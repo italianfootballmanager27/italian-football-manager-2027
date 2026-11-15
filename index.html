@@ -3,242 +3,321 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101d19">
-<title>Italian Football Manager 2027</title>
+<title>IFM 2027</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#101d19;color:#fff;font-family:Arial,sans-serif;min-height:100vh}
-header{padding:22px 18px;text-align:center;background:#172c24;border-bottom:2px solid #b99a49}
-.logo{font-size:34px}
-h1{font-size:24px;margin:5px 0;color:#e4c46e}
-.subtitle{color:#b8c7bd;font-size:13px}
-main{max-width:650px;margin:auto;padding:22px 16px}
-.stadium{background:linear-gradient(135deg,#1d4836,#10251d);border:1px solid #456c55;border-radius:16px;padding:25px 16px;text-align:center;margin-bottom:20px}
-.stadium h2{font-size:26px;margin:12px 0}
-.stadium p{color:#c6d9cb;font-size:14px;line-height:1.6}
-.tag{display:inline-block;background:#b99a49;color:#15231b;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:bold}
-button{width:100%;padding:15px;margin-top:12px;border:0;border-radius:9px;font-size:14px;font-weight:bold;cursor:pointer}
-.primary{background:#d1ad54;color:#15231b}
+body{margin:0;background:#101d19;color:white;font-family:Arial,sans-serif}
+header{background:#172c24;padding:20px;text-align:center;border-bottom:2px solid #c4a34f}
+h1{font-size:23px;color:#e4c46e;margin:5px}
+header p{font-size:12px;color:#b8c7bd;margin:5px}
+main{max-width:700px;margin:auto;padding:16px}
+.panel{background:#192c23;border:1px solid #456c55;border-radius:12px;padding:17px;margin:13px 0}
+.hero{text-align:center;background:linear-gradient(135deg,#1d4836,#10251d);padding:25px 15px;border-radius:15px}
+h2{color:#e4c46e}
+h3{margin:8px 0;color:#e4c46e}
+button{width:100%;padding:14px;margin-top:10px;border:0;border-radius:8px;font-weight:bold;background:#d1ad54;color:#15231b;cursor:pointer}
 .secondary{background:#294438;color:white}
-input{width:100%;padding:14px;border-radius:8px;border:1px solid #617b69;background:#1b3026;color:white;font-size:16px;margin-top:10px}
-label{display:block;margin-top:20px;font-weight:bold}
-.card{background:#192c23;border:1px solid #355440;padding:17px;border-radius:12px;margin-top:16px}
-.small{font-size:12px;color:#a9beb0;line-height:1.6}
+input,select{width:100%;padding:13px;margin-top:9px;border-radius:7px;border:1px solid #617b69;background:#1b3026;color:white;font-size:15px}
+label{display:block;margin-top:18px;font-weight:bold}
+.tag{display:inline-block;background:#c4a34f;color:#17251d;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:bold}
+.small{font-size:12px;color:#b8c7bd;line-height:1.5}
 .hidden{display:none!important}
-.club{background:#192c23;border:1px solid #456c55;border-radius:12px;padding:14px;margin-top:11px}
-.club h3{margin:0 0 6px;color:#e4c46e;font-size:17px}
-.club p{margin:4px 0;color:#c1d0c5;font-size:12px}
-.club button{margin-top:9px;padding:11px}
-.club.selected{border:2px solid #d1ad54;background:#243d30}
-.section-title{color:#e4c46e;margin-top:24px}
+.club,.player{background:#192c23;border:1px solid #456c55;border-radius:10px;padding:13px;margin-top:10px}
+.club p,.player p{font-size:12px;color:#b8c7bd;margin:5px 0}
+.player{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.rating{font-size:22px;color:#e4c46e;font-weight:bold}
+.player strong{font-size:14px}
+.stats{font-size:11px;color:#a9beb0}
+nav{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+nav button{width:auto;flex:1;min-width:100px;font-size:11px;padding:11px}
 footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
 </style>
 </head>
 <body>
 <header>
- <div class="logo">⚽</div>
- <h1>ITALIAN FOOTBALL MANAGER</h1>
- <div class="subtitle">EDIZIONE 2026 / 2027</div>
+ <div style="font-size:32px">⚽</div>
+ <h1>ITALIAN FOOTBALL MANAGER 2027</h1>
+ <p>DALLA SERIE D ALLA GLORIA</p>
 </header>
-
 <main>
+
 <section id="home">
- <div class="stadium">
-  <span class="tag">LA TUA CARRIERA TI ASPETTA</span>
-  <h2>DALLA SERIE D<br>ALLA SERIE A</h2>
-  <p>Costruisci la tua squadra, conquista le promozioni, scopri nuovi talenti e diventa una leggenda del calcio italiano.</p>
+ <div class="hero">
+  <span class="tag">STAGIONE 2026/2027</span>
+  <h2>DALLA SERIE D ALLA SERIE A</h2>
+  <p>Costruisci la tua squadra e scrivi la storia del calcio italiano.</p>
   <div style="font-size:48px">🏟️</div>
  </div>
- <button class="primary" onclick="showCareer()">NUOVA CARRIERA</button>
+ <button onclick="show('career')">NUOVA CARRIERA</button>
  <button class="secondary" onclick="loadCareer()">CARICA CARRIERA</button>
- <div class="card">
-  <strong>IL TUO OBIETTIVO</strong>
-  <p class="small">Partirai obbligatoriamente dalla Serie D italiana. Solo con risultati, programmazione e lavoro potrai raggiungere la Serie A.</p>
- </div>
 </section>
 
 <section id="career" class="hidden">
- <div class="card">
+ <div class="panel">
   <span class="tag">NUOVA AVVENTURA</span>
-  <h2>CREA IL TUO MANAGER</h2>
-  <p class="small">Scegli il nome con cui sarai conosciuto nel calcio italiano.</p>
-  <label for="manager">Nome e cognome del manager</label>
+  <h2>Crea il tuo manager</h2>
+  <label>Nome e cognome</label>
   <input id="manager" maxlength="35" placeholder="Es. Marco Rossi">
-  <button class="primary" onclick="createManager()">CONFERMA E CONTINUA</button>
-  <button class="secondary" onclick="goHome()">INDIETRO</button>
+  <button onclick="createManager()">CONTINUA</button>
+  <button class="secondary" onclick="show('home')">INDIETRO</button>
  </div>
 </section>
 
 <section id="welcome" class="hidden">
- <div class="stadium">
+ <div class="hero">
   <span class="tag">BENVENUTO MANAGER</span>
   <h2 id="managerName"></h2>
-  <p>La tua carriera nel calcio italiano sta per cominciare.</p>
-  <div style="font-size:50px">🏆</div>
+  <p>La tua avventura comincia dalla Serie D.</p>
  </div>
- <div class="card">
-  <strong>STAGIONE 2026/2027</strong>
-  <p>Categoria iniziale: <strong>Serie D</strong></p>
-  <p class="small">Ora scegli la società che guiderai verso la gloria.</p>
+ <div class="panel">
+  <h3>Stagione 2026/2027</h3>
+  Categoria iniziale: Serie D
+  <p class="small">Scegli la società che guiderai verso la gloria.</p>
  </div>
- <button class="primary" onclick="showClubs()">SCEGLI LA TUA SQUADRA</button>
- <button class="secondary" onclick="goHome()">MENU PRINCIPALE</button>
+ <button onclick="showClubs()">SCEGLI LA SQUADRA</button>
+ <button class="secondary" onclick="show('home')">MENU PRINCIPALE</button>
 </section>
 
 <section id="clubs" class="hidden">
- <div class="card">
-  <span class="tag">SERIE D – 2026/2027</span>
-  <h2>SCEGLI LA TUA SOCIETÀ</h2>
-  <p class="small">Seleziona una squadra con cui iniziare la scalata verso la Serie A. Le società qui presenti sono nomi fittizi per la versione iniziale del gioco.</p>
+ <div class="panel">
+  <span class="tag">SERIE D</span>
+  <h2>Scegli la tua società</h2>
+  <p class="small">Società fittizie della versione iniziale del gioco.</p>
  </div>
  <div id="clubList"></div>
- <button class="secondary" onclick="showWelcome()">INDIETRO</button>
+ <button class="secondary" onclick="show('welcome')">INDIETRO</button>
 </section>
 
 <section id="clubDetail" class="hidden">
- <div class="stadium">
-  <span class="tag">LA TUA NUOVA SOCIETÀ</span>
-  <div style="font-size:48px">🛡️</div>
+ <div class="hero">
+  <div style="font-size:45px">🛡️</div>
+  <span class="tag">LA TUA SOCIETÀ</span>
   <h2 id="chosenClub"></h2>
   <p id="chosenInfo"></p>
  </div>
- <div class="card">
-  <strong>OBIETTIVO: STAGIONE 2026/2027</strong>
-  <p>Categoria: Serie D</p>
+ <div class="panel">
+  <h3>Obiettivo: stagione 2026/2027</h3>
+  Campionato: Serie D
   <p id="chosenGroup" class="small"></p>
-  <p class="small">La tua avventura comincia qui. Costruisci una squadra competitiva e punta alla promozione!</p>
  </div>
- <button class="primary" onclick="startCareer()">INIZIA LA CARRIERA</button>
+ <button onclick="startCareer()">INIZIA LA CARRIERA</button>
  <button class="secondary" onclick="showClubs()">CAMBIA SQUADRA</button>
 </section>
 
 <section id="dashboard" class="hidden">
- <div class="stadium">
-  <span class="tag">LA TUA CARRIERA È INIZIATA</span>
+ <div class="hero">
+  <span class="tag">LA TUA CARRIERA</span>
   <h2 id="dashClub"></h2>
   <p id="dashManager"></p>
-  <div style="font-size:45px">🏆</div>
- </div>
- <div class="card">
-  <strong>STAGIONE 2026/2027</strong>
-  <p>Campionato: <strong>Serie D</strong></p>
   <p id="dashGroup"></p>
-  <p>Stato: <strong>Allenatore in carica</strong></p>
+  <strong>STAGIONE 2026/2027 · SERIE D</strong>
  </div>
- <div class="card">
-  <strong>PROSSIMI SVILUPPI</strong>
-  <p class="small">Mercato, rosa, calendario, tattiche, partite e gestione societaria saranno aggiunti nelle prossime versioni.</p>
+ <nav>
+  <button onclick="showRoster()">ROSA</button>
+  <button onclick="show('dashboard')">SOCIETÀ</button>
+ </nav>
+ <div class="panel">
+  <h3>Benvenuto alla guida della società!</h3>
+  <p class="small">La tua carriera è stata salvata. Puoi consultare i 25 calciatori della rosa.</p>
+  <button onclick="showRoster()">GESTISCI LA ROSA</button>
+  <button class="secondary" onclick="show('home')">MENU PRINCIPALE</button>
  </div>
- <button class="secondary" onclick="goHome()">TORNA AL MENU</button>
 </section>
-</main>
 
-<footer>ITALIAN FOOTBALL MANAGER 2027<br>Progetto indipendente · Versione 0.2</footer>
+<section id="roster" class="hidden">
+ <div class="hero">
+  <span class="tag">PRIMA SQUADRA</span>
+  <h2>ROSA CALCIATORI</h2>
+  <p id="rosterClub"></p>
+  <div style="font-size:25px">👕 25 CALCIATORI</div>
+ </div>
+ <div class="panel">
+  <h3>Composizione della rosa</h3>
+  <p id="rosterCounts" class="small"></p>
+  <label>Filtra per ruolo</label>
+  <select id="roleFilter" onchange="renderPlayers()">
+   <option value="Tutti">Tutti i ruoli</option>
+   <option value="POR">Portieri</option>
+   <option value="DIF">Difensori</option>
+   <option value="CEN">Centrocampisti</option>
+   <option value="ATT">Attaccanti</option>
+  </select>
+ </div>
+ <div id="playerList"></div>
+ <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
+</section>
+
+</main>
+<footer>ITALIAN FOOTBALL MANAGER 2027 · VERSIONE 0.3</footer>
 
 <script>
-const clubs = [
- {name:"Audace Cerignolese",city:"Cerignola",group:"Girone H"},
- {name:"Foggia Calcio 1927",city:"Foggia",group:"Girone H"},
- {name:"Bari Adriatica",city:"Bari",group:"Girone H"},
- {name:"Taranto Jonica",city:"Taranto",group:"Girone H"},
- {name:"Salento United",city:"Lecce",group:"Girone H"},
- {name:"Napoli Partenopea",city:"Napoli",group:"Girone G"},
- {name:"Avellino Irpina",city:"Avellino",group:"Girone G"},
- {name:"Roma Capitolina",city:"Roma",group:"Girone F"},
- {name:"Latina Pontina",city:"Latina",group:"Girone F"},
- {name:"Firenze Medicea",city:"Firenze",group:"Girone E"},
- {name:"Perugia Etrusca",city:"Perugia",group:"Girone E"},
- {name:"Bologna Felsinea",city:"Bologna",group:"Girone D"},
- {name:"Ravenna Adriatica",city:"Ravenna",group:"Girone D"},
- {name:"Milano Lombarda",city:"Milano",group:"Girone B"},
- {name:"Bergamo Orobica",city:"Bergamo",group:"Girone B"},
- {name:"Torino Granata FC",city:"Torino",group:"Girone A"},
- {name:"Genova Liguria",city:"Genova",group:"Girone A"},
- {name:"Trieste Giuliana",city:"Trieste",group:"Girone C"}
+const clubs=[
+{name:"Audace Cerignolese",city:"Cerignola",group:"Girone H"},
+{name:"Foggia Calcio 1927",city:"Foggia",group:"Girone H"},
+{name:"Bari Adriatica",city:"Bari",group:"Girone H"},
+{name:"Taranto Jonica",city:"Taranto",group:"Girone H"},
+{name:"Salento United",city:"Lecce",group:"Girone H"},
+{name:"Napoli Partenopea",city:"Napoli",group:"Girone G"},
+{name:"Avellino Irpina",city:"Avellino",group:"Girone G"},
+{name:"Roma Capitolina",city:"Roma",group:"Girone F"},
+{name:"Latina Pontina",city:"Latina",group:"Girone F"},
+{name:"Firenze Medicea",city:"Firenze",group:"Girone E"},
+{name:"Perugia Etrusca",city:"Perugia",group:"Girone E"},
+{name:"Bologna Felsinea",city:"Bologna",group:"Girone D"},
+{name:"Ravenna Adriatica",city:"Ravenna",group:"Girone D"},
+{name:"Milano Lombarda",city:"Milano",group:"Girone B"},
+{name:"Bergamo Orobica",city:"Bergamo",group:"Girone B"},
+{name:"Torino Granata FC",city:"Torino",group:"Girone A"},
+{name:"Genova Liguria",city:"Genova",group:"Girone A"},
+{name:"Trieste Giuliana",city:"Trieste",group:"Girone C"}
 ];
 
-let manager = "";
-let selectedClub = null;
+const firstNames=["Luca","Matteo","Andrea","Davide","Simone","Marco","Lorenzo","Alessandro","Federico","Riccardo","Tommaso","Gabriele","Filippo","Nicola","Samuele","Diego","Edoardo","Michele","Stefano","Christian","Fabio","Daniele","Pietro","Enrico","Leonardo","Giorgio","Antonio","Jacopo","Roberto","Massimo"];
+const lastNames=["Ferrari","Romano","Conti","Marino","Greco","Costa","Rinaldi","Moretti","Gallo","Caruso","Lombardi","De Luca","Barbieri","Fontana","Mancini","Ricci","Esposito","Serra","Colombo","Martini","Villa","Pellegrini","Leone","Ferri","Santoro","Marchetti","Testa","Bernardi","Farina","Longo"];
 
-function hideAll(){
- ["home","career","welcome","clubs","clubDetail","dashboard"].forEach(id=>{
-  document.getElementById(id).classList.add("hidden");
- });
-}
-function showCareer(){
- hideAll();
- document.getElementById("career").classList.remove("hidden");
-}
-function goHome(){
- hideAll();
- document.getElementById("home").classList.remove("hidden");
-}
-function showWelcome(){
- hideAll();
- document.getElementById("managerName").textContent=manager;
- document.getElementById("welcome").classList.remove("hidden");
+let manager="";
+let selectedClub=null;
+let players=[];
+
+function show(id){
+ document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
 }
 function createManager(){
- const name=document.getElementById("manager").value.trim();
- if(!name){alert("Inserisci il nome del manager!");return;}
- manager=name;
- showWelcome();
+ const value=document.getElementById("manager").value.trim();
+ if(!value){alert("Inserisci il nome del manager!");return;}
+ manager=value;
+ document.getElementById("managerName").textContent=manager;
+ show("welcome");
 }
 function showClubs(){
- hideAll();
  const list=document.getElementById("clubList");
  list.innerHTML="";
- clubs.forEach((club,index)=>{
+ clubs.forEach((club,i)=>{
   const item=document.createElement("div");
   item.className="club";
-  const title=document.createElement("h3");
-  title.textContent="🛡️ "+club.name;
-  const city=document.createElement("p");
-  city.textContent="Città: "+club.city;
-  const group=document.createElement("p");
-  group.textContent=club.group+" · Serie D";
-  const button=document.createElement("button");
-  button.className="primary";
-  button.textContent="SELEZIONA QUESTA SQUADRA";
-  button.onclick=()=>selectClub(index);
-  item.append(title,city,group,button);
+  const h=document.createElement("h3");
+  h.textContent="🛡️ "+club.name;
+  const p=document.createElement("p");
+  p.textContent="Città: "+club.city+" · "+club.group;
+  const b=document.createElement("button");
+  b.textContent="SELEZIONA QUESTA SQUADRA";
+  b.onclick=()=>selectClub(i);
+  item.append(h,p,b);
   list.appendChild(item);
  });
- document.getElementById("clubs").classList.remove("hidden");
+ show("clubs");
 }
-function selectClub(index){
- selectedClub=clubs[index];
+function selectClub(i){
+ selectedClub=clubs[i];
  document.getElementById("chosenClub").textContent=selectedClub.name;
  document.getElementById("chosenInfo").textContent="Città: "+selectedClub.city;
- document.getElementById("chosenGroup").textContent="Girone di appartenenza: "+selectedClub.group;
- hideAll();
- document.getElementById("clubDetail").classList.remove("hidden");
+ document.getElementById("chosenGroup").textContent=selectedClub.group;
+ show("clubDetail");
+}
+function makePlayers(){
+ const positions=[
+  ...Array(3).fill(["POR","Portiere"]),
+  ...Array(8).fill(["DIF","Difensore"]),
+  ...Array(8).fill(["CEN","Centrocampista"]),
+  ...Array(6).fill(["ATT","Attaccante"])
+ ];
+ const used=[];
+ return positions.map((pos,i)=>{
+  let n;
+  do{
+   n=firstNames[Math.floor(Math.random()*firstNames.length)]+" "+lastNames[Math.floor(Math.random()*lastNames.length)];
+  }while(used.includes(n));
+  used.push(n);
+  const age=18+Math.floor(Math.random()*17);
+  const overall=48+Math.floor(Math.random()*25);
+  const potential=Math.min(90,overall+Math.floor(Math.random()*17));
+  const wage=350+overall*32+Math.floor(Math.random()*250);
+  return {
+   id:i+1,name:n,role:pos[0],position:pos[1],
+   age:age,overall:overall,potential:potential,
+   wage:wage,value:Math.round((overall*overall*age/25)*100)/100,
+   pace:40+Math.floor(Math.random()*50),
+   shooting:40+Math.floor(Math.random()*50),
+   passing:40+Math.floor(Math.random()*50),
+   technique:40+Math.floor(Math.random()*50),
+   defending:40+Math.floor(Math.random()*50),
+   physical:40+Math.floor(Math.random()*50)
+  };
+ });
 }
 function startCareer(){
- if(!manager||!selectedClub){alert("Completa prima la scelta del manager e della squadra.");return;}
- const save={manager:manager,club:selectedClub,season:"2026/2027"};
- localStorage.setItem("ifm2027_save",JSON.stringify(save));
+ if(!manager||!selectedClub){alert("Completa la scelta del manager e della squadra.");return;}
+ players=makePlayers();
+ saveGame();
  showDashboard();
+}
+function saveGame(){
+ const save={manager:manager,club:selectedClub,season:"2026/2027",players:players};
+ localStorage.setItem("ifm2027_save",JSON.stringify(save));
 }
 function showDashboard(){
  document.getElementById("dashClub").textContent=selectedClub.name;
  document.getElementById("dashManager").textContent="Allenatore: "+manager;
- document.getElementById("dashGroup").textContent="Girone: "+selectedClub.group;
- hideAll();
- document.getElementById("dashboard").classList.remove("hidden");
+ document.getElementById("dashGroup").textContent=selectedClub.group;
+ show("dashboard");
 }
 function loadCareer(){
  const raw=localStorage.getItem("ifm2027_save");
- if(!raw){alert("Non hai ancora una carriera salvata! Crea una nuova carriera.");return;}
+ if(!raw){alert("Non hai ancora una carriera salvata!");return;}
  try{
   const save=JSON.parse(raw);
   manager=save.manager;
   selectedClub=save.club;
+  players=save.players||makePlayers();
+  if(!save.players)saveGame();
   showDashboard();
- }catch(e){
-  alert("Salvataggio non leggibile. Crea una nuova carriera.");
+ }catch(e){alert("Salvataggio non leggibile. Crea una nuova carriera.");}
+}
+function showRoster(){
+ if(players.length!==25){
+  alert("Non è disponibile una rosa completa. Avvia una nuova carriera.");
+  return;
  }
+ document.getElementById("rosterClub").textContent=selectedClub.name;
+ const count={POR:0,DIF:0,CEN:0,ATT:0};
+ players.forEach(p=>count[p.role]++);
+ document.getElementById("rosterCounts").textContent=
+ "Portieri: "+count.POR+" · Difensori: "+count.DIF+
+ " · Centrocampisti: "+count.CEN+" · Attaccanti: "+count.ATT;
+ document.getElementById("roleFilter").value="Tutti";
+ renderPlayers();
+ show("roster");
+}
+function renderPlayers(){
+ const filter=document.getElementById("roleFilter").value;
+ const list=document.getElementById("playerList");
+ list.innerHTML="";
+ players.filter(p=>filter==="Tutti"||p.role===filter).forEach(p=>{
+  const item=document.createElement("div");
+  item.className="player";
+  const info=document.createElement("div");
+  const name=document.createElement("strong");
+  name.textContent=p.name;
+  const details=document.createElement("p");
+  details.textContent=p.position+" · "+p.age+" anni";
+  const stats=document.createElement("div");
+  stats.className="stats";
+  stats.textContent="Potenziale "+p.potential+" · Stipendio €"+p.wage.toLocaleString("it-IT")+"/mese";
+  info.append(name,details,stats);
+  const rating=document.createElement("div");
+  rating.className="rating";
+  rating.textContent=p.overall;
+  const caption=document.createElement("div");
+  caption.className="stats";
+  caption.textContent="VAL";
+  const right=document.createElement("div");
+  right.append(rating,caption);
+  item.append(info,right);
+  list.appendChild(item);
+ });
 }
 </script>
 </body>
