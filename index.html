@@ -41,17 +41,22 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
 .goal.top{top:0;border-top:0}
 .goal.bottom{bottom:0;border-bottom:0}
 .player-slot{position:absolute;transform:translate(-50%,-50%);width:68px;text-align:center;z-index:2}
-.player-shirt{width:36px;height:36px;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;background:#f0c94f;color:#17251d;border:2px solid white;font-weight:bold;font-size:12px;box-shadow:0 2px 5px #123}
-.player-slot select{display:block;width:78px;margin:4px 0 0 -5px;padding:4px 2px;font-size:9px;text-align:center;background:#12271d;color:white;border:1px solid #d7c16f;border-radius:5px}
+.player-shirt{width:36px;height:36px;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;background:#f0c94f;color:#17251d;border:2px solid white;font-weight:bold;font-size:12px}
+.player-slot select{display:block;width:78px;margin:4px 0 0 -5px;padding:4px 2px;font-size:9px;text-align:center}
 .slot-name{font-size:9px;font-weight:bold;text-shadow:1px 1px 2px black;white-space:nowrap}
-.slot-rating{font-size:10px;color:#ffe58a;font-weight:bold;text-shadow:1px 1px 2px black}
+.slot-rating{font-size:10px;color:#ffe58a;font-weight:bold}
 .bench-item{display:flex;justify-content:space-between;padding:9px;border-bottom:1px solid #456c55;font-size:12px}
-.bench-item:last-child{border:0}
 .setting{padding:12px 0;border-bottom:1px solid #456c55}
-.setting:last-child{border:0}
-.setting select{margin-top:7px}
 .setting p{font-size:11px;color:#b8c7bd;margin:5px 0}
 .value{color:#e4c46e;font-weight:bold}
+.score{font-size:42px;font-weight:bold;color:#e4c46e;margin:12px}
+.event{padding:10px;border-bottom:1px solid #456c55;font-size:13px;line-height:1.5}
+.event strong{color:#e4c46e}
+.statrow{display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #456c55;font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+td,th{padding:9px 5px;text-align:center;border-bottom:1px solid #456c55}
+th{color:#e4c46e}
+td:first-child,th:first-child{text-align:left}
 </style>
 </head>
 <body>
@@ -89,11 +94,7 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
   <h2 id="managerName"></h2>
   <p>La tua avventura comincia dalla Serie D.</p>
  </div>
- <div class="panel">
-  <h3>Stagione 2026/2027</h3>
-  Categoria iniziale: Serie D
-  <p class="small">Scegli la società che guiderai verso la gloria.</p>
- </div>
+ <div class="panel">Stagione 2026/2027 · Serie D</div>
  <button onclick="showClubs()">SCEGLI LA SQUADRA</button>
  <button class="secondary" onclick="show('home')">MENU PRINCIPALE</button>
 </section>
@@ -132,13 +133,18 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
   <p id="dashGroup"></p>
   <strong>STAGIONE 2026/2027 · SERIE D</strong>
  </div>
+ <div class="panel">
+  <h3>Situazione in campionato</h3>
+  <div id="dashStats" class="small"></div>
+  <button onclick="showMatch()">⚽ PROSSIMA PARTITA</button>
+  <button class="secondary" onclick="showTable()">CLASSIFICA</button>
+ </div>
  <nav>
   <button onclick="showRoster()">ROSA</button>
   <button onclick="showTactics()">FORMAZIONE E TATTICHE</button>
  </nav>
  <div class="panel">
   <h3>Centro di gestione</h3>
-  <p class="small">Prepara la tua squadra e definisci il tuo stile di gioco.</p>
   <button onclick="showTactics()">GESTISCI LA SQUADRA</button>
   <button class="secondary" onclick="showRoster()">CONSULTA LA ROSA</button>
   <button class="secondary" onclick="show('home')">MENU PRINCIPALE</button>
@@ -174,7 +180,6 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
   <h2>LA TUA SQUADRA</h2>
   <p id="tacticClub"></p>
  </div>
-
  <div class="panel">
   <h3>1. Modulo di gioco</h3>
   <label>Seleziona il modulo</label>
@@ -184,104 +189,57 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
    <option value="352">3-5-2</option>
    <option value="4231">4-2-3-1</option>
   </select>
-  <p class="small">Il modulo stabilisce la disposizione dei tuoi undici calciatori.</p>
  </div>
-
  <div class="panel">
   <h3>2. La tua formazione</h3>
   <p class="small">Seleziona i giocatori direttamente sul campo.</p>
   <div class="pitch">
-   <div class="boxline top"></div>
-   <div class="boxline bottom"></div>
-   <div class="goal top"></div>
-   <div class="goal bottom"></div>
+   <div class="boxline top"></div><div class="boxline bottom"></div>
+   <div class="goal top"></div><div class="goal bottom"></div>
    <div id="pitchPlayers"></div>
   </div>
   <h3>La tua panchina</h3>
   <div id="bench"></div>
   <p id="lineupSummary" class="small"></p>
  </div>
-
  <div class="panel">
-  <span class="tag">NUOVO</span>
-  <h3>3. Mentalità della squadra</h3>
-
-  <div class="setting">
-   <label for="mentality">Mentalità</label>
+  <h3>3. Mentalità e tattiche</h3>
+  <div class="setting"><label>Mentalità</label>
    <select id="mentality" onchange="updateTactics()">
-    <option value="Difensiva">Difensiva</option>
-    <option value="Prudente">Prudente</option>
-    <option value="Equilibrata">Equilibrata</option>
-    <option value="Positiva">Positiva</option>
-    <option value="Offensiva">Offensiva</option>
+    <option>Difensiva</option><option>Prudente</option><option>Equilibrata</option><option>Positiva</option><option>Offensiva</option>
    </select>
-   <p>Determina l'atteggiamento generale della squadra.</p>
   </div>
-
-  <div class="setting">
-   <label for="style">Stile di gioco</label>
+  <div class="setting"><label>Stile di gioco</label>
    <select id="style" onchange="updateTactics()">
-    <option value="Possesso palla">Possesso palla</option>
-    <option value="Contropiede">Contropiede</option>
-    <option value="Pressing alto">Pressing alto</option>
-    <option value="Gioco sulle fasce">Gioco sulle fasce</option>
-    <option value="Palla lunga">Palla lunga</option>
+    <option>Possesso palla</option><option>Contropiede</option><option>Pressing alto</option><option>Gioco sulle fasce</option><option>Palla lunga</option>
    </select>
-   <p>Scegli come vuoi costruire le azioni offensive.</p>
   </div>
-
-  <div class="setting">
-   <label for="pressing">Intensità del pressing</label>
+  <div class="setting"><label>Intensità del pressing</label>
    <select id="pressing" onchange="updateTactics()">
-    <option value="Basso">Bassa</option>
-    <option value="Medio">Media</option>
-    <option value="Alto">Alta</option>
-    <option value="Molto alto">Molto alta</option>
+    <option>Basso</option><option>Medio</option><option>Alto</option><option>Molto alto</option>
    </select>
-   <p>Un pressing più intenso può recuperare palloni, ma aumenta il consumo di energie.</p>
   </div>
-
-  <div class="setting">
-   <label for="defense">Altezza della linea difensiva</label>
+  <div class="setting"><label>Linea difensiva</label>
    <select id="defense" onchange="updateTactics()">
-    <option value="Bassa">Bassa</option>
-    <option value="Media">Media</option>
-    <option value="Alta">Alta</option>
+    <option>Bassa</option><option>Media</option><option>Alta</option>
    </select>
-   <p>Una linea alta porta la difesa più avanti e lascia più spazio alle spalle.</p>
   </div>
-
-  <div class="setting">
-   <label for="tempo">Ritmo di gioco</label>
+  <div class="setting"><label>Ritmo di gioco</label>
    <select id="tempo" onchange="updateTactics()">
-    <option value="Lento">Lento</option>
-    <option value="Normale">Normale</option>
-    <option value="Veloce">Veloce</option>
+    <option>Lento</option><option>Normale</option><option>Veloce</option>
    </select>
-   <p>Decide la velocità con cui la squadra muove il pallone.</p>
   </div>
-
-  <div class="setting">
-   <label for="width">Ampiezza di gioco</label>
+  <div class="setting"><label>Ampiezza</label>
    <select id="width" onchange="updateTactics()">
-    <option value="Stretta">Stretta</option>
-    <option value="Normale">Normale</option>
-    <option value="Ampia">Ampia</option>
+    <option>Stretta</option><option>Normale</option><option>Ampia</option>
    </select>
-   <p>Stabilisce quanto la squadra sfrutta le fasce laterali.</p>
   </div>
-
-  <div class="setting">
-   <label for="passing">Tipo di passaggi</label>
+  <div class="setting"><label>Tipo di passaggi</label>
    <select id="passing" onchange="updateTactics()">
-    <option value="Corti">Corti</option>
-    <option value="Misti">Misti</option>
-    <option value="Diretti">Diretti</option>
+    <option>Corti</option><option>Misti</option><option>Diretti</option>
    </select>
-   <p>Determina come i calciatori cercano i compagni.</p>
   </div>
  </div>
-
  <div class="panel">
   <h3>Riepilogo tattico</h3>
   <div id="tacticSummary" class="small"></div>
@@ -290,8 +248,51 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
  </div>
 </section>
 
+<section id="match" class="hidden">
+ <div class="hero">
+  <span class="tag">CAMPIONATO · SERIE D</span>
+  <h2 id="matchDay">GIORNATA 1</h2>
+  <p id="matchVenue"></p>
+  <div id="matchTeams" style="font-size:18px;font-weight:bold"></div>
+  <div id="matchScore" class="score">- : -</div>
+  <p id="matchStatus" class="small">Partita da giocare</p>
+ </div>
+ <div class="panel" id="preMatch">
+  <h3>La prossima sfida</h3>
+  <p id="opponentInfo" class="small"></p>
+  <p id="yourTacticsInfo" class="small"></p>
+  <button onclick="playMatch()">▶ GIOCA LA PARTITA</button>
+  <button class="secondary" onclick="showTactics()">MODIFICA FORMAZIONE E TATTICHE</button>
+ </div>
+ <div class="panel hidden" id="matchReport">
+  <h3>Telecronaca della partita</h3>
+  <div id="commentary"></div>
+  <h3>Statistiche</h3>
+  <div id="matchStats"></div>
+ </div>
+ <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
+</section>
+
+<section id="table" class="hidden">
+ <div class="hero">
+  <span class="tag">SERIE D</span>
+  <h2>CLASSIFICA</h2>
+  <p id="tableGroup"></p>
+ </div>
+ <div class="panel">
+  <div style="overflow-x:auto">
+   <table>
+    <thead><tr><th>#</th><th>Squadra</th><th>PG</th><th>V</th><th>N</th><th>P</th><th>DR</th><th>PT</th></tr></thead>
+    <tbody id="tableBody"></tbody>
+   </table>
+  </div>
+  <p class="small">Classifica provvisoria del girone. I club e il calendario sono fittizi in questa versione.</p>
+ </div>
+ <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
+</section>
+
 </main>
-<footer>ITALIAN FOOTBALL MANAGER 2027 · VERSIONE 0.5</footer>
+<footer>ITALIAN FOOTBALL MANAGER 2027 · VERSIONE 0.6</footer>
 
 <script>
 const clubs=[
@@ -319,366 +320,290 @@ const firstNames=["Luca","Matteo","Andrea","Davide","Simone","Marco","Lorenzo","
 const lastNames=["Ferrari","Romano","Conti","Marino","Greco","Costa","Rinaldi","Moretti","Gallo","Caruso","Lombardi","De Luca","Barbieri","Fontana","Mancini","Ricci","Esposito","Serra","Colombo","Martini","Villa","Pellegrini","Leone","Ferri","Santoro","Marchetti","Testa","Bernardi","Farina","Longo"];
 
 const formations={
- "433":[
-  {name:"POR",role:"POR",x:50,y:89},
-  {name:"TD",role:"DIF",x:83,y:70},{name:"DC",role:"DIF",x:61,y:74},
-  {name:"DC",role:"DIF",x:39,y:74},{name:"TS",role:"DIF",x:17,y:70},
-  {name:"CC",role:"CEN",x:70,y:51},{name:"CC",role:"CEN",x:50,y:57},{name:"CC",role:"CEN",x:30,y:51},
-  {name:"AD",role:"ATT",x:80,y:27},{name:"ATT",role:"ATT",x:50,y:20},{name:"AS",role:"ATT",x:20,y:27}
- ],
- "442":[
-  {name:"POR",role:"POR",x:50,y:89},
-  {name:"TD",role:"DIF",x:83,y:70},{name:"DC",role:"DIF",x:61,y:74},{name:"DC",role:"DIF",x:39,y:74},{name:"TS",role:"DIF",x:17,y:70},
-  {name:"ED",role:"CEN",x:83,y:49},{name:"CC",role:"CEN",x:61,y:54},{name:"CC",role:"CEN",x:39,y:54},{name:"ES",role:"CEN",x:17,y:49},
-  {name:"ATT",role:"ATT",x:62,y:25},{name:"ATT",role:"ATT",x:38,y:25}
- ],
- "352":[
-  {name:"POR",role:"POR",x:50,y:89},
-  {name:"DC",role:"DIF",x:75,y:73},{name:"DC",role:"DIF",x:50,y:76},{name:"DC",role:"DIF",x:25,y:73},
-  {name:"ED",role:"CEN",x:88,y:49},{name:"CC",role:"CEN",x:69,y:55},{name:"CC",role:"CEN",x:50,y:48},{name:"CC",role:"CEN",x:31,y:55},{name:"ES",role:"CEN",x:12,y:49},
-  {name:"ATT",role:"ATT",x:63,y:24},{name:"ATT",role:"ATT",x:37,y:24}
- ],
- "4231":[
-  {name:"POR",role:"POR",x:50,y:89},
-  {name:"TD",role:"DIF",x:83,y:70},{name:"DC",role:"DIF",x:61,y:74},{name:"DC",role:"DIF",x:39,y:74},{name:"TS",role:"DIF",x:17,y:70},
-  {name:"CC",role:"CEN",x:61,y:57},{name:"CC",role:"CEN",x:39,y:57},
-  {name:"AD",role:"CEN",x:78,y:36},{name:"TQ",role:"CEN",x:50,y:32},{name:"AS",role:"CEN",x:22,y:36},
-  {name:"ATT",role:"ATT",x:50,y:16}
- ]
+"433":[
+{role:"POR",name:"POR",x:50,y:89},
+{role:"DIF",name:"TD",x:83,y:70},{role:"DIF",name:"DC",x:61,y:74},{role:"DIF",name:"DC",x:39,y:74},{role:"DIF",name:"TS",x:17,y:70},
+{role:"CEN",name:"CC",x:70,y:51},{role:"CEN",name:"CC",x:50,y:57},{role:"CEN",name:"CC",x:30,y:51},
+{role:"ATT",name:"AD",x:80,y:27},{role:"ATT",name:"ATT",x:50,y:20},{role:"ATT",name:"AS",x:20,y:27}],
+"442":[
+{role:"POR",name:"POR",x:50,y:89},
+{role:"DIF",name:"TD",x:83,y:70},{role:"DIF",name:"DC",x:61,y:74},{role:"DIF",name:"DC",x:39,y:74},{role:"DIF",name:"TS",x:17,y:70},
+{role:"CEN",name:"ED",x:83,y:49},{role:"CEN",name:"CC",x:61,y:54},{role:"CEN",name:"CC",x:39,y:54},{role:"CEN",name:"ES",x:17,y:49},
+{role:"ATT",name:"ATT",x:62,y:25},{role:"ATT",name:"ATT",x:38,y:25}],
+"352":[
+{role:"POR",name:"POR",x:50,y:89},
+{role:"DIF",name:"DC",x:75,y:73},{role:"DIF",name:"DC",x:50,y:76},{role:"DIF",name:"DC",x:25,y:73},
+{role:"CEN",name:"ED",x:88,y:49},{role:"CEN",name:"CC",x:69,y:55},{role:"CEN",name:"CC",x:50,y:48},{role:"CEN",name:"CC",x:31,y:55},{role:"CEN",name:"ES",x:12,y:49},
+{role:"ATT",name:"ATT",x:63,y:24},{role:"ATT",name:"ATT",x:37,y:24}],
+"4231":[
+{role:"POR",name:"POR",x:50,y:89},
+{role:"DIF",name:"TD",x:83,y:70},{role:"DIF",name:"DC",x:61,y:74},{role:"DIF",name:"DC",x:39,y:74},{role:"DIF",name:"TS",x:17,y:70},
+{role:"CEN",name:"CC",x:61,y:57},{role:"CEN",name:"CC",x:39,y:57},
+{role:"CEN",name:"AD",x:78,y:36},{role:"CEN",name:"TQ",x:50,y:32},{role:"CEN",name:"AS",x:22,y:36},
+{role:"ATT",name:"ATT",x:50,y:16}]
 };
 
-const defaultTactics={
- mentality:"Equilibrata",
- style:"Possesso palla",
- pressing:"Medio",
- defense:"Media",
- tempo:"Normale",
- width:"Normale",
- passing:"Misti"
-};
-
-let manager="";
-let selectedClub=null;
-let players=[];
-let lineup=[];
-let currentFormation="433";
-let tactics={...defaultTactics};
+const defaultTactics={mentality:"Equilibrata",style:"Possesso palla",pressing:"Medio",defense:"Media",tempo:"Normale",width:"Normale",passing:"Misti"};
+let manager="",selectedClub=null,players=[],lineup=[],currentFormation="433",tactics={...defaultTactics};
+let league=[],matchday=1,lastMatch=null,playedOpponents=[];
 
 function show(id){
  document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
  document.getElementById(id).classList.remove("hidden");
 }
-
 function createManager(){
- const value=document.getElementById("manager").value.trim();
- if(!value){alert("Inserisci il nome del manager!");return;}
- manager=value;
- document.getElementById("managerName").textContent=manager;
- show("welcome");
+ const v=document.getElementById("manager").value.trim();
+ if(!v){alert("Inserisci il nome del manager!");return;}
+ manager=v;document.getElementById("managerName").textContent=manager;show("welcome");
 }
-
 function showClubs(){
- const list=document.getElementById("clubList");
- list.innerHTML="";
- clubs.forEach((club,i)=>{
-  const item=document.createElement("div");
-  item.className="club";
-  const h=document.createElement("h3");
-  h.textContent="🛡️ "+club.name;
-  const p=document.createElement("p");
-  p.textContent="Città: "+club.city+" · "+club.group;
-  const b=document.createElement("button");
-  b.textContent="SELEZIONA QUESTA SQUADRA";
-  b.onclick=()=>selectClub(i);
-  item.append(h,p,b);
-  list.appendChild(item);
- });
- show("clubs");
+ const list=document.getElementById("clubList");list.innerHTML="";
+ clubs.forEach((c,i)=>{
+  const item=document.createElement("div");item.className="club";
+  const h=document.createElement("h3");h.textContent="🛡️ "+c.name;
+  const p=document.createElement("p");p.textContent="Città: "+c.city+" · "+c.group;
+  const b=document.createElement("button");b.textContent="SELEZIONA QUESTA SQUADRA";b.onclick=()=>selectClub(i);
+  item.append(h,p,b);list.appendChild(item);
+ });show("clubs");
 }
-
 function selectClub(i){
- selectedClub=clubs[i];
- document.getElementById("chosenClub").textContent=selectedClub.name;
+ selectedClub=clubs[i];document.getElementById("chosenClub").textContent=selectedClub.name;
  document.getElementById("chosenInfo").textContent="Città: "+selectedClub.city;
- document.getElementById("chosenGroup").textContent=selectedClub.group;
- show("clubDetail");
+ document.getElementById("chosenGroup").textContent=selectedClub.group;show("clubDetail");
 }
-
 function makePlayers(){
- const positions=[
-  ...Array(3).fill(["POR","Portiere"]),
-  ...Array(8).fill(["DIF","Difensore"]),
-  ...Array(8).fill(["CEN","Centrocampista"]),
-  ...Array(6).fill(["ATT","Attaccante"])
- ];
+ const positions=[...Array(3).fill(["POR","Portiere"]),...Array(8).fill(["DIF","Difensore"]),...Array(8).fill(["CEN","Centrocampista"]),...Array(6).fill(["ATT","Attaccante")];
  const used=[];
  return positions.map((pos,i)=>{
-  let n;
-  do{
-   n=firstNames[Math.floor(Math.random()*firstNames.length)]+" "+lastNames[Math.floor(Math.random()*lastNames.length)];
-  }while(used.includes(n));
-  used.push(n);
-  const age=18+Math.floor(Math.random()*17);
-  const overall=48+Math.floor(Math.random()*25);
-  const potential=Math.min(90,overall+Math.floor(Math.random()*17));
-  const wage=350+overall*32+Math.floor(Math.random()*250);
-  return {
-   id:i+1,name:n,role:pos[0],position:pos[1],
-   age:age,overall:overall,potential:potential,
-   wage:wage,value:Math.round((overall*overall*age/25)*100)/100,
-   pace:40+Math.floor(Math.random()*50),
-   shooting:40+Math.floor(Math.random()*50),
-   passing:40+Math.floor(Math.random()*50),
-   technique:40+Math.floor(Math.random()*50),
-   defending:40+Math.floor(Math.random()*50),
-   physical:40+Math.floor(Math.random()*50)
-  };
+  let n;do{n=firstNames[Math.floor(Math.random()*firstNames.length)]+" "+lastNames[Math.floor(Math.random()*lastNames.length)];}while(used.includes(n));used.push(n);
+  const age=18+Math.floor(Math.random()*17),overall=48+Math.floor(Math.random()*25);
+  return {id:i+1,name:n,role:pos[0],position:pos[1],age,overall,potential:Math.min(90,overall+Math.floor(Math.random()*17)),wage:350+overall*32+Math.floor(Math.random()*250),value:Math.round(overall*overall*age/25*100)/100,pace:40+Math.floor(Math.random()*50),shooting:40+Math.floor(Math.random()*50),passing:40+Math.floor(Math.random()*50),technique:40+Math.floor(Math.random()*50),defending:40+Math.floor(Math.random()*50),physical:40+Math.floor(Math.random()*50)};
  });
 }
-
 function createDefaultLineup(){
- const slots=formations[currentFormation];
- const available=[...players].sort((a,b)=>b.overall-a.overall);
- const used=[];
- return slots.map(slot=>{
-  const p=available.find(x=>x.role===slot.role&&!used.includes(x.id));
-  if(p)used.push(p.id);
-  return p?p.id:null;
+ const used=[];return formations[currentFormation].map(s=>{
+  const p=[...players].sort((a,b)=>b.overall-a.overall).find(x=>x.role===s.role&&!used.includes(x.id));
+  if(p)used.push(p.id);return p?p.id:null;
  });
 }
-
+function makeLeague(){
+ league=clubs.filter(c=>c.group===selectedClub.group).map((c,i)=>({name:c.name,city:c.city,played:0,w:0,d:0,l:0,gf:0,ga:0,points:0,clubIndex:clubs.indexOf(c)}));
+ playedOpponents=[];matchday=1;lastMatch=null;
+}
 function startCareer(){
  if(!manager||!selectedClub){alert("Completa la scelta del manager e della squadra.");return;}
- players=makePlayers();
- currentFormation="433";
- tactics={...defaultTactics};
- lineup=createDefaultLineup();
- saveGame();
- showDashboard();
+ players=makePlayers();currentFormation="433";tactics={...defaultTactics};lineup=createDefaultLineup();makeLeague();saveGame();showDashboard();
 }
-
 function saveGame(){
- const save={
-  manager:manager,
-  club:selectedClub,
-  season:"2026/2027",
-  players:players,
-  formation:currentFormation,
-  lineup:lineup,
-  tactics:tactics
- };
- localStorage.setItem("ifm2027_save",JSON.stringify(save));
+ localStorage.setItem("ifm2027_save",JSON.stringify({manager,club:selectedClub,season:"2026/2027",players,formation:currentFormation,lineup,tactics,league,matchday,lastMatch,playedOpponents}));
 }
-
+function loadCareer(){
+ const raw=localStorage.getItem("ifm2027_save");if(!raw){alert("Non hai ancora una carriera salvata!");return;}
+ try{
+  const s=JSON.parse(raw);manager=s.manager;selectedClub=s.club;players=s.players||[];currentFormation=s.formation||"433";lineup=s.lineup||[];tactics={...defaultTactics,...(s.tactics||{})};
+  if(players.length!==25){alert("Salvataggio non compatibile. Crea una nuova carriera.");return;}
+  if(!formations[currentFormation])currentFormation="433";
+  if(lineup.length!==11)lineup=createDefaultLineup();
+  if(s.league&&s.league.length){league=s.league;matchday=s.matchday||1;lastMatch=s.lastMatch||null;playedOpponents=s.playedOpponents||[];}
+  else{makeLeague();}
+  showDashboard();
+ }catch(e){alert("Salvataggio non leggibile.");}
+}
 function showDashboard(){
  document.getElementById("dashClub").textContent=selectedClub.name;
  document.getElementById("dashManager").textContent="Allenatore: "+manager;
  document.getElementById("dashGroup").textContent=selectedClub.group;
+ const me=league.find(x=>x.name===selectedClub.name);
+ document.getElementById("dashStats").textContent=me?me.played+" partite · "+me.points+" punti · "+me.w+" vittorie · "+me.d+" pareggi · "+me.l+" sconfitte":"Campionato pronto";
  show("dashboard");
 }
-
-function loadCareer(){
- const raw=localStorage.getItem("ifm2027_save");
- if(!raw){alert("Non hai ancora una carriera salvata!");return;}
- try{
-  const save=JSON.parse(raw);
-  manager=save.manager;
-  selectedClub=save.club;
-  players=save.players||[];
-  currentFormation=save.formation||"433";
-  lineup=save.lineup||[];
-  tactics={...defaultTactics,...(save.tactics||{})};
-
-  if(players.length!==25){
-   alert("Salvataggio non compatibile. Crea una nuova carriera.");
-   return;
-  }
-  if(!formations[currentFormation])currentFormation="433";
-  if(lineup.length!==formations[currentFormation].length){
-   lineup=createDefaultLineup();
-  }
-  showDashboard();
- }catch(e){
-  alert("Salvataggio non leggibile. Crea una nuova carriera.");
- }
-}
-
 function showRoster(){
  document.getElementById("rosterClub").textContent=selectedClub.name;
- const count={POR:0,DIF:0,CEN:0,ATT:0};
- players.forEach(p=>count[p.role]++);
- document.getElementById("rosterCounts").textContent=
- "Portieri: "+count.POR+" · Difensori: "+count.DIF+
- " · Centrocampisti: "+count.CEN+" · Attaccanti: "+count.ATT;
- document.getElementById("roleFilter").value="Tutti";
- renderPlayers();
- show("roster");
+ const count={POR:0,DIF:0,CEN:0,ATT:0};players.forEach(p=>count[p.role]++);
+ document.getElementById("rosterCounts").textContent="Portieri: "+count.POR+" · Difensori: "+count.DIF+" · Centrocampisti: "+count.CEN+" · Attaccanti: "+count.ATT;
+ document.getElementById("roleFilter").value="Tutti";renderPlayers();show("roster");
 }
-
 function renderPlayers(){
- const filter=document.getElementById("roleFilter").value;
- const list=document.getElementById("playerList");
- list.innerHTML="";
- players.filter(p=>filter==="Tutti"||p.role===filter).forEach(p=>{
-  const item=document.createElement("div");
-  item.className="player";
-  const info=document.createElement("div");
-  const name=document.createElement("strong");
-  name.textContent=p.name;
-  const details=document.createElement("p");
-  details.textContent=p.position+" · "+p.age+" anni";
-  const stats=document.createElement("p");
-  stats.textContent="Potenziale "+p.potential+" · Stipendio €"+p.wage.toLocaleString("it-IT")+"/mese";
-  info.append(name,details,stats);
-  const rating=document.createElement("div");
-  rating.className="rating";
-  rating.textContent=p.overall;
-  item.append(info,rating);
-  list.appendChild(item);
+ const f=document.getElementById("roleFilter").value,list=document.getElementById("playerList");list.innerHTML="";
+ players.filter(p=>f==="Tutti"||p.role===f).forEach(p=>{
+  const item=document.createElement("div");item.className="player";
+  const info=document.createElement("div"),name=document.createElement("strong"),details=document.createElement("p"),stats=document.createElement("p"),rating=document.createElement("div");
+  name.textContent=p.name;details.textContent=p.position+" · "+p.age+" anni";stats.textContent="Potenziale "+p.potential+" · Stipendio €"+p.wage.toLocaleString("it-IT")+"/mese";rating.className="rating";rating.textContent=p.overall;
+  info.append(name,details,stats);item.append(info,rating);list.appendChild(item);
  });
 }
-
 function showTactics(){
- document.getElementById("tacticClub").textContent=selectedClub.name;
- document.getElementById("formation").value=currentFormation;
- loadTacticsControls();
- renderPitch();
- show("tactics");
+ document.getElementById("tacticClub").textContent=selectedClub.name;document.getElementById("formation").value=currentFormation;loadTacticsControls();renderPitch();show("tactics");
 }
-
 function loadTacticsControls(){
- Object.keys(defaultTactics).forEach(key=>{
-  document.getElementById(key).value=tactics[key]||defaultTactics[key];
- });
- updateTacticSummary();
+ Object.keys(defaultTactics).forEach(k=>document.getElementById(k).value=tactics[k]||defaultTactics[k]);updateTacticSummary();
 }
-
 function changeFormation(){
- currentFormation=document.getElementById("formation").value;
- lineup=createDefaultLineup();
- renderPitch();
- saveGame();
+ currentFormation=document.getElementById("formation").value;lineup=createDefaultLineup();renderPitch();saveGame();
 }
-
 function renderPitch(){
- const pitch=document.getElementById("pitchPlayers");
- pitch.innerHTML="";
- const slots=formations[currentFormation];
-
- slots.forEach((slot,index)=>{
-  const player=players.find(p=>p.id===lineup[index]);
-  const el=document.createElement("div");
-  el.className="player-slot";
-  el.style.left=slot.x+"%";
-  el.style.top=slot.y+"%";
-
-  const shirt=document.createElement("div");
-  shirt.className="player-shirt";
-  shirt.textContent=player?player.overall:slot.name;
-
-  const name=document.createElement("div");
-  name.className="slot-name";
-  name.textContent=player?player.name:slot.name;
-
-  const rating=document.createElement("div");
-  rating.className="slot-rating";
-  rating.textContent=player?player.overall+" VAL":"";
-
-  const select=document.createElement("select");
-  const placeholder=document.createElement("option");
-  placeholder.value="";
-  placeholder.textContent=slot.name;
-  select.appendChild(placeholder);
-
+ const pitch=document.getElementById("pitchPlayers");pitch.innerHTML="";
+ formations[currentFormation].forEach((slot,index)=>{
+  const player=players.find(p=>p.id===lineup[index]),el=document.createElement("div");el.className="player-slot";el.style.left=slot.x+"%";el.style.top=slot.y+"%";
+  const shirt=document.createElement("div");shirt.className="player-shirt";shirt.textContent=player?player.overall:slot.name;
+  const name=document.createElement("div");name.className="slot-name";name.textContent=player?player.name:slot.name;
+  const rating=document.createElement("div");rating.className="slot-rating";rating.textContent=player?player.overall+" VAL":"";
+  const select=document.createElement("select"),placeholder=document.createElement("option");placeholder.value="";placeholder.textContent=slot.name;select.appendChild(placeholder);
   const used=lineup.filter((id,i)=>id!==null&&i!==index);
-  players.filter(p=>p.role===slot.role&&!used.includes(p.id))
-   .sort((a,b)=>b.overall-a.overall)
-   .forEach(p=>{
-    const option=document.createElement("option");
-    option.value=p.id;
-    option.textContent=p.name+" ("+p.overall+")";
-    select.appendChild(option);
-   });
-
+  players.filter(p=>p.role===slot.role&&!used.includes(p.id)).sort((a,b)=>b.overall-a.overall).forEach(p=>{const o=document.createElement("option");o.value=p.id;o.textContent=p.name+" ("+p.overall+")";select.appendChild(o);});
   select.value=player?String(player.id):"";
-  select.onchange=()=>{
-   lineup[index]=select.value?Number(select.value):null;
-   renderPitch();
-   saveGame();
-  };
-
-  el.append(shirt,name,rating,select);
-  pitch.appendChild(el);
- });
- renderBench();
- updateSummary();
+  select.onchange=()=>{lineup[index]=select.value?Number(select.value):null;renderPitch();saveGame();};
+  el.append(shirt,name,rating,select);pitch.appendChild(el);
+ });renderBench();updateSummary();
 }
-
 function renderBench(){
- const used=lineup.filter(id=>id!==null);
- const remaining=players.filter(p=>!used.includes(p.id))
-  .sort((a,b)=>b.overall-a.overall).slice(0,7);
- const bench=document.getElementById("bench");
- bench.innerHTML="";
- remaining.forEach((p,i)=>{
-  const row=document.createElement("div");
-  row.className="bench-item";
-  const left=document.createElement("span");
-  left.textContent=(i+1)+". "+p.name+" · "+p.role;
-  const right=document.createElement("strong");
-  right.textContent=p.overall;
-  row.append(left,right);
-  bench.appendChild(row);
- });
+ const used=lineup.filter(id=>id!==null),remaining=players.filter(p=>!used.includes(p.id)).sort((a,b)=>b.overall-a.overall).slice(0,7),bench=document.getElementById("bench");bench.innerHTML="";
+ remaining.forEach((p,i)=>{const row=document.createElement("div");row.className="bench-item";row.textContent=(i+1)+". "+p.name+" · "+p.role+" — "+p.overall;bench.appendChild(row);});
 }
-
 function updateSummary(){
- const used=lineup.filter(id=>id!==null).length;
- const avg=players.filter(p=>lineup.includes(p.id));
- const average=avg.length?Math.round(avg.reduce((s,p)=>s+p.overall,0)/avg.length):0;
- document.getElementById("lineupSummary").textContent=
- "Modulo: "+currentFormation+" · Giocatori schierati: "+used+"/11 · Valutazione media: "+average;
+ const avg=players.filter(p=>lineup.includes(p.id)),average=avg.length?Math.round(avg.reduce((s,p)=>s+p.overall,0)/avg.length):0;
+ document.getElementById("lineupSummary").textContent="Modulo: "+currentFormation+" · Giocatori schierati: "+avg.length+"/11 · Valutazione media: "+average;
 }
-
 function updateTactics(){
- Object.keys(defaultTactics).forEach(key=>{
-  tactics[key]=document.getElementById(key).value;
- });
- updateTacticSummary();
- saveGame();
+ Object.keys(defaultTactics).forEach(k=>tactics[k]=document.getElementById(k).value);updateTacticSummary();saveGame();
 }
-
 function updateTacticSummary(){
- const labels=[
-  ["Mentalità","mentality"],
-  ["Stile di gioco","style"],
-  ["Pressing","pressing"],
-  ["Linea difensiva","defense"],
-  ["Ritmo","tempo"],
-  ["Ampiezza","width"],
-  ["Passaggi","passing"]
- ];
- const area=document.getElementById("tacticSummary");
- if(!area)return;
- area.innerHTML="";
- labels.forEach(([label,key])=>{
-  const line=document.createElement("p");
-  const strong=document.createElement("strong");
-  strong.textContent=label+": ";
-  const value=document.createElement("span");
-  value.className="value";
-  value.textContent=tactics[key];
-  line.append(strong,value);
-  area.appendChild(line);
- });
+ const labels=[["Mentalità","mentality"],["Stile","style"],["Pressing","pressing"],["Linea difensiva","defense"],["Ritmo","tempo"],["Ampiezza","width"],["Passaggi","passing"]];
+ const area=document.getElementById("tacticSummary");if(!area)return;area.innerHTML="";
+ labels.forEach(([label,key])=>{const p=document.createElement("p"),b=document.createElement("strong"),v=document.createElement("span");b.textContent=label+": ";v.className="value";v.textContent=tactics[key];p.append(b,v);area.appendChild(p);});
+}
+function saveTactics(){
+ updateTactics();saveGame();alert("Formazione e tattiche salvate correttamente!");
 }
 
-function saveTactics(){
- Object.keys(defaultTactics).forEach(key=>{
-  tactics[key]=document.getElementById(key).value;
- });
+/* MOTORE DELLE PARTITE */
+function nextOpponent(){
+ const candidates=league.filter(x=>x.name!==selectedClub.name&&!playedOpponents.includes(x.name));
+ if(!candidates.length){playedOpponents=[];return league.find(x=>x.name!==selectedClub.name);}
+ return candidates[Math.floor(Math.random()*candidates.length)];
+}
+function showMatch(){
+ const opponent=nextOpponent();
+ if(!opponent){alert("Non ci sono avversari disponibili.");return;}
+ document.getElementById("matchDay").textContent="GIORNATA "+matchday;
+ document.getElementById("matchVenue").textContent=matchday%2===1?"Partita in casa":"Partita in trasferta";
+ document.getElementById("matchTeams").textContent=matchday%2===1?selectedClub.name+"  VS  "+opponent.name:opponent.name+"  VS  "+selectedClub.name;
+ document.getElementById("matchScore").textContent="- : -";
+ document.getElementById("matchStatus").textContent="Partita da giocare";
+ document.getElementById("opponentInfo").textContent="Avversario: "+opponent.name+" · "+opponent.city+". La forza dell'avversario sarà generata per questa simulazione.";
+ document.getElementById("yourTacticsInfo").textContent="La tua tattica: "+tactics.mentality+" · "+tactics.style+" · Pressing "+tactics.pressing+".";
+ document.getElementById("preMatch").classList.remove("hidden");
+ document.getElementById("matchReport").classList.add("hidden");
+ show("match");
+}
+function teamStrength(){
+ const starters=players.filter(p=>lineup.includes(p.id));
+ if(starters.length<11)return null;
+ let base=starters.reduce((s,p)=>s+p.overall,0)/11;
+ const roles={POR:[],DIF:[],CEN:[],ATT:[]};
+ starters.forEach(p=>roles[p.role].push(p));
+ const average=(arr)=>arr.length?arr.reduce((s,p)=>s+p.overall,0)/arr.length:50;
+ let attack=average(roles.ATT),mid=average(roles.CEN),def=average(roles.DIF),keeper=average(roles.POR);
+ let bonus=0;
+ if(tactics.mentality==="Offensiva")bonus+=2.5;
+ if(tactics.mentality==="Positiva")bonus+=1.5;
+ if(tactics.mentality==="Difensiva")bonus-=1;
+ if(tactics.style==="Pressing alto")bonus+=1.5;
+ if(tactics.style==="Possesso palla")bonus+=mid*.025;
+ if(tactics.style==="Contropiede")bonus+=attack*.025;
+ if(tactics.style==="Gioco sulle fasce")bonus+=attack*.02;
+ if(tactics.style==="Palla lunga")bonus+=attack*.015;
+ if(tactics.pressing==="Alto")bonus+=1;
+ if(tactics.pressing==="Molto alto")bonus+=1.5;
+ if(tactics.pressing==="Basso")bonus-=.5;
+ if(tactics.tempo==="Veloce")bonus+=1;
+ if(tactics.tempo==="Lento")bonus-=.5;
+ if(tactics.defense==="Alta")bonus+=.5;
+ if(tactics.defense==="Bassa")bonus-=.3;
+ if(tactics.passing==="Corti")bonus+=mid*.012;
+ if(tactics.passing==="Diretti")bonus+=attack*.012;
+ return {overall:base+bonus,attack,mid,def,keeper};
+}
+function playMatch(){
+ const opponent=nextOpponent();if(!opponent){alert("Avversario non disponibile.");return;}
+ const strength=teamStrength();
+ if(!strength){alert("Devi schierare tutti gli 11 titolari prima di giocare!");return;}
+ const home=matchday%2===1;
+ const opponentStrength=55+Math.random()*13;
+ const myStrength=strength.overall+(home?2:0);
+ const theirStrength=opponentStrength+(home?0:2);
+ const advantage=myStrength-theirStrength;
+ let myGoals=0,theirGoals=0;
+ const events=[];
+ const goalMinutes=[];
+ const chances=8+Math.floor(Math.random()*7);
+ let myShots=0,theirShots=0,myPoss=48+Math.round(advantage*.7)+(Math.random()*12-6);
+ myPoss=Math.max(30,Math.min(70,myPoss));
+ for(let i=0;i<chances;i++){
+  const minute=2+Math.floor(Math.random()*87);
+  const mine=Math.random()<Math.max(.25,Math.min(.75,.5+advantage*.018));
+  if(mine)myShots++;else theirShots++;
+  const goalChance=mine?.24+Math.max(-.08,Math.min(.12,advantage*.009)):.22-Math.max(-.08,Math.min(.12,advantage*.009));
+  if(Math.random()<goalChance){
+   if(mine){
+    myGoals++;
+    const scorers=players.filter(p=>lineup.includes(p.id)&&p.role==="ATT");
+    const mids=players.filter(p=>lineup.includes(p.id)&&p.role==="CEN");
+    const pool=[...scorers,...scorers,...mids];
+    const scorer=pool[Math.floor(Math.random()*pool.length)]||players[0];
+    events.push({minute,text:"GOAL! "+scorer.name+" porta in vantaggio "+selectedClub.name+"!"});
+    goalMinutes.push(minute);
+   }else{
+    theirGoals++;
+    events.push({minute,text:"Gol di "+opponent.name+". La difesa viene sorpresa."});
+   }
+  }else if(mine){
+   const phrases=["Occasione per "+selectedClub.name+": il portiere avversario si salva!","Conclusione della squadra, pallone fuori di poco!","Bella azione offensiva, ma manca la precisione nell'ultimo passaggio.","Calcio d'angolo per "+selectedClub.name+"!"];
+   events.push({minute,text:phrases[Math.floor(Math.random()*phrases.length)]});
+  }else{
+   const phrases=["L'avversario prova a rendersi pericoloso.","Intervento decisivo della difesa.","Conclusione avversaria, il portiere controlla.","Ripartenza pericolosa degli avversari."];
+   events.push({minute,text:phrases[Math.floor(Math.random()*phrases.length)]});
+  }
+ }
+ if(Math.random()<.65)events.push({minute:Math.floor(Math.random()*80)+5,text:"Ammonizione per un calciatore in campo."});
+ if(Math.random()<.12)events.push({minute:Math.floor(Math.random()*75)+10,text:"Cartellino rosso! Una squadra resta in dieci."});
+ events.push({minute:45,text:"Fine primo tempo."});
+ events.push({minute:90,text:"Triplice fischio! La partita è terminata."});
+ events.sort((a,b)=>a.minute-b.minute);
+ const me=league.find(x=>x.name===selectedClub.name),opp=league.find(x=>x.name===opponent.name);
+ me.played++;opp.played++;me.gf+=myGoals;me.ga+=theirGoals;opp.gf+=theirGoals;opp.ga+=myGoals;
+ if(myGoals>theirGoals){me.w++;me.points+=3;opp.l++;}
+ else if(myGoals<theirGoals){opp.w++;opp.points+=3;me.l++;}
+ else{me.d++;opp.d++;me.points++;opp.points++;}
+ playedOpponents.push(opponent.name);
+ lastMatch={opponent:opponent.name,myGoals,theirGoals,events,home,matchday,shots:myShots+theirShots,poss:myPoss};
+ matchday++;
  saveGame();
- alert("Formazione e tattiche salvate correttamente!");
+ showMatchResult(opponent,lastMatch);
+}
+function showMatchResult(opponent,result){
+ document.getElementById("matchDay").textContent="GIORNATA "+result.matchday+" · RISULTATO FINALE";
+ document.getElementById("matchVenue").textContent=result.home?"In casa":"In trasferta";
+ document.getElementById("matchTeams").textContent=result.home?selectedClub.name+"  -  "+opponent.name:opponent.name+"  -  "+selectedClub.name;
+ document.getElementById("matchScore").textContent=result.home?result.myGoals+" : "+result.theirGoals:result.theirGoals+" : "+result.myGoals;
+ let status=result.myGoals>result.theirGoals?"VITTORIA!":result.myGoals<result.theirGoals?"SCONFITTA":"PAREGGIO";
+ document.getElementById("matchStatus").textContent=status;
+ document.getElementById("preMatch").classList.add("hidden");
+ document.getElementById("matchReport").classList.remove("hidden");
+ const area=document.getElementById("commentary");area.innerHTML="";
+ result.events.forEach(e=>{const div=document.createElement("div");div.className="event";const strong=document.createElement("strong");strong.textContent=e.minute+"' ";div.append(strong,document.createTextNode(e.text));area.appendChild(div);});
+ document.getElementById("matchStats").innerHTML="<div class='statrow'><span>Tiri totali</span><strong>"+result.shots+"</strong></div><div class='statrow'><span>Possesso palla stimato</span><strong>"+Math.round(result.poss)+"% - "+(100-Math.round(result.poss))+"%</strong></div><div class='statrow'><span>Forza della tua formazione</span><strong>"+Math.round(teamStrength().overall)+"</strong></div>";
+ show("match");
+}
+function showTable(){
+ const sorted=[...league].sort((a,b)=>b.points-a.points||(b.gf-b.ga)-(a.gf-a.ga)||b.gf-a.gf);
+ document.getElementById("tableGroup").textContent=selectedClub.group;
+ const body=document.getElementById("tableBody");body.innerHTML="";
+ sorted.forEach((x,i)=>{
+  const tr=document.createElement("tr");
+  [i+1,x.name,x.played,x.w,x.d,x.l,x.gf-x.ga,x.points].forEach((v,j)=>{const td=document.createElement("td");td.textContent=v;if(x.name===selectedClub.name)td.style.color="#e4c46e";tr.appendChild(td);});
+  body.appendChild(tr);
+ });show("table");
 }
 </script>
 </body>
