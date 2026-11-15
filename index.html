@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101d19">
+<title>Italian Football Manager 2027</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#101d19;color:#fff;
+ font-family:Arial,sans-serif;min-height:100vh;
+}
+header{
+ padding:22px 18px;text-align:center;
+ background:#172c24;border-bottom:2px solid #b99a49;
+}
+.logo{font-size:34px;margin-bottom:8px}
+h1{font-size:25px;margin:5px 0;color:#e4c46e}
+.subtitle{color:#b8c7bd;font-size:13px}
+main{max-width:520px;margin:auto;padding:25px 18px}
+.stadium{
+ background:linear-gradient(135deg,#1d4836,#10251d);
+ border:1px solid #456c55;border-radius:16px;
+ padding:30px 18px;text-align:center;margin-bottom:22px;
+}
+.stadium h2{font-size:27px;margin:10px 0;color:#fff}
+.stadium p{color:#c6d9cb;font-size:14px;line-height:1.6}
+.tag{
+ display:inline-block;background:#b99a49;color:#15231b;
+ padding:7px 13px;border-radius:20px;
+ font-size:12px;font-weight:bold;
+}
+button{
+ width:100%;padding:16px;margin-top:12px;
+ border:0;border-radius:9px;font-size:15px;
+ font-weight:bold;cursor:pointer;
+}
+.primary{background:#d1ad54;color:#15231b}
+.secondary{background:#294438;color:white}
+input{
+ width:100%;padding:15px;border-radius:8px;
+ border:1px solid #617b69;background:#1b3026;
+ color:white;font-size:16px;margin-top:10px;
+}
+label{display:block;margin-top:22px;font-weight:bold}
+.card{
+ background:#192c23;border:1px solid #355440;
+ padding:18px;border-radius:12px;margin-top:18px;
+}
+.small{font-size:12px;color:#a9beb0;line-height:1.6}
+.hidden{display:none}
+footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">⚽</div>
+ <h1>ITALIAN FOOTBALL MANAGER</h1>
+ <div class="subtitle">EDIZIONE 2026 / 2027</div>
+</header>
+
+<main>
+ <section id="home">
+  <div class="stadium">
+   <span class="tag">LA TUA CARRIERA TI ASPETTA</span>
+   <h2>DALLA SERIE D<br>ALLA SERIE A</h2>
+   <p>Costruisci la tua squadra, conquista le promozioni,
+   scopri nuovi talenti e diventa una leggenda del calcio italiano.</p>
+   <div style="font-size:48px;margin-top:15px">🏟️</div>
+  </div>
+  <button class="primary" onclick="showCareer()">NUOVA CARRIERA</button>
+  <button class="secondary" onclick="alert('La funzione Carica carriera sarà disponibile in una prossima versione.')">CARICA CARRIERA</button>
+  <div class="card">
+   <strong>IL TUO OBIETTIVO</strong>
+   <p class="small">Partirai obbligatoriamente dalla Serie D italiana.
+   Solo con risultati, programmazione e lavoro potrai raggiungere la Serie A.</p>
+  </div>
+ </section>
+
+ <section id="career" class="hidden">
+  <div class="card">
+   <span class="tag">NUOVA AVVENTURA</span>
+   <h2>CREA IL TUO MANAGER</h2>
+   <p class="small">Prima di iniziare, scegli il nome con cui sarai conosciuto nel calcio italiano.</p>
+   <label for="manager">Nome e cognome del manager</label>
+   <input id="manager" type="text" maxlength="35"
+    placeholder="Es. Marco Rossi">
+   <button class="primary" onclick="createManager()">CONFERMA E CONTINUA</button>
+   <button class="secondary" onclick="goHome()">INDIETRO</button>
+  </div>
+ </section>
+
+ <section id="welcome" class="hidden">
+  <div class="stadium">
+   <span class="tag">BENVENUTO MANAGER</span>
+   <h2 id="managerName"></h2>
+   <p>La tua carriera nel calcio italiano sta per cominciare.</p>
+   <div style="font-size:55px">🏆</div>
+  </div>
+  <div class="card">
+   <strong>STAGIONE 2026/2027</strong>
+   <p>Categoria iniziale: <strong>Serie D</strong></p>
+   <p class="small">La prossima tappa sarà scegliere la tua società
+   e iniziare a costruire la squadra.</p>
+  </div>
+  <button class="primary" onclick="alert('La scelta della società sarà sviluppata nel prossimo aggiornamento!')">VAI ALLA SCELTA DELLA SQUADRA</button>
+  <button class="secondary" onclick="goHome()">MENU PRINCIPALE</button>
+ </section>
+</main>
+
+<footer>
+ ITALIAN FOOTBALL MANAGER 2027<br>
+ Progetto indipendente · Versione 0.1
+</footer>
+
+<script>
+function showCareer(){
+ document.getElementById('home').classList.add('hidden');
+ document.getElementById('career').classList.remove('hidden');
+}
+function goHome(){
+ ['career','welcome'].forEach(id=>
+ document.getElementById(id).classList.add('hidden'));
+ document.getElementById('home').classList.remove('hidden');
+}
+function createManager(){
+ const name=document.getElementById('manager').value.trim();
+ if(!name){
+  alert('Inserisci il nome del manager!');
+  return;
+ }
+ document.getElementById('managerName').textContent=name;
+ document.getElementById('career').classList.add('hidden');
+ document.getElementById('welcome').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
