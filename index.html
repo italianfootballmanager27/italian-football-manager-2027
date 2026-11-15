@@ -8,49 +8,30 @@
 <title>Italian Football Manager 2027</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;background:#101d19;color:#fff;
- font-family:Arial,sans-serif;min-height:100vh;
-}
-header{
- padding:22px 18px;text-align:center;
- background:#172c24;border-bottom:2px solid #b99a49;
-}
-.logo{font-size:34px;margin-bottom:8px}
-h1{font-size:25px;margin:5px 0;color:#e4c46e}
+body{margin:0;background:#101d19;color:#fff;font-family:Arial,sans-serif;min-height:100vh}
+header{padding:22px 18px;text-align:center;background:#172c24;border-bottom:2px solid #b99a49}
+.logo{font-size:34px}
+h1{font-size:24px;margin:5px 0;color:#e4c46e}
 .subtitle{color:#b8c7bd;font-size:13px}
-main{max-width:520px;margin:auto;padding:25px 18px}
-.stadium{
- background:linear-gradient(135deg,#1d4836,#10251d);
- border:1px solid #456c55;border-radius:16px;
- padding:30px 18px;text-align:center;margin-bottom:22px;
-}
-.stadium h2{font-size:27px;margin:10px 0;color:#fff}
+main{max-width:650px;margin:auto;padding:22px 16px}
+.stadium{background:linear-gradient(135deg,#1d4836,#10251d);border:1px solid #456c55;border-radius:16px;padding:25px 16px;text-align:center;margin-bottom:20px}
+.stadium h2{font-size:26px;margin:12px 0}
 .stadium p{color:#c6d9cb;font-size:14px;line-height:1.6}
-.tag{
- display:inline-block;background:#b99a49;color:#15231b;
- padding:7px 13px;border-radius:20px;
- font-size:12px;font-weight:bold;
-}
-button{
- width:100%;padding:16px;margin-top:12px;
- border:0;border-radius:9px;font-size:15px;
- font-weight:bold;cursor:pointer;
-}
+.tag{display:inline-block;background:#b99a49;color:#15231b;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:bold}
+button{width:100%;padding:15px;margin-top:12px;border:0;border-radius:9px;font-size:14px;font-weight:bold;cursor:pointer}
 .primary{background:#d1ad54;color:#15231b}
 .secondary{background:#294438;color:white}
-input{
- width:100%;padding:15px;border-radius:8px;
- border:1px solid #617b69;background:#1b3026;
- color:white;font-size:16px;margin-top:10px;
-}
-label{display:block;margin-top:22px;font-weight:bold}
-.card{
- background:#192c23;border:1px solid #355440;
- padding:18px;border-radius:12px;margin-top:18px;
-}
+input{width:100%;padding:14px;border-radius:8px;border:1px solid #617b69;background:#1b3026;color:white;font-size:16px;margin-top:10px}
+label{display:block;margin-top:20px;font-weight:bold}
+.card{background:#192c23;border:1px solid #355440;padding:17px;border-radius:12px;margin-top:16px}
 .small{font-size:12px;color:#a9beb0;line-height:1.6}
-.hidden{display:none}
+.hidden{display:none!important}
+.club{background:#192c23;border:1px solid #456c55;border-radius:12px;padding:14px;margin-top:11px}
+.club h3{margin:0 0 6px;color:#e4c46e;font-size:17px}
+.club p{margin:4px 0;color:#c1d0c5;font-size:12px}
+.club button{margin-top:9px;padding:11px}
+.club.selected{border:2px solid #d1ad54;background:#243d30}
+.section-title{color:#e4c46e;margin-top:24px}
 footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
 </style>
 </head>
@@ -62,78 +43,202 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
 </header>
 
 <main>
- <section id="home">
-  <div class="stadium">
-   <span class="tag">LA TUA CARRIERA TI ASPETTA</span>
-   <h2>DALLA SERIE D<br>ALLA SERIE A</h2>
-   <p>Costruisci la tua squadra, conquista le promozioni,
-   scopri nuovi talenti e diventa una leggenda del calcio italiano.</p>
-   <div style="font-size:48px;margin-top:15px">🏟️</div>
-  </div>
-  <button class="primary" onclick="showCareer()">NUOVA CARRIERA</button>
-  <button class="secondary" onclick="alert('La funzione Carica carriera sarà disponibile in una prossima versione.')">CARICA CARRIERA</button>
-  <div class="card">
-   <strong>IL TUO OBIETTIVO</strong>
-   <p class="small">Partirai obbligatoriamente dalla Serie D italiana.
-   Solo con risultati, programmazione e lavoro potrai raggiungere la Serie A.</p>
-  </div>
- </section>
+<section id="home">
+ <div class="stadium">
+  <span class="tag">LA TUA CARRIERA TI ASPETTA</span>
+  <h2>DALLA SERIE D<br>ALLA SERIE A</h2>
+  <p>Costruisci la tua squadra, conquista le promozioni, scopri nuovi talenti e diventa una leggenda del calcio italiano.</p>
+  <div style="font-size:48px">🏟️</div>
+ </div>
+ <button class="primary" onclick="showCareer()">NUOVA CARRIERA</button>
+ <button class="secondary" onclick="loadCareer()">CARICA CARRIERA</button>
+ <div class="card">
+  <strong>IL TUO OBIETTIVO</strong>
+  <p class="small">Partirai obbligatoriamente dalla Serie D italiana. Solo con risultati, programmazione e lavoro potrai raggiungere la Serie A.</p>
+ </div>
+</section>
 
- <section id="career" class="hidden">
-  <div class="card">
-   <span class="tag">NUOVA AVVENTURA</span>
-   <h2>CREA IL TUO MANAGER</h2>
-   <p class="small">Prima di iniziare, scegli il nome con cui sarai conosciuto nel calcio italiano.</p>
-   <label for="manager">Nome e cognome del manager</label>
-   <input id="manager" type="text" maxlength="35"
-    placeholder="Es. Marco Rossi">
-   <button class="primary" onclick="createManager()">CONFERMA E CONTINUA</button>
-   <button class="secondary" onclick="goHome()">INDIETRO</button>
-  </div>
- </section>
+<section id="career" class="hidden">
+ <div class="card">
+  <span class="tag">NUOVA AVVENTURA</span>
+  <h2>CREA IL TUO MANAGER</h2>
+  <p class="small">Scegli il nome con cui sarai conosciuto nel calcio italiano.</p>
+  <label for="manager">Nome e cognome del manager</label>
+  <input id="manager" maxlength="35" placeholder="Es. Marco Rossi">
+  <button class="primary" onclick="createManager()">CONFERMA E CONTINUA</button>
+  <button class="secondary" onclick="goHome()">INDIETRO</button>
+ </div>
+</section>
 
- <section id="welcome" class="hidden">
-  <div class="stadium">
-   <span class="tag">BENVENUTO MANAGER</span>
-   <h2 id="managerName"></h2>
-   <p>La tua carriera nel calcio italiano sta per cominciare.</p>
-   <div style="font-size:55px">🏆</div>
-  </div>
-  <div class="card">
-   <strong>STAGIONE 2026/2027</strong>
-   <p>Categoria iniziale: <strong>Serie D</strong></p>
-   <p class="small">La prossima tappa sarà scegliere la tua società
-   e iniziare a costruire la squadra.</p>
-  </div>
-  <button class="primary" onclick="alert('La scelta della società sarà sviluppata nel prossimo aggiornamento!')">VAI ALLA SCELTA DELLA SQUADRA</button>
-  <button class="secondary" onclick="goHome()">MENU PRINCIPALE</button>
- </section>
+<section id="welcome" class="hidden">
+ <div class="stadium">
+  <span class="tag">BENVENUTO MANAGER</span>
+  <h2 id="managerName"></h2>
+  <p>La tua carriera nel calcio italiano sta per cominciare.</p>
+  <div style="font-size:50px">🏆</div>
+ </div>
+ <div class="card">
+  <strong>STAGIONE 2026/2027</strong>
+  <p>Categoria iniziale: <strong>Serie D</strong></p>
+  <p class="small">Ora scegli la società che guiderai verso la gloria.</p>
+ </div>
+ <button class="primary" onclick="showClubs()">SCEGLI LA TUA SQUADRA</button>
+ <button class="secondary" onclick="goHome()">MENU PRINCIPALE</button>
+</section>
+
+<section id="clubs" class="hidden">
+ <div class="card">
+  <span class="tag">SERIE D – 2026/2027</span>
+  <h2>SCEGLI LA TUA SOCIETÀ</h2>
+  <p class="small">Seleziona una squadra con cui iniziare la scalata verso la Serie A. Le società qui presenti sono nomi fittizi per la versione iniziale del gioco.</p>
+ </div>
+ <div id="clubList"></div>
+ <button class="secondary" onclick="showWelcome()">INDIETRO</button>
+</section>
+
+<section id="clubDetail" class="hidden">
+ <div class="stadium">
+  <span class="tag">LA TUA NUOVA SOCIETÀ</span>
+  <div style="font-size:48px">🛡️</div>
+  <h2 id="chosenClub"></h2>
+  <p id="chosenInfo"></p>
+ </div>
+ <div class="card">
+  <strong>OBIETTIVO: STAGIONE 2026/2027</strong>
+  <p>Categoria: Serie D</p>
+  <p id="chosenGroup" class="small"></p>
+  <p class="small">La tua avventura comincia qui. Costruisci una squadra competitiva e punta alla promozione!</p>
+ </div>
+ <button class="primary" onclick="startCareer()">INIZIA LA CARRIERA</button>
+ <button class="secondary" onclick="showClubs()">CAMBIA SQUADRA</button>
+</section>
+
+<section id="dashboard" class="hidden">
+ <div class="stadium">
+  <span class="tag">LA TUA CARRIERA È INIZIATA</span>
+  <h2 id="dashClub"></h2>
+  <p id="dashManager"></p>
+  <div style="font-size:45px">🏆</div>
+ </div>
+ <div class="card">
+  <strong>STAGIONE 2026/2027</strong>
+  <p>Campionato: <strong>Serie D</strong></p>
+  <p id="dashGroup"></p>
+  <p>Stato: <strong>Allenatore in carica</strong></p>
+ </div>
+ <div class="card">
+  <strong>PROSSIMI SVILUPPI</strong>
+  <p class="small">Mercato, rosa, calendario, tattiche, partite e gestione societaria saranno aggiunti nelle prossime versioni.</p>
+ </div>
+ <button class="secondary" onclick="goHome()">TORNA AL MENU</button>
+</section>
 </main>
 
-<footer>
- ITALIAN FOOTBALL MANAGER 2027<br>
- Progetto indipendente · Versione 0.1
-</footer>
+<footer>ITALIAN FOOTBALL MANAGER 2027<br>Progetto indipendente · Versione 0.2</footer>
 
 <script>
+const clubs = [
+ {name:"Audace Cerignolese",city:"Cerignola",group:"Girone H"},
+ {name:"Foggia Calcio 1927",city:"Foggia",group:"Girone H"},
+ {name:"Bari Adriatica",city:"Bari",group:"Girone H"},
+ {name:"Taranto Jonica",city:"Taranto",group:"Girone H"},
+ {name:"Salento United",city:"Lecce",group:"Girone H"},
+ {name:"Napoli Partenopea",city:"Napoli",group:"Girone G"},
+ {name:"Avellino Irpina",city:"Avellino",group:"Girone G"},
+ {name:"Roma Capitolina",city:"Roma",group:"Girone F"},
+ {name:"Latina Pontina",city:"Latina",group:"Girone F"},
+ {name:"Firenze Medicea",city:"Firenze",group:"Girone E"},
+ {name:"Perugia Etrusca",city:"Perugia",group:"Girone E"},
+ {name:"Bologna Felsinea",city:"Bologna",group:"Girone D"},
+ {name:"Ravenna Adriatica",city:"Ravenna",group:"Girone D"},
+ {name:"Milano Lombarda",city:"Milano",group:"Girone B"},
+ {name:"Bergamo Orobica",city:"Bergamo",group:"Girone B"},
+ {name:"Torino Granata FC",city:"Torino",group:"Girone A"},
+ {name:"Genova Liguria",city:"Genova",group:"Girone A"},
+ {name:"Trieste Giuliana",city:"Trieste",group:"Girone C"}
+];
+
+let manager = "";
+let selectedClub = null;
+
+function hideAll(){
+ ["home","career","welcome","clubs","clubDetail","dashboard"].forEach(id=>{
+  document.getElementById(id).classList.add("hidden");
+ });
+}
 function showCareer(){
- document.getElementById('home').classList.add('hidden');
- document.getElementById('career').classList.remove('hidden');
+ hideAll();
+ document.getElementById("career").classList.remove("hidden");
 }
 function goHome(){
- ['career','welcome'].forEach(id=>
- document.getElementById(id).classList.add('hidden'));
- document.getElementById('home').classList.remove('hidden');
+ hideAll();
+ document.getElementById("home").classList.remove("hidden");
+}
+function showWelcome(){
+ hideAll();
+ document.getElementById("managerName").textContent=manager;
+ document.getElementById("welcome").classList.remove("hidden");
 }
 function createManager(){
- const name=document.getElementById('manager').value.trim();
- if(!name){
-  alert('Inserisci il nome del manager!');
-  return;
+ const name=document.getElementById("manager").value.trim();
+ if(!name){alert("Inserisci il nome del manager!");return;}
+ manager=name;
+ showWelcome();
+}
+function showClubs(){
+ hideAll();
+ const list=document.getElementById("clubList");
+ list.innerHTML="";
+ clubs.forEach((club,index)=>{
+  const item=document.createElement("div");
+  item.className="club";
+  const title=document.createElement("h3");
+  title.textContent="🛡️ "+club.name;
+  const city=document.createElement("p");
+  city.textContent="Città: "+club.city;
+  const group=document.createElement("p");
+  group.textContent=club.group+" · Serie D";
+  const button=document.createElement("button");
+  button.className="primary";
+  button.textContent="SELEZIONA QUESTA SQUADRA";
+  button.onclick=()=>selectClub(index);
+  item.append(title,city,group,button);
+  list.appendChild(item);
+ });
+ document.getElementById("clubs").classList.remove("hidden");
+}
+function selectClub(index){
+ selectedClub=clubs[index];
+ document.getElementById("chosenClub").textContent=selectedClub.name;
+ document.getElementById("chosenInfo").textContent="Città: "+selectedClub.city;
+ document.getElementById("chosenGroup").textContent="Girone di appartenenza: "+selectedClub.group;
+ hideAll();
+ document.getElementById("clubDetail").classList.remove("hidden");
+}
+function startCareer(){
+ if(!manager||!selectedClub){alert("Completa prima la scelta del manager e della squadra.");return;}
+ const save={manager:manager,club:selectedClub,season:"2026/2027"};
+ localStorage.setItem("ifm2027_save",JSON.stringify(save));
+ showDashboard();
+}
+function showDashboard(){
+ document.getElementById("dashClub").textContent=selectedClub.name;
+ document.getElementById("dashManager").textContent="Allenatore: "+manager;
+ document.getElementById("dashGroup").textContent="Girone: "+selectedClub.group;
+ hideAll();
+ document.getElementById("dashboard").classList.remove("hidden");
+}
+function loadCareer(){
+ const raw=localStorage.getItem("ifm2027_save");
+ if(!raw){alert("Non hai ancora una carriera salvata! Crea una nuova carriera.");return;}
+ try{
+  const save=JSON.parse(raw);
+  manager=save.manager;
+  selectedClub=save.club;
+  showDashboard();
+ }catch(e){
+  alert("Salvataggio non leggibile. Crea una nuova carriera.");
  }
- document.getElementById('managerName').textContent=name;
- document.getElementById('career').classList.add('hidden');
- document.getElementById('welcome').classList.remove('hidden');
 }
 </script>
 </body>
