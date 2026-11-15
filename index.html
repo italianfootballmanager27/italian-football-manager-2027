@@ -5,605 +5,730 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101d19">
-<title>IFM 2027</title>
+<title>ITALIAN FOOTBALL MANAGER 2027</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#101d19;color:white;font-family:Arial,sans-serif}
-header{background:#172c24;padding:18px;text-align:center;border-bottom:2px solid #c4a34f}
-h1{font-size:22px;color:#e4c46e;margin:5px}
+header{background:#172c24;padding:16px;text-align:center;border-bottom:2px solid #c4a34f}
+h1{font-size:21px;color:#e4c46e;margin:5px}
 header p{font-size:12px;color:#b8c7bd;margin:5px}
-main{max-width:720px;margin:auto;padding:14px}
-.panel{background:#192c23;border:1px solid #456c55;border-radius:12px;padding:15px;margin:12px 0}
-.hero{text-align:center;background:linear-gradient(135deg,#1d4836,#10251d);padding:22px 12px;border-radius:14px}
-h2{color:#e4c46e}
-h3{margin:8px 0;color:#e4c46e}
+main{max-width:760px;margin:auto;padding:12px}
+.panel,.club,.player{background:#192c23;border:1px solid #456c55;border-radius:12px;padding:14px;margin:11px 0}
+.hero{text-align:center;background:linear-gradient(135deg,#1d4836,#10251d);padding:20px 12px;border-radius:14px}
+h2,h3{color:#e4c46e}
+.tag{display:inline-block;background:#c4a34f;color:#17251d;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:bold}
 button{width:100%;padding:13px;margin-top:9px;border:0;border-radius:8px;font-weight:bold;background:#d1ad54;color:#15231b;cursor:pointer}
 .secondary{background:#294438;color:white}
-input,select{width:100%;padding:12px;margin-top:8px;border-radius:7px;border:1px solid #617b69;background:#1b3026;color:white;font-size:14px}
-label{display:block;margin-top:14px;font-weight:bold;font-size:13px}
-.tag{display:inline-block;background:#c4a34f;color:#17251d;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:bold}
+input,select{width:100%;padding:11px;margin-top:7px;border-radius:7px;border:1px solid #617b69;background:#1b3026;color:white;font-size:14px}
+label{display:block;margin-top:12px;font-weight:bold;font-size:13px}
 .small{font-size:12px;color:#b8c7bd;line-height:1.5}
 .hidden{display:none!important}
-.club,.player{background:#192c23;border:1px solid #456c55;border-radius:10px;padding:12px;margin-top:10px}
 .club p,.player p{font-size:12px;color:#b8c7bd;margin:5px 0}
-.player{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.player{display:flex;justify-content:space-between;align-items:center}
 .rating{font-size:22px;color:#e4c46e;font-weight:bold}
 nav{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
 nav button{width:auto;flex:1;min-width:100px;font-size:11px;padding:11px}
 footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
-.pitch{position:relative;width:100%;height:520px;max-width:480px;margin:14px auto;border:3px solid #e9f1e8;border-radius:5px;overflow:hidden;background:repeating-linear-gradient(0deg,#267647 0px,#267647 65px,#2d824e 65px,#2d824e 130px)}
-.pitch:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid #e9f1e8}
-.pitch:after{content:"";position:absolute;width:110px;height:110px;border:2px solid #e9f1e8;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
-.boxline{position:absolute;left:22%;width:56%;height:13%;border:2px solid #e9f1e8}
-.boxline.top{top:0;border-top:0}
-.boxline.bottom{bottom:0;border-bottom:0}
-.goal{position:absolute;left:38%;width:24%;height:4%;border:2px solid #e9f1e8}
-.goal.top{top:0;border-top:0}
-.goal.bottom{bottom:0;border-bottom:0}
-.player-slot{position:absolute;transform:translate(-50%,-50%);width:68px;text-align:center;z-index:2}
-.player-shirt{width:36px;height:36px;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;background:#f0c94f;color:#17251d;border:2px solid white;font-weight:bold;font-size:12px}
-.player-slot select{display:block;width:78px;margin:4px 0 0 -5px;padding:4px 2px;font-size:9px;text-align:center}
-.slot-name{font-size:9px;font-weight:bold;text-shadow:1px 1px 2px black;white-space:nowrap}
-.slot-rating{font-size:10px;color:#ffe58a;font-weight:bold}
-.bench-item{display:flex;justify-content:space-between;padding:9px;border-bottom:1px solid #456c55;font-size:12px}
-.setting{padding:12px 0;border-bottom:1px solid #456c55}
-.setting p{font-size:11px;color:#b8c7bd;margin:5px 0}
-.value{color:#e4c46e;font-weight:bold}
 .score{font-size:42px;font-weight:bold;color:#e4c46e;margin:12px}
-.event{padding:10px;border-bottom:1px solid #456c55;font-size:13px;line-height:1.5}
+.event{padding:9px;border-bottom:1px solid #456c55;font-size:13px;line-height:1.5}
 .event strong{color:#e4c46e}
 .statrow{display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #456c55;font-size:13px}
 table{width:100%;border-collapse:collapse;font-size:12px}
 td,th{padding:9px 5px;text-align:center;border-bottom:1px solid #456c55}
 th{color:#e4c46e}
 td:first-child,th:first-child{text-align:left}
+.fixture{display:flex;justify-content:space-between;gap:8px;padding:10px 4px;border-bottom:1px solid #456c55;font-size:12px}
+.pitch{position:relative;width:100%;height:480px;max-width:480px;margin:14px auto;border:3px solid #e9f1e8;border-radius:5px;overflow:hidden;background:repeating-linear-gradient(0deg,#267647 0,#267647 60px,#2d824e 60px,#2d824e 120px)}
+.pitch:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid #e9f1e8}
+.pitch:after{content:"";position:absolute;width:100px;height:100px;border:2px solid #e9f1e8;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
+.slot{position:absolute;transform:translate(-50%,-50%);width:72px;text-align:center;z-index:2}
+.shirt{width:32px;height:32px;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;background:#f0c94f;color:#17251d;border:2px solid white;font-weight:bold;font-size:11px}
+.slot select{font-size:9px;padding:3px;width:78px;margin-top:3px}
+.slot-name{font-size:9px;font-weight:bold;text-shadow:1px 1px 2px black;white-space:nowrap}
+.bench-item{padding:8px;border-bottom:1px solid #456c55;font-size:12px}
 </style>
 </head>
 <body>
 <header>
- <div style="font-size:30px">⚽</div>
- <h1>ITALIAN FOOTBALL MANAGER 2027</h1>
- <p>DALLA SERIE D ALLA GLORIA</p>
+<div style="font-size:29px">⚽</div>
+<h1>ITALIAN FOOTBALL MANAGER 2027</h1>
+<p>DALLA SERIE D ALLA GLORIA</p>
 </header>
 <main>
 
 <section id="home">
- <div class="hero">
-  <span class="tag">STAGIONE 2026/2027</span>
-  <h2>DALLA SERIE D ALLA SERIE A</h2>
-  <p>Costruisci la tua squadra e scrivi la storia del calcio italiano.</p>
-  <div style="font-size:45px">🏟️</div>
- </div>
- <button onclick="show('career')">NUOVA CARRIERA</button>
- <button class="secondary" onclick="loadCareer()">CARICA CARRIERA</button>
+<div class="hero">
+<span class="tag">STAGIONE 2026/2027</span>
+<h2>DALLA SERIE D ALLA SERIE A</h2>
+<p>Costruisci la tua squadra e scrivi la storia del calcio italiano.</p>
+<div style="font-size:42px">🏟️</div>
+</div>
+<button onclick="show('career')">NUOVA CARRIERA</button>
+<button class="secondary" onclick="loadCareer()">CARICA CARRIERA</button>
 </section>
 
 <section id="career" class="hidden">
- <div class="panel">
-  <h2>Crea il tuo manager</h2>
-  <label>Nome e cognome</label>
-  <input id="manager" maxlength="35" placeholder="Es. Marco Rossi">
-  <button onclick="createManager()">CONTINUA</button>
-  <button class="secondary" onclick="show('home')">INDIETRO</button>
- </div>
+<div class="panel">
+<h2>Crea il tuo manager</h2>
+<label>Nome e cognome</label>
+<input id="manager" maxlength="35" placeholder="Es. Marco Rossi">
+<button onclick="createManager()">CONTINUA</button>
+<button class="secondary" onclick="show('home')">INDIETRO</button>
+</div>
 </section>
 
 <section id="welcome" class="hidden">
- <div class="hero">
-  <span class="tag">BENVENUTO MANAGER</span>
-  <h2 id="managerName"></h2>
-  <p>La tua avventura comincia dalla Serie D.</p>
- </div>
- <div class="panel">Stagione 2026/2027 · Serie D</div>
- <button onclick="showClubs()">SCEGLI LA SQUADRA</button>
- <button class="secondary" onclick="show('home')">MENU PRINCIPALE</button>
+<div class="hero">
+<span class="tag">BENVENUTO MANAGER</span>
+<h2 id="managerName"></h2>
+<p>La tua avventura comincia dalla Serie D.</p>
+</div>
+<div class="panel">Stagione 2026/2027 · Serie D</div>
+<button onclick="showClubs()">SCEGLI LA SQUADRA</button>
+<button class="secondary" onclick="show('home')">MENU PRINCIPALE</button>
 </section>
 
 <section id="clubs" class="hidden">
- <div class="panel">
-  <span class="tag">SERIE D</span>
-  <h2>Scegli la tua società</h2>
-  <p class="small">Società fittizie della versione iniziale del gioco.</p>
- </div>
- <div id="clubList"></div>
- <button class="secondary" onclick="show('welcome')">INDIETRO</button>
+<div class="panel">
+<h2>Scegli la tua società</h2>
+<p class="small">Club fittizi della versione di gioco.</p>
+</div>
+<div id="clubList"></div>
+<button class="secondary" onclick="show('welcome')">INDIETRO</button>
 </section>
 
 <section id="clubDetail" class="hidden">
- <div class="hero">
-  <div style="font-size:42px">🛡️</div>
-  <span class="tag">LA TUA SOCIETÀ</span>
-  <h2 id="chosenClub"></h2>
-  <p id="chosenInfo"></p>
- </div>
- <div class="panel">
-  <h3>Obiettivo: stagione 2026/2027</h3>
-  Campionato: Serie D
-  <p id="chosenGroup" class="small"></p>
- </div>
- <button onclick="startCareer()">INIZIA LA CARRIERA</button>
- <button class="secondary" onclick="showClubs()">CAMBIA SQUADRA</button>
+<div class="hero">
+<span class="tag">LA TUA SOCIETÀ</span>
+<h2 id="chosenClub"></h2>
+<p id="chosenInfo"></p>
+</div>
+<div class="panel">Campionato: Serie D · <span id="chosenGroup"></span></div>
+<button onclick="startCareer()">INIZIA LA CARRIERA</button>
+<button class="secondary" onclick="showClubs()">CAMBIA SQUADRA</button>
 </section>
 
 <section id="dashboard" class="hidden">
- <div class="hero">
-  <span class="tag">LA TUA CARRIERA</span>
-  <h2 id="dashClub"></h2>
-  <p id="dashManager"></p>
-  <p id="dashGroup"></p>
-  <strong>STAGIONE 2026/2027 · SERIE D</strong>
- </div>
- <div class="panel">
-  <h3>Situazione in campionato</h3>
-  <div id="dashStats" class="small"></div>
-  <button onclick="showMatch()">⚽ PROSSIMA PARTITA</button>
-  <button class="secondary" onclick="showTable()">CLASSIFICA</button>
- </div>
- <nav>
-  <button onclick="showRoster()">ROSA</button>
-  <button onclick="showTactics()">FORMAZIONE E TATTICHE</button>
- </nav>
- <div class="panel">
-  <h3>Centro di gestione</h3>
-  <button onclick="showTactics()">GESTISCI LA SQUADRA</button>
-  <button class="secondary" onclick="showRoster()">CONSULTA LA ROSA</button>
-  <button class="secondary" onclick="show('home')">MENU PRINCIPALE</button>
- </div>
+<div class="hero">
+<span class="tag">LA TUA CARRIERA</span>
+<h2 id="dashClub"></h2>
+<p id="dashManager"></p>
+<p id="dashGroup"></p>
+<strong>STAGIONE 2026/2027 · SERIE D</strong>
+</div>
+<div class="panel">
+<h3>Situazione in campionato</h3>
+<div id="dashStats" class="small"></div>
+<button onclick="showMatch()">⚽ PROSSIMA PARTITA</button>
+<button class="secondary" onclick="showTable()">CLASSIFICA</button>
+<button class="secondary" onclick="showCalendar()">CALENDARIO COMPLETO</button>
+</div>
+<nav>
+<button onclick="showRoster()">ROSA</button>
+<button onclick="showTactics()">FORMAZIONE E TATTICHE</button>
+</nav>
+<div class="panel">
+<button class="secondary" onclick="show('home')">MENU PRINCIPALE</button>
+</div>
 </section>
 
 <section id="roster" class="hidden">
- <div class="hero">
-  <span class="tag">PRIMA SQUADRA</span>
-  <h2>ROSA CALCIATORI</h2>
-  <p id="rosterClub"></p>
-  <strong>25 CALCIATORI</strong>
- </div>
- <div class="panel">
-  <h3>Composizione della rosa</h3>
-  <p id="rosterCounts" class="small"></p>
-  <label>Filtra per ruolo</label>
-  <select id="roleFilter" onchange="renderPlayers()">
-   <option value="Tutti">Tutti i ruoli</option>
-   <option value="POR">Portieri</option>
-   <option value="DIF">Difensori</option>
-   <option value="CEN">Centrocampisti</option>
-   <option value="ATT">Attaccanti</option>
-  </select>
- </div>
- <div id="playerList"></div>
- <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
+<div class="hero">
+<span class="tag">PRIMA SQUADRA</span>
+<h2>ROSA CALCIATORI</h2>
+<p id="rosterClub"></p>
+<strong>25 CALCIATORI</strong>
+</div>
+<div class="panel">
+<p id="rosterCounts" class="small"></p>
+<label>Filtra per ruolo</label>
+<select id="roleFilter" onchange="renderPlayers()">
+<option value="Tutti">Tutti i ruoli</option>
+<option value="POR">Portieri</option>
+<option value="DIF">Difensori</option>
+<option value="CEN">Centrocampisti</option>
+<option value="ATT">Attaccanti</option>
+</select>
+</div>
+<div id="playerList"></div>
+<button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
 </section>
 
 <section id="tactics" class="hidden">
- <div class="hero">
-  <span class="tag">CENTRO TATTICO</span>
-  <h2>LA TUA SQUADRA</h2>
-  <p id="tacticClub"></p>
- </div>
- <div class="panel">
-  <h3>1. Modulo di gioco</h3>
-  <label>Seleziona il modulo</label>
-  <select id="formation" onchange="changeFormation()">
-   <option value="433">4-3-3</option>
-   <option value="442">4-4-2</option>
-   <option value="352">3-5-2</option>
-   <option value="4231">4-2-3-1</option>
-  </select>
- </div>
- <div class="panel">
-  <h3>2. La tua formazione</h3>
-  <p class="small">Seleziona i giocatori direttamente sul campo.</p>
-  <div class="pitch">
-   <div class="boxline top"></div><div class="boxline bottom"></div>
-   <div class="goal top"></div><div class="goal bottom"></div>
-   <div id="pitchPlayers"></div>
-  </div>
-  <h3>La tua panchina</h3>
-  <div id="bench"></div>
-  <p id="lineupSummary" class="small"></p>
- </div>
- <div class="panel">
-  <h3>3. Mentalità e tattiche</h3>
-  <div class="setting"><label>Mentalità</label>
-   <select id="mentality" onchange="updateTactics()">
-    <option>Difensiva</option><option>Prudente</option><option>Equilibrata</option><option>Positiva</option><option>Offensiva</option>
-   </select>
-  </div>
-  <div class="setting"><label>Stile di gioco</label>
-   <select id="style" onchange="updateTactics()">
-    <option>Possesso palla</option><option>Contropiede</option><option>Pressing alto</option><option>Gioco sulle fasce</option><option>Palla lunga</option>
-   </select>
-  </div>
-  <div class="setting"><label>Intensità del pressing</label>
-   <select id="pressing" onchange="updateTactics()">
-    <option>Basso</option><option>Medio</option><option>Alto</option><option>Molto alto</option>
-   </select>
-  </div>
-  <div class="setting"><label>Linea difensiva</label>
-   <select id="defense" onchange="updateTactics()">
-    <option>Bassa</option><option>Media</option><option>Alta</option>
-   </select>
-  </div>
-  <div class="setting"><label>Ritmo di gioco</label>
-   <select id="tempo" onchange="updateTactics()">
-    <option>Lento</option><option>Normale</option><option>Veloce</option>
-   </select>
-  </div>
-  <div class="setting"><label>Ampiezza</label>
-   <select id="width" onchange="updateTactics()">
-    <option>Stretta</option><option>Normale</option><option>Ampia</option>
-   </select>
-  </div>
-  <div class="setting"><label>Tipo di passaggi</label>
-   <select id="passing" onchange="updateTactics()">
-    <option>Corti</option><option>Misti</option><option>Diretti</option>
-   </select>
-  </div>
- </div>
- <div class="panel">
-  <h3>Riepilogo tattico</h3>
-  <div id="tacticSummary" class="small"></div>
-  <button onclick="saveTactics()">SALVA FORMAZIONE E TATTICHE</button>
-  <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
- </div>
+<div class="hero">
+<span class="tag">CENTRO TATTICO</span>
+<h2>LA TUA SQUADRA</h2>
+<p id="tacticClub"></p>
+</div>
+<div class="panel">
+<label>Modulo di gioco</label>
+<select id="formation" onchange="changeFormation()">
+<option value="433">4-3-3</option>
+<option value="442">4-4-2</option>
+<option value="352">3-5-2</option>
+<option value="4231">4-2-3-1</option>
+</select>
+</div>
+<div class="panel">
+<h3>Formazione titolare</h3>
+<p class="small">Scegli i giocatori per ogni posizione.</p>
+<div class="pitch"><div id="pitchPlayers"></div></div>
+<h3>Panchina</h3>
+<div id="bench"></div>
+<p id="lineupSummary" class="small"></p>
+</div>
+<div class="panel">
+<h3>Tattiche</h3>
+<label>Mentalità</label>
+<select id="mentality" onchange="updateTactics()">
+<option>Difensiva</option><option>Prudente</option><option>Equilibrata</option><option>Positiva</option><option>Offensiva</option>
+</select>
+<label>Stile di gioco</label>
+<select id="style" onchange="updateTactics()">
+<option>Possesso palla</option><option>Contropiede</option><option>Pressing alto</option><option>Gioco sulle fasce</option><option>Palla lunga</option>
+</select>
+<label>Pressing</label>
+<select id="pressing" onchange="updateTactics()">
+<option>Basso</option><option>Medio</option><option>Alto</option><option>Molto alto</option>
+</select>
+<label>Linea difensiva</label>
+<select id="defense" onchange="updateTactics()">
+<option>Bassa</option><option>Media</option><option>Alta</option>
+</select>
+<label>Ritmo</label>
+<select id="tempo" onchange="updateTactics()">
+<option>Lento</option><option>Normale</option><option>Veloce</option>
+</select>
+<label>Ampiezza</label>
+<select id="width" onchange="updateTactics()">
+<option>Stretta</option><option>Normale</option><option>Ampia</option>
+</select>
+<label>Passaggi</label>
+<select id="passing" onchange="updateTactics()">
+<option>Corti</option><option>Misti</option><option>Diretti</option>
+</select>
+<button onclick="saveTactics()">SALVA FORMAZIONE E TATTICHE</button>
+<button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
+</div>
 </section>
 
 <section id="match" class="hidden">
- <div class="hero">
-  <span class="tag">CAMPIONATO · SERIE D</span>
-  <h2 id="matchDay">GIORNATA 1</h2>
-  <p id="matchVenue"></p>
-  <div id="matchTeams" style="font-size:18px;font-weight:bold"></div>
-  <div id="matchScore" class="score">- : -</div>
-  <p id="matchStatus" class="small">Partita da giocare</p>
- </div>
- <div class="panel" id="preMatch">
-  <h3>La prossima sfida</h3>
-  <p id="opponentInfo" class="small"></p>
-  <p id="yourTacticsInfo" class="small"></p>
-  <button onclick="playMatch()">▶ GIOCA LA PARTITA</button>
-  <button class="secondary" onclick="showTactics()">MODIFICA FORMAZIONE E TATTICHE</button>
- </div>
- <div class="panel hidden" id="matchReport">
-  <h3>Telecronaca della partita</h3>
-  <div id="commentary"></div>
-  <h3>Statistiche</h3>
-  <div id="matchStats"></div>
- </div>
- <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
+<div class="hero">
+<span class="tag">CAMPIONATO · SERIE D</span>
+<h2 id="matchDay"></h2>
+<p id="matchVenue"></p>
+<div id="matchTeams" style="font-size:17px;font-weight:bold"></div>
+<div id="matchScore" class="score">- : -</div>
+<p id="matchStatus" class="small">Partita da giocare</p>
+</div>
+<div class="panel" id="preMatch">
+<h3>La prossima sfida</h3>
+<p id="opponentInfo" class="small"></p>
+<p id="yourTacticsInfo" class="small"></p>
+<button onclick="playMatch()">▶ GIOCA LA PARTITA</button>
+<button class="secondary" onclick="showTactics()">MODIFICA FORMAZIONE E TATTICHE</button>
+</div>
+<div class="panel hidden" id="matchReport">
+<h3>Telecronaca</h3>
+<div id="commentary"></div>
+<h3>Statistiche</h3>
+<div id="matchStats"></div>
+<button onclick="show('dashboard')">CONTINUA</button>
+</div>
+<button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
 </section>
 
 <section id="table" class="hidden">
- <div class="hero">
-  <span class="tag">SERIE D</span>
-  <h2>CLASSIFICA</h2>
-  <p id="tableGroup"></p>
- </div>
- <div class="panel">
-  <div style="overflow-x:auto">
-   <table>
-    <thead><tr><th>#</th><th>Squadra</th><th>PG</th><th>V</th><th>N</th><th>P</th><th>DR</th><th>PT</th></tr></thead>
-    <tbody id="tableBody"></tbody>
-   </table>
-  </div>
-  <p class="small">Classifica provvisoria del girone. I club e il calendario sono fittizi in questa versione.</p>
- </div>
- <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
+<div class="hero">
+<span class="tag">SERIE D</span>
+<h2>CLASSIFICA</h2>
+<p id="tableGroup"></p>
+</div>
+<div class="panel" style="overflow-x:auto">
+<table>
+<thead><tr><th>#</th><th>Squadra</th><th>PG</th><th>V</th><th>N</th><th>P</th><th>DR</th><th>PT</th></tr></thead>
+<tbody id="tableBody"></tbody>
+</table>
+<p class="small">Girone fittizio di 18 squadre. Classifica aggiornata dopo ogni partita.</p>
+</div>
+<button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
+</section>
+
+<section id="calendar" class="hidden">
+<div class="hero">
+<span class="tag">STAGIONE 2026/2027</span>
+<h2>CALENDARIO</h2>
+<p id="calendarGroup"></p>
+</div>
+<div class="panel">
+<label>Seleziona giornata</label>
+<select id="calendarDay" onchange="renderCalendar()"></select>
+<div id="calendarGames"></div>
+</div>
+<button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
 </section>
 
 </main>
-<footer>ITALIAN FOOTBALL MANAGER 2027 · VERSIONE 0.6</footer>
+<footer>ITALIAN FOOTBALL MANAGER 2027 · VERSIONE 0.7</footer>
 
 <script>
-const clubs=[
-{name:"Audace Cerignolese",city:"Cerignola",group:"Girone H"},
-{name:"Foggia Calcio 1927",city:"Foggia",group:"Girone H"},
-{name:"Bari Adriatica",city:"Bari",group:"Girone H"},
-{name:"Taranto Jonica",city:"Taranto",group:"Girone H"},
-{name:"Salento United",city:"Lecce",group:"Girone H"},
-{name:"Napoli Partenopea",city:"Napoli",group:"Girone G"},
-{name:"Avellino Irpina",city:"Avellino",group:"Girone G"},
-{name:"Roma Capitolina",city:"Roma",group:"Girone F"},
-{name:"Latina Pontina",city:"Latina",group:"Girone F"},
-{name:"Firenze Medicea",city:"Firenze",group:"Girone E"},
-{name:"Perugia Etrusca",city:"Perugia",group:"Girone E"},
-{name:"Bologna Felsinea",city:"Bologna",group:"Girone D"},
-{name:"Ravenna Adriatica",city:"Ravenna",group:"Girone D"},
-{name:"Milano Lombarda",city:"Milano",group:"Girone B"},
-{name:"Bergamo Orobica",city:"Bergamo",group:"Girone B"},
-{name:"Torino Granata FC",city:"Torino",group:"Girone A"},
-{name:"Genova Liguria",city:"Genova",group:"Girone A"},
-{name:"Trieste Giuliana",city:"Trieste",group:"Girone C"}
-];
+const groups={
+"Girone H":[["Audace Cerignolese","Cerignola"],["Foggia Calcio 1927","Foggia"],["Bari Adriatica","Bari"],["Taranto Jonica","Taranto"],["Salento United","Lecce"],["Sporting Andria","Andria"],["Atletico Barletta","Barletta"],["Real Trani","Trani"],["Union Manfredonia","Manfredonia"],["Pro Altamura","Altamura"],["Sporting Bitonto","Bitonto"],["Atletico Monopoli","Monopoli"],["Real Brindisi","Brindisi"],["Union Casarano","Casarano"],["Pro Nardò","Nardò"],["Sporting Gallipoli","Gallipoli"],["Atletico Fasano","Fasano"],["Real Molfetta","Molfetta"]],
+"Girone G":[["Napoli Partenopea","Napoli"],["Avellino Irpina","Avellino"],["Sporting Salerno","Salerno"],["Atletico Caserta","Caserta"],["Real Benevento","Benevento"],["Union Sorrento","Sorrento"],["Pro Torre del Greco","Torre del Greco"],["Sporting Pozzuoli","Pozzuoli"],["Atletico Aversa","Aversa"],["Real Nola","Nola"],["Union Ischia","Ischia"],["Pro Formia","Formia"],["Sporting Cassino","Cassino"],["Atletico Sassari","Sassari"],["Real Olbia","Olbia"],["Union Giugliano","Giugliano"],["Pro Pomigliano","Pomigliano"],["Sporting Ercolano","Ercolano"]],
+"Girone F":[["Roma Capitolina","Roma"],["Latina Pontina","Latina"],["Sporting Viterbo","Viterbo"],["Atletico Terni","Terni"],["Real Rieti","Rieti"],["Union Frosinone","Frosinone"],["Pro Civitavecchia","Civitavecchia"],["Sporting Ostia","Ostia"],["Atletico Pomezia","Pomezia"],["Real Ancona","Ancona"],["Union Ascoli","Ascoli"],["Pro Teramo","Teramo"],["Sporting L'Aquila","L'Aquila"],["Atletico Chieti","Chieti"],["Real Avezzano","Avezzano"],["Union Tivoli","Tivoli"],["Pro Guidonia","Guidonia"],["Sporting Aprilia","Aprilia"]],
+"Girone E":[["Firenze Medicea","Firenze"],["Perugia Etrusca","Perugia"],["Sporting Arezzo","Arezzo"],["Atletico Siena","Siena"],["Real Livorno","Livorno"],["Union Pisa","Pisa"],["Pro Lucca","Lucca"],["Sporting Grosseto","Grosseto"],["Atletico Prato","Prato"],["Real Pistoia","Pistoia"],["Union Foligno","Foligno"],["Pro Spoleto","Spoleto"],["Sporting Orvieto","Orvieto"],["Atletico Gubbio","Gubbio"],["Real Todi","Todi"],["Union Empoli","Empoli"],["Pro Pontedera","Pontedera"],["Sporting Cecina","Cecina"]],
+"Girone D":[["Bologna Felsinea","Bologna"],["Ravenna Adriatica","Ravenna"],["Sporting Modena","Modena"],["Atletico Parma","Parma"],["Real Piacenza","Piacenza"],["Union Ferrara","Ferrara"],["Pro Forlì","Forlì"],["Sporting Cesena","Cesena"],["Atletico Imola","Imola"],["Real Carpi","Carpi"],["Union Faenza","Faenza"],["Pro Rimini","Rimini"],["Sporting Fidenza","Fidenza"],["Atletico Sassuolo","Sassuolo"],["Real Reggio Emilia","Reggio Emilia"],["Union Lugo","Lugo"],["Pro Riccione","Riccione"],["Sporting Vignola","Vignola"]],
+"Girone B":[["Milano Lombarda","Milano"],["Bergamo Orobica","Bergamo"],["Sporting Monza","Monza"],["Atletico Como","Como"],["Real Lecco","Lecco"],["Union Varese","Varese"],["Pro Pavia","Pavia"],["Sporting Cremona","Cremona"],["Atletico Lodi","Lodi"],["Real Sondrio","Sondrio"],["Union Brescia","Brescia"],["Pro Mantova","Mantova"],["Sporting Legnano","Legnano"],["Atletico Seregno","Seregno"],["Real Crema","Crema"],["Union Cantù","Cantù"],["Pro Gallarate","Gallarate"],["Sporting Desio","Desio"]],
+"Girone A":[["Torino Granata FC","Torino"],["Genova Liguria","Genova"],["Sporting Asti","Asti"],["Atletico Cuneo","Cuneo"],["Real Novara","Novara"],["Union Vercelli","Vercelli"],["Pro Alessandria","Alessandria"],["Sporting Savona","Savona"],["Atletico Imperia","Imperia"],["Real Sanremo","Sanremo"],["Union Biella","Biella"],["Pro Ivrea","Ivrea"],["Sporting Bra","Bra"],["Atletico Chieri","Chieri"],["Real Pinerolo","Pinerolo"],["Union Alba","Alba"],["Pro Acqui","Acqui Terme"],["Sporting Sestri","Sestri Levante"]],
+"Girone C":[["Trieste Giuliana","Trieste"],["Sporting Udine","Udine"],["Atletico Pordenone","Pordenone"],["Real Gorizia","Gorizia"],["Union Treviso","Treviso"],["Pro Padova","Padova"],["Sporting Vicenza","Vicenza"],["Atletico Verona","Verona"],["Real Belluno","Belluno"],["Union Rovigo","Rovigo"],["Pro Portogruaro","Portogruaro"],["Sporting Conegliano","Conegliano"],["Atletico Bassano","Bassano"],["Real Este","Este"],["Union Mestre","Mestre"],["Pro San Donà","San Donà"],["Sporting Feltre","Feltre"],["Atletico Chioggia","Chioggia"]]
+};
 
 const firstNames=["Luca","Matteo","Andrea","Davide","Simone","Marco","Lorenzo","Alessandro","Federico","Riccardo","Tommaso","Gabriele","Filippo","Nicola","Samuele","Diego","Edoardo","Michele","Stefano","Christian","Fabio","Daniele","Pietro","Enrico","Leonardo","Giorgio","Antonio","Jacopo","Roberto","Massimo"];
 const lastNames=["Ferrari","Romano","Conti","Marino","Greco","Costa","Rinaldi","Moretti","Gallo","Caruso","Lombardi","De Luca","Barbieri","Fontana","Mancini","Ricci","Esposito","Serra","Colombo","Martini","Villa","Pellegrini","Leone","Ferri","Santoro","Marchetti","Testa","Bernardi","Farina","Longo"];
 
 const formations={
-"433":[
-{role:"POR",name:"POR",x:50,y:89},
-{role:"DIF",name:"TD",x:83,y:70},{role:"DIF",name:"DC",x:61,y:74},{role:"DIF",name:"DC",x:39,y:74},{role:"DIF",name:"TS",x:17,y:70},
-{role:"CEN",name:"CC",x:70,y:51},{role:"CEN",name:"CC",x:50,y:57},{role:"CEN",name:"CC",x:30,y:51},
-{role:"ATT",name:"AD",x:80,y:27},{role:"ATT",name:"ATT",x:50,y:20},{role:"ATT",name:"AS",x:20,y:27}],
-"442":[
-{role:"POR",name:"POR",x:50,y:89},
-{role:"DIF",name:"TD",x:83,y:70},{role:"DIF",name:"DC",x:61,y:74},{role:"DIF",name:"DC",x:39,y:74},{role:"DIF",name:"TS",x:17,y:70},
-{role:"CEN",name:"ED",x:83,y:49},{role:"CEN",name:"CC",x:61,y:54},{role:"CEN",name:"CC",x:39,y:54},{role:"CEN",name:"ES",x:17,y:49},
-{role:"ATT",name:"ATT",x:62,y:25},{role:"ATT",name:"ATT",x:38,y:25}],
-"352":[
-{role:"POR",name:"POR",x:50,y:89},
-{role:"DIF",name:"DC",x:75,y:73},{role:"DIF",name:"DC",x:50,y:76},{role:"DIF",name:"DC",x:25,y:73},
-{role:"CEN",name:"ED",x:88,y:49},{role:"CEN",name:"CC",x:69,y:55},{role:"CEN",name:"CC",x:50,y:48},{role:"CEN",name:"CC",x:31,y:55},{role:"CEN",name:"ES",x:12,y:49},
-{role:"ATT",name:"ATT",x:63,y:24},{role:"ATT",name:"ATT",x:37,y:24}],
-"4231":[
-{role:"POR",name:"POR",x:50,y:89},
-{role:"DIF",name:"TD",x:83,y:70},{role:"DIF",name:"DC",x:61,y:74},{role:"DIF",name:"DC",x:39,y:74},{role:"DIF",name:"TS",x:17,y:70},
-{role:"CEN",name:"CC",x:61,y:57},{role:"CEN",name:"CC",x:39,y:57},
-{role:"CEN",name:"AD",x:78,y:36},{role:"CEN",name:"TQ",x:50,y:32},{role:"CEN",name:"AS",x:22,y:36},
-{role:"ATT",name:"ATT",x:50,y:16}]
+"433":[["POR",50,89],["DIF",83,70],["DIF",61,74],["DIF",39,74],["DIF",17,70],["CEN",70,51],["CEN",50,57],["CEN",30,51],["ATT",80,27],["ATT",50,20],["ATT",20,27]],
+"442":[["POR",50,89],["DIF",83,70],["DIF",61,74],["DIF",39,74],["DIF",17,70],["CEN",83,49],["CEN",61,54],["CEN",39,54],["CEN",17,49],["ATT",62,25],["ATT",38,25]],
+"352":[["POR",50,89],["DIF",75,73],["DIF",50,76],["DIF",25,73],["CEN",88,49],["CEN",69,55],["CEN",50,48],["CEN",31,55],["CEN",12,49],["ATT",63,24],["ATT",37,24]],
+"4231":[["POR",50,89],["DIF",83,70],["DIF",61,74],["DIF",39,74],["DIF",17,70],["CEN",61,57],["CEN",39,57],["CEN",78,36],["CEN",50,32],["CEN",22,36],["ATT",50,16]]
 };
 
 const defaultTactics={mentality:"Equilibrata",style:"Possesso palla",pressing:"Medio",defense:"Media",tempo:"Normale",width:"Normale",passing:"Misti"};
-let manager="",selectedClub=null,players=[],lineup=[],currentFormation="433",tactics={...defaultTactics};
-let league=[],matchday=1,lastMatch=null,playedOpponents=[];
+
+let manager="",selectedClub=null,players=[],lineup=[],currentFormation="433";
+let tactics={...defaultTactics},league=[],fixtures=[],matchday=1,lastMatch=null,pendingFixture=null;
 
 function show(id){
  document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
  document.getElementById(id).classList.remove("hidden");
 }
+
 function createManager(){
  const v=document.getElementById("manager").value.trim();
  if(!v){alert("Inserisci il nome del manager!");return;}
- manager=v;document.getElementById("managerName").textContent=manager;show("welcome");
+ manager=v;
+ document.getElementById("managerName").textContent=v;
+ show("welcome");
 }
+
 function showClubs(){
- const list=document.getElementById("clubList");list.innerHTML="";
- clubs.forEach((c,i)=>{
-  const item=document.createElement("div");item.className="club";
-  const h=document.createElement("h3");h.textContent="🛡️ "+c.name;
-  const p=document.createElement("p");p.textContent="Città: "+c.city+" · "+c.group;
-  const b=document.createElement("button");b.textContent="SELEZIONA QUESTA SQUADRA";b.onclick=()=>selectClub(i);
-  item.append(h,p,b);list.appendChild(item);
- });show("clubs");
+ const list=document.getElementById("clubList");
+ list.innerHTML="";
+ Object.keys(groups).forEach(g=>{
+  groups[g].forEach(c=>{
+   const d=document.createElement("div");
+   d.className="club";
+   const h=document.createElement("h3");
+   h.textContent="🛡️ "+c[0];
+   const p=document.createElement("p");
+   p.textContent=c[1]+" · "+g;
+   const b=document.createElement("button");
+   b.textContent="SELEZIONA QUESTA SQUADRA";
+   b.onclick=()=>selectClub(c[0],c[1],g);
+   d.append(h,p,b);
+   list.appendChild(d);
+  });
+ });
+ show("clubs");
 }
-function selectClub(i){
- selectedClub=clubs[i];document.getElementById("chosenClub").textContent=selectedClub.name;
- document.getElementById("chosenInfo").textContent="Città: "+selectedClub.city;
- document.getElementById("chosenGroup").textContent=selectedClub.group;show("clubDetail");
+
+function selectClub(name,city,group){
+ selectedClub={name,city,group};
+ document.getElementById("chosenClub").textContent=name;
+ document.getElementById("chosenInfo").textContent="Città: "+city;
+ document.getElementById("chosenGroup").textContent=group;
+ show("clubDetail");
 }
+
 function makePlayers(){
- const positions=[...Array(3).fill(["POR","Portiere"]),...Array(8).fill(["DIF","Difensore"]),...Array(8).fill(["CEN","Centrocampista"]),...Array(6).fill(["ATT","Attaccante"])];
+ const pos=[...Array(3).fill(["POR","Portiere"]),...Array(8).fill(["DIF","Difensore"]),...Array(8).fill(["CEN","Centrocampista"]),...Array(6).fill(["ATT","Attaccante"])];
  const used=[];
- return positions.map((pos,i)=>{
-  let n;do{n=firstNames[Math.floor(Math.random()*firstNames.length)]+" "+lastNames[Math.floor(Math.random()*lastNames.length)];}while(used.includes(n));used.push(n);
-  const age=18+Math.floor(Math.random()*17),overall=48+Math.floor(Math.random()*25);
-  return {id:i+1,name:n,role:pos[0],position:pos[1],age,overall,potential:Math.min(90,overall+Math.floor(Math.random()*17)),wage:350+overall*32+Math.floor(Math.random()*250),value:Math.round(overall*overall*age/25*100)/100,pace:40+Math.floor(Math.random()*50),shooting:40+Math.floor(Math.random()*50),passing:40+Math.floor(Math.random()*50),technique:40+Math.floor(Math.random()*50),defending:40+Math.floor(Math.random()*50),physical:40+Math.floor(Math.random()*50)};
+ return pos.map((p,i)=>{
+  let n;
+  do{
+   n=firstNames[Math.floor(Math.random()*firstNames.length)]+" "+lastNames[Math.floor(Math.random()*lastNames.length)];
+  }while(used.includes(n));
+  used.push(n);
+  const age=18+Math.floor(Math.random()*17);
+  const overall=48+Math.floor(Math.random()*25);
+  return {
+   id:i+1,name:n,role:p[0],position:p[1],age,overall,
+   potential:Math.min(90,overall+Math.floor(Math.random()*17)),
+   wage:350+overall*32+Math.floor(Math.random()*250)
+  };
  });
 }
-function createDefaultLineup(){
- const used=[];return formations[currentFormation].map(s=>{
-  const p=[...players].sort((a,b)=>b.overall-a.overall).find(x=>x.role===s.role&&!used.includes(x.id));
-  if(p)used.push(p.id);return p?p.id:null;
- });
-}
+
 function makeLeague(){
- league=clubs.filter(c=>c.group===selectedClub.group).map((c,i)=>({name:c.name,city:c.city,played:0,w:0,d:0,l:0,gf:0,ga:0,points:0,clubIndex:clubs.indexOf(c)}));
- playedOpponents=[];matchday=1;lastMatch=null;
+ const list=groups[selectedClub.group];
+ league=list.map(c=>({
+  name:c[0],city:c[1],played:0,w:0,d:0,l:0,
+  gf:0,ga:0,points:0
+ }));
+ generateFixtures();
+ matchday=1;
+ lastMatch=null;
+ pendingFixture=null;
 }
+
+function generateFixtures(){
+ const rotation=league.map(t=>t.name);
+ const rounds=[];
+ for(let r=0;r<17;r++){
+  const games=[];
+  for(let i=0;i<9;i++){
+   let home=rotation[i];
+   let away=rotation[17-i];
+   if((r+i)%2===1)[home,away]=[away,home];
+   games.push({home,away});
+  }
+  rounds.push(games);
+  const fixed=rotation[0];
+  const rest=rotation.slice(1);
+  rest.unshift(rest.pop());
+  rotation.splice(0,rotation.length,fixed,...rest);
+ }
+ fixtures=[];
+ rounds.forEach((games,i)=>fixtures.push({day:i+1,games}));
+ rounds.forEach((games,i)=>fixtures.push({
+  day:i+18,
+  games:games.map(g=>({home:g.away,away:g.home}))
+ }));
+}
+
+function createLineup(){
+ const used=[];
+ return formations[currentFormation].map(s=>{
+  const p=players.filter(x=>x.role===s[0]&&!used.includes(x.id)).sort((a,b)=>b.overall-a.overall)[0];
+  if(p)used.push(p.id);
+  return p?p.id:null;
+ });
+}
+
 function startCareer(){
  if(!manager||!selectedClub){alert("Completa la scelta del manager e della squadra.");return;}
- players=makePlayers();currentFormation="433";tactics={...defaultTactics};lineup=createDefaultLineup();makeLeague();saveGame();showDashboard();
+ players=makePlayers();
+ currentFormation="433";
+ tactics={...defaultTactics};
+ lineup=createLineup();
+ makeLeague();
+ saveGame();
+ showDashboard();
 }
+
 function saveGame(){
- localStorage.setItem("ifm2027_save",JSON.stringify({manager,club:selectedClub,season:"2026/2027",players,formation:currentFormation,lineup,tactics,league,matchday,lastMatch,playedOpponents}));
+ localStorage.setItem("ifm2027_save",JSON.stringify({
+  manager,club:selectedClub,season:"2026/2027",
+  players,formation:currentFormation,lineup,tactics,
+  league,fixtures,matchday,lastMatch
+ }));
 }
+
 function loadCareer(){
- const raw=localStorage.getItem("ifm2027_save");if(!raw){alert("Non hai ancora una carriera salvata!");return;}
+ const raw=localStorage.getItem("ifm2027_save");
+ if(!raw){alert("Non hai ancora una carriera salvata!");return;}
  try{
-  const s=JSON.parse(raw);manager=s.manager;selectedClub=s.club;players=s.players||[];currentFormation=s.formation||"433";lineup=s.lineup||[];tactics={...defaultTactics,...(s.tactics||{})};
-  if(players.length!==25){alert("Salvataggio non compatibile. Crea una nuova carriera.");return;}
+  const s=JSON.parse(raw);
+  manager=s.manager;
+  selectedClub=s.club;
+  players=s.players||[];
+  if(!selectedClub||players.length!==25){alert("Salvataggio non compatibile.");return;}
+  currentFormation=s.formation||"433";
   if(!formations[currentFormation])currentFormation="433";
-  if(lineup.length!==11)lineup=createDefaultLineup();
-  if(s.league&&s.league.length){league=s.league;matchday=s.matchday||1;lastMatch=s.lastMatch||null;playedOpponents=s.playedOpponents||[];}
-  else{makeLeague();}
+  tactics={...defaultTactics,...(s.tactics||{})};
+  lineup=s.lineup||[];
+  if(lineup.length!==11)lineup=createLineup();
+
+  if(s.league&&s.league.length===18){
+   league=s.league;
+   fixtures=s.fixtures||[];
+   matchday=s.matchday||1;
+   lastMatch=s.lastMatch||null;
+   if(fixtures.length!==34)generateFixtures();
+  }else{
+   makeLeague();
+   alert("Carriera aggiornata al nuovo campionato da 18 squadre. Rosa e tattiche conservate; il calendario riparte dalla prima giornata.");
+  }
+  pendingFixture=null;
   showDashboard();
- }catch(e){alert("Salvataggio non leggibile.");}
+ }catch(e){
+  alert("Salvataggio non leggibile.");
+ }
 }
+
 function showDashboard(){
  document.getElementById("dashClub").textContent=selectedClub.name;
  document.getElementById("dashManager").textContent="Allenatore: "+manager;
  document.getElementById("dashGroup").textContent=selectedClub.group;
  const me=league.find(x=>x.name===selectedClub.name);
- document.getElementById("dashStats").textContent=me?me.played+" partite · "+me.points+" punti · "+me.w+" vittorie · "+me.d+" pareggi · "+me.l+" sconfitte":"Campionato pronto";
+ document.getElementById("dashStats").textContent=me?
+  me.played+" partite · "+me.points+" punti · "+me.w+" vittorie · "+me.d+" pareggi · "+me.l+" sconfitte":
+  "Campionato pronto";
  show("dashboard");
 }
+
 function showRoster(){
  document.getElementById("rosterClub").textContent=selectedClub.name;
- const count={POR:0,DIF:0,CEN:0,ATT:0};players.forEach(p=>count[p.role]++);
- document.getElementById("rosterCounts").textContent="Portieri: "+count.POR+" · Difensori: "+count.DIF+" · Centrocampisti: "+count.CEN+" · Attaccanti: "+count.ATT;
- document.getElementById("roleFilter").value="Tutti";renderPlayers();show("roster");
-}
-function renderPlayers(){
- const f=document.getElementById("roleFilter").value,list=document.getElementById("playerList");list.innerHTML="";
- players.filter(p=>f==="Tutti"||p.role===f).forEach(p=>{
-  const item=document.createElement("div");item.className="player";
-  const info=document.createElement("div"),name=document.createElement("strong"),details=document.createElement("p"),stats=document.createElement("p"),rating=document.createElement("div");
-  name.textContent=p.name;details.textContent=p.position+" · "+p.age+" anni";stats.textContent="Potenziale "+p.potential+" · Stipendio €"+p.wage.toLocaleString("it-IT")+"/mese";rating.className="rating";rating.textContent=p.overall;
-  info.append(name,details,stats);item.append(info,rating);list.appendChild(item);
- });
-}
-function showTactics(){
- document.getElementById("tacticClub").textContent=selectedClub.name;document.getElementById("formation").value=currentFormation;loadTacticsControls();renderPitch();show("tactics");
-}
-function loadTacticsControls(){
- Object.keys(defaultTactics).forEach(k=>document.getElementById(k).value=tactics[k]||defaultTactics[k]);updateTacticSummary();
-}
-function changeFormation(){
- currentFormation=document.getElementById("formation").value;lineup=createDefaultLineup();renderPitch();saveGame();
-}
-function renderPitch(){
- const pitch=document.getElementById("pitchPlayers");pitch.innerHTML="";
- formations[currentFormation].forEach((slot,index)=>{
-  const player=players.find(p=>p.id===lineup[index]),el=document.createElement("div");el.className="player-slot";el.style.left=slot.x+"%";el.style.top=slot.y+"%";
-  const shirt=document.createElement("div");shirt.className="player-shirt";shirt.textContent=player?player.overall:slot.name;
-  const name=document.createElement("div");name.className="slot-name";name.textContent=player?player.name:slot.name;
-  const rating=document.createElement("div");rating.className="slot-rating";rating.textContent=player?player.overall+" VAL":"";
-  const select=document.createElement("select"),placeholder=document.createElement("option");placeholder.value="";placeholder.textContent=slot.name;select.appendChild(placeholder);
-  const used=lineup.filter((id,i)=>id!==null&&i!==index);
-  players.filter(p=>p.role===slot.role&&!used.includes(p.id)).sort((a,b)=>b.overall-a.overall).forEach(p=>{const o=document.createElement("option");o.value=p.id;o.textContent=p.name+" ("+p.overall+")";select.appendChild(o);});
-  select.value=player?String(player.id):"";
-  select.onchange=()=>{lineup[index]=select.value?Number(select.value):null;renderPitch();saveGame();};
-  el.append(shirt,name,rating,select);pitch.appendChild(el);
- });renderBench();updateSummary();
-}
-function renderBench(){
- const used=lineup.filter(id=>id!==null),remaining=players.filter(p=>!used.includes(p.id)).sort((a,b)=>b.overall-a.overall).slice(0,7),bench=document.getElementById("bench");bench.innerHTML="";
- remaining.forEach((p,i)=>{const row=document.createElement("div");row.className="bench-item";row.textContent=(i+1)+". "+p.name+" · "+p.role+" — "+p.overall;bench.appendChild(row);});
-}
-function updateSummary(){
- const avg=players.filter(p=>lineup.includes(p.id)),average=avg.length?Math.round(avg.reduce((s,p)=>s+p.overall,0)/avg.length):0;
- document.getElementById("lineupSummary").textContent="Modulo: "+currentFormation+" · Giocatori schierati: "+avg.length+"/11 · Valutazione media: "+average;
-}
-function updateTactics(){
- Object.keys(defaultTactics).forEach(k=>tactics[k]=document.getElementById(k).value);updateTacticSummary();saveGame();
-}
-function updateTacticSummary(){
- const labels=[["Mentalità","mentality"],["Stile","style"],["Pressing","pressing"],["Linea difensiva","defense"],["Ritmo","tempo"],["Ampiezza","width"],["Passaggi","passing"]];
- const area=document.getElementById("tacticSummary");if(!area)return;area.innerHTML="";
- labels.forEach(([label,key])=>{const p=document.createElement("p"),b=document.createElement("strong"),v=document.createElement("span");b.textContent=label+": ";v.className="value";v.textContent=tactics[key];p.append(b,v);area.appendChild(p);});
-}
-function saveTactics(){
- updateTactics();saveGame();alert("Formazione e tattiche salvate correttamente!");
+ const c={POR:0,DIF:0,CEN:0,ATT:0};
+ players.forEach(p=>c[p.role]++);
+ document.getElementById("rosterCounts").textContent=
+  "Portieri: "+c.POR+" · Difensori: "+c.DIF+" · Centrocampisti: "+c.CEN+" · Attaccanti: "+c.ATT;
+ document.getElementById("roleFilter").value="Tutti";
+ renderPlayers();
+ show("roster");
 }
 
-/* MOTORE DELLE PARTITE */
-function nextOpponent(){
- const candidates=league.filter(x=>x.name!==selectedClub.name&&!playedOpponents.includes(x.name));
- if(!candidates.length){playedOpponents=[];return league.find(x=>x.name!==selectedClub.name);}
- return candidates[Math.floor(Math.random()*candidates.length)];
+function renderPlayers(){
+ const f=document.getElementById("roleFilter").value;
+ const el=document.getElementById("playerList");
+ el.innerHTML="";
+ players.filter(p=>f==="Tutti"||p.role===f).forEach(p=>{
+  const d=document.createElement("div");
+  d.className="player";
+  const info=document.createElement("div");
+  info.innerHTML="<strong>"+p.name+"</strong><p>"+p.position+" · "+p.age+" anni · Potenziale "+p.potential+"</p><p>Stipendio €"+p.wage.toLocaleString("it-IT")+"/mese</p>";
+  const rating=document.createElement("div");
+  rating.className="rating";
+  rating.textContent=p.overall;
+  d.append(info,rating);
+  el.appendChild(d);
+ });
 }
+
+function showTactics(){
+ document.getElementById("tacticClub").textContent=selectedClub.name;
+ document.getElementById("formation").value=currentFormation;
+ Object.keys(defaultTactics).forEach(k=>document.getElementById(k).value=tactics[k]);
+ renderPitch();
+ show("tactics");
+}
+
+function changeFormation(){
+ currentFormation=document.getElementById("formation").value;
+ lineup=createLineup();
+ renderPitch();
+ saveGame();
+}
+
+function renderPitch(){
+ const area=document.getElementById("pitchPlayers");
+ area.innerHTML="";
+ formations[currentFormation].forEach((s,i)=>{
+  const p=players.find(x=>x.id===lineup[i]);
+  const d=document.createElement("div");
+  d.className="slot";
+  d.style.left=s[1]+"%";
+  d.style.top=s[2]+"%";
+  const shirt=document.createElement("div");
+  shirt.className="shirt";
+  shirt.textContent=p?p.overall:s[0];
+  const name=document.createElement("div");
+  name.className="slot-name";
+  name.textContent=p?p.name:s[0];
+  const sel=document.createElement("select");
+  const op=document.createElement("option");
+  op.value="";
+  op.textContent=s[0];
+  sel.appendChild(op);
+  const used=lineup.filter((id,j)=>j!==i&&id!==null);
+  players.filter(x=>x.role===s[0]&&!used.includes(x.id)).sort((a,b)=>b.overall-a.overall).forEach(x=>{
+   const o=document.createElement("option");
+   o.value=x.id;
+   o.textContent=x.name+" ("+x.overall+")";
+   sel.appendChild(o);
+  });
+  sel.value=p?String(p.id):"";
+  sel.onchange=()=>{
+   lineup[i]=sel.value?Number(sel.value):null;
+   renderPitch();
+   saveGame();
+  };
+  d.append(shirt,name,sel);
+  area.appendChild(d);
+ });
+ renderBench();
+ document.getElementById("lineupSummary").textContent=
+  "Modulo "+currentFormation+" · "+lineup.filter(Boolean).length+"/11 titolari selezionati";
+}
+
+function renderBench(){
+ const used=lineup.filter(Boolean);
+ const bench=document.getElementById("bench");
+ bench.innerHTML="";
+ players.filter(p=>!used.includes(p.id)).sort((a,b)=>b.overall-a.overall).slice(0,7).forEach((p,i)=>{
+  const d=document.createElement("div");
+  d.className="bench-item";
+  d.textContent=(i+1)+". "+p.name+" · "+p.role+" · "+p.overall;
+  bench.appendChild(d);
+ });
+}
+
+function updateTactics(){
+ Object.keys(defaultTactics).forEach(k=>tactics[k]=document.getElementById(k).value);
+ saveGame();
+}
+function saveTactics(){
+ updateTactics();
+ alert("Formazione e tattiche salvate!");
+}
+
+function getNextFixture(){
+ const round=fixtures.find(r=>r.day===matchday);
+ return round?round.games.find(g=>g.home===selectedClub.name||g.away===selectedClub.name):null;
+}
+
 function showMatch(){
- const opponent=nextOpponent();
- if(!opponent){alert("Non ci sono avversari disponibili.");return;}
+ pendingFixture=getNextFixture();
+ if(!pendingFixture){alert("Campionato terminato!");return;}
+ const home=pendingFixture.home===selectedClub.name;
+ const opp=league.find(t=>t.name===(home?pendingFixture.away:pendingFixture.home));
  document.getElementById("matchDay").textContent="GIORNATA "+matchday;
- document.getElementById("matchVenue").textContent=matchday%2===1?"Partita in casa":"Partita in trasferta";
- document.getElementById("matchTeams").textContent=matchday%2===1?selectedClub.name+"  VS  "+opponent.name:opponent.name+"  VS  "+selectedClub.name;
+ document.getElementById("matchVenue").textContent=home?"In casa":"In trasferta";
+ document.getElementById("matchTeams").textContent=pendingFixture.home+" VS "+pendingFixture.away;
  document.getElementById("matchScore").textContent="- : -";
  document.getElementById("matchStatus").textContent="Partita da giocare";
- document.getElementById("opponentInfo").textContent="Avversario: "+opponent.name+" · "+opponent.city+". La forza dell'avversario sarà generata per questa simulazione.";
- document.getElementById("yourTacticsInfo").textContent="La tua tattica: "+tactics.mentality+" · "+tactics.style+" · Pressing "+tactics.pressing+".";
+ document.getElementById("opponentInfo").textContent="Avversario: "+opp.name+" · "+opp.city;
+ document.getElementById("yourTacticsInfo").textContent="Tattica: "+tactics.mentality+" · "+tactics.style+" · Pressing "+tactics.pressing;
  document.getElementById("preMatch").classList.remove("hidden");
  document.getElementById("matchReport").classList.add("hidden");
  show("match");
 }
+
 function teamStrength(){
  const starters=players.filter(p=>lineup.includes(p.id));
- if(starters.length<11)return null;
- let base=starters.reduce((s,p)=>s+p.overall,0)/11;
- const roles={POR:[],DIF:[],CEN:[],ATT:[]};
- starters.forEach(p=>roles[p.role].push(p));
- const average=(arr)=>arr.length?arr.reduce((s,p)=>s+p.overall,0)/arr.length:50;
- let attack=average(roles.ATT),mid=average(roles.CEN),def=average(roles.DIF),keeper=average(roles.POR);
+ if(starters.length!==11)return null;
+ const avg=starters.reduce((a,p)=>a+p.overall,0)/11;
  let bonus=0;
  if(tactics.mentality==="Offensiva")bonus+=2.5;
  if(tactics.mentality==="Positiva")bonus+=1.5;
  if(tactics.mentality==="Difensiva")bonus-=1;
- if(tactics.style==="Pressing alto")bonus+=1.5;
- if(tactics.style==="Possesso palla")bonus+=mid*.025;
- if(tactics.style==="Contropiede")bonus+=attack*.025;
- if(tactics.style==="Gioco sulle fasce")bonus+=attack*.02;
- if(tactics.style==="Palla lunga")bonus+=attack*.015;
  if(tactics.pressing==="Alto")bonus+=1;
  if(tactics.pressing==="Molto alto")bonus+=1.5;
- if(tactics.pressing==="Basso")bonus-=.5;
- if(tactics.tempo==="Veloce")bonus+=1;
- if(tactics.tempo==="Lento")bonus-=.5;
- if(tactics.defense==="Alta")bonus+=.5;
- if(tactics.defense==="Bassa")bonus-=.3;
- if(tactics.passing==="Corti")bonus+=mid*.012;
- if(tactics.passing==="Diretti")bonus+=attack*.012;
- return {overall:base+bonus,attack,mid,def,keeper};
+ if(tactics.style==="Possesso palla")bonus+=1.2;
+ if(tactics.style==="Contropiede")bonus+=1;
+ return avg+bonus;
 }
+
 function playMatch(){
- const opponent=nextOpponent();if(!opponent){alert("Avversario non disponibile.");return;}
+ if(!pendingFixture)pendingFixture=getNextFixture();
+ if(!pendingFixture){alert("Campionato terminato!");return;}
  const strength=teamStrength();
- if(!strength){alert("Devi schierare tutti gli 11 titolari prima di giocare!");return;}
- const home=matchday%2===1;
- const opponentStrength=55+Math.random()*13;
- const myStrength=strength.overall+(home?2:0);
- const theirStrength=opponentStrength+(home?0:2);
- const advantage=myStrength-theirStrength;
- let myGoals=0,theirGoals=0;
- const events=[];
- const goalMinutes=[];
- const chances=8+Math.floor(Math.random()*7);
- let myShots=0,theirShots=0,myPoss=48+Math.round(advantage*.7)+(Math.random()*12-6);
- myPoss=Math.max(30,Math.min(70,myPoss));
- for(let i=0;i<chances;i++){
-  const minute=2+Math.floor(Math.random()*87);
-  const mine=Math.random()<Math.max(.25,Math.min(.75,.5+advantage*.018));
-  if(mine)myShots++;else theirShots++;
-  const goalChance=mine?.24+Math.max(-.08,Math.min(.12,advantage*.009)):.22-Math.max(-.08,Math.min(.12,advantage*.009));
+ if(strength===null){alert("Devi schierare tutti gli 11 titolari!");return;}
+ const home=pendingFixture.home===selectedClub.name;
+ const oppName=home?pendingFixture.away:pendingFixture.home;
+ const opp=league.find(t=>t.name===oppName);
+ const me=league.find(t=>t.name===selectedClub.name);
+ const adv=strength+(home?2:0)-(57+Math.random()*12+(home?0:2));
+ let my=0,their=0,events=[],shots=0;
+ for(let i=0;i<12;i++){
+  const min=3+Math.floor(Math.random()*86);
+  const mine=Math.random()<Math.max(.25,Math.min(.75,.5+adv*.018));
+  shots++;
+  const goalChance=mine?0.24:0.22;
   if(Math.random()<goalChance){
    if(mine){
-    myGoals++;
-    const scorers=players.filter(p=>lineup.includes(p.id)&&p.role==="ATT");
-    const mids=players.filter(p=>lineup.includes(p.id)&&p.role==="CEN");
-    const pool=[...scorers,...scorers,...mids];
-    const scorer=pool[Math.floor(Math.random()*pool.length)]||players[0];
-    events.push({minute,text:"GOAL! "+scorer.name+" porta in vantaggio "+selectedClub.name+"!"});
-    goalMinutes.push(minute);
+    my++;
+    const scorers=players.filter(p=>lineup.includes(p.id)&&(p.role==="ATT"||p.role==="CEN"));
+    const scorer=scorers[Math.floor(Math.random()*scorers.length)]||players[0];
+    events.push({minute:min,text:"GOAL! "+scorer.name+" segna per "+selectedClub.name+"!"});
    }else{
-    theirGoals++;
-    events.push({minute,text:"Gol di "+opponent.name+". La difesa viene sorpresa."});
+    their++;
+    events.push({minute:min,text:"Gol di "+opp.name+"."});
    }
-  }else if(mine){
-   const phrases=["Occasione per "+selectedClub.name+": il portiere avversario si salva!","Conclusione della squadra, pallone fuori di poco!","Bella azione offensiva, ma manca la precisione nell'ultimo passaggio.","Calcio d'angolo per "+selectedClub.name+"!"];
-   events.push({minute,text:phrases[Math.floor(Math.random()*phrases.length)]});
   }else{
-   const phrases=["L'avversario prova a rendersi pericoloso.","Intervento decisivo della difesa.","Conclusione avversaria, il portiere controlla.","Ripartenza pericolosa degli avversari."];
-   events.push({minute,text:phrases[Math.floor(Math.random()*phrases.length)]});
+   events.push({minute:min,text:mine?"Occasione per "+selectedClub.name+", ma il tiro non trova la rete.":"L'avversario prova a rendersi pericoloso."});
   }
  }
- if(Math.random()<.65)events.push({minute:Math.floor(Math.random()*80)+5,text:"Ammonizione per un calciatore in campo."});
- if(Math.random()<.12)events.push({minute:Math.floor(Math.random()*75)+10,text:"Cartellino rosso! Una squadra resta in dieci."});
- events.push({minute:45,text:"Fine primo tempo."});
- events.push({minute:90,text:"Triplice fischio! La partita è terminata."});
+ events.push({minute:45,text:"Fine primo tempo."},{minute:90,text:"Triplice fischio!"});
  events.sort((a,b)=>a.minute-b.minute);
- const me=league.find(x=>x.name===selectedClub.name),opp=league.find(x=>x.name===opponent.name);
- me.played++;opp.played++;me.gf+=myGoals;me.ga+=theirGoals;opp.gf+=theirGoals;opp.ga+=myGoals;
- if(myGoals>theirGoals){me.w++;me.points+=3;opp.l++;}
- else if(myGoals<theirGoals){opp.w++;opp.points+=3;me.l++;}
+ me.played++;
+ opp.played++;
+ me.gf+=my;me.ga+=their;
+ opp.gf+=their;opp.ga+=my;
+ if(my>their){me.w++;me.points+=3;opp.l++;}
+ else if(my<their){opp.w++;opp.points+=3;me.l++;}
  else{me.d++;opp.d++;me.points++;opp.points++;}
- playedOpponents.push(opponent.name);
- lastMatch={opponent:opponent.name,myGoals,theirGoals,events,home,matchday,shots:myShots+theirShots,poss:myPoss};
+ lastMatch={opponent:opp.name,myGoals:my,theirGoals:their,events,home,day:matchday,shots};
+ pendingFixture=null;
  matchday++;
  saveGame();
- showMatchResult(opponent,lastMatch);
+ showMatchResult(lastMatch);
 }
-function showMatchResult(opponent,result){
- document.getElementById("matchDay").textContent="GIORNATA "+result.matchday+" · RISULTATO FINALE";
- document.getElementById("matchVenue").textContent=result.home?"In casa":"In trasferta";
- document.getElementById("matchTeams").textContent=result.home?selectedClub.name+"  -  "+opponent.name:opponent.name+"  -  "+selectedClub.name;
- document.getElementById("matchScore").textContent=result.home?result.myGoals+" : "+result.theirGoals:result.theirGoals+" : "+result.myGoals;
- let status=result.myGoals>result.theirGoals?"VITTORIA!":result.myGoals<result.theirGoals?"SCONFITTA":"PAREGGIO";
- document.getElementById("matchStatus").textContent=status;
+
+function showMatchResult(r){
+ document.getElementById("matchDay").textContent="GIORNATA "+r.day+" · RISULTATO FINALE";
+ document.getElementById("matchVenue").textContent=r.home?"In casa":"In trasferta";
+ document.getElementById("matchTeams").textContent=r.home?selectedClub.name+" - "+r.opponent:r.opponent+" - "+selectedClub.name;
+ document.getElementById("matchScore").textContent=r.home?r.myGoals+" : "+r.theirGoals:r.theirGoals+" : "+r.myGoals;
+ document.getElementById("matchStatus").textContent=r.myGoals>r.theirGoals?"VITTORIA!":r.myGoals<r.theirGoals?"SCONFITTA":"PAREGGIO";
  document.getElementById("preMatch").classList.add("hidden");
  document.getElementById("matchReport").classList.remove("hidden");
- const area=document.getElementById("commentary");area.innerHTML="";
- result.events.forEach(e=>{const div=document.createElement("div");div.className="event";const strong=document.createElement("strong");strong.textContent=e.minute+"' ";div.append(strong,document.createTextNode(e.text));area.appendChild(div);});
- document.getElementById("matchStats").innerHTML="<div class='statrow'><span>Tiri totali</span><strong>"+result.shots+"</strong></div><div class='statrow'><span>Possesso palla stimato</span><strong>"+Math.round(result.poss)+"% - "+(100-Math.round(result.poss))+"%</strong></div><div class='statrow'><span>Forza della tua formazione</span><strong>"+Math.round(teamStrength().overall)+"</strong></div>";
+ const a=document.getElementById("commentary");
+ a.innerHTML="";
+ r.events.forEach(e=>{
+  const d=document.createElement("div");
+  d.className="event";
+  const strong=document.createElement("strong");
+  strong.textContent=e.minute+"' ";
+  d.append(strong,document.createTextNode(e.text));
+  a.appendChild(d);
+ });
+ document.getElementById("matchStats").innerHTML=
+  "<div class='statrow'><span>Tiri simulati</span><strong>"+r.shots+"</strong></div><div class='statrow'><span>Forza formazione</span><strong>"+Math.round(teamStrength())+"</strong></div>";
  show("match");
 }
+
 function showTable(){
- const sorted=[...league].sort((a,b)=>b.points-a.points||(b.gf-b.ga)-(a.gf-a.ga)||b.gf-a.gf);
+ const sorted=[...league].sort((a,b)=>b.points-a.points||((b.gf-b.ga)-(a.gf-a.ga))||b.gf-a.gf);
  document.getElementById("tableGroup").textContent=selectedClub.group;
- const body=document.getElementById("tableBody");body.innerHTML="";
+ const body=document.getElementById("tableBody");
+ body.innerHTML="";
  sorted.forEach((x,i)=>{
   const tr=document.createElement("tr");
-  [i+1,x.name,x.played,x.w,x.d,x.l,x.gf-x.ga,x.points].forEach((v,j)=>{const td=document.createElement("td");td.textContent=v;if(x.name===selectedClub.name)td.style.color="#e4c46e";tr.appendChild(td);});
+  [i+1,x.name,x.played,x.w,x.d,x.l,x.gf-x.ga,x.points].forEach(v=>{
+   const td=document.createElement("td");
+   td.textContent=v;
+   if(x.name===selectedClub.name)td.style.color="#e4c46e";
+   tr.appendChild(td);
+  });
   body.appendChild(tr);
- });show("table");
+ });
+ show("table");
+}
+
+function showCalendar(){
+ document.getElementById("calendarGroup").textContent=selectedClub.group+" · 34 giornate";
+ const s=document.getElementById("calendarDay");
+ s.innerHTML="";
+ for(let i=1;i<=34;i++){
+  const o=document.createElement("option");
+  o.value=i;
+  o.textContent="Giornata "+i;
+  s.appendChild(o);
+ }
+ s.value=Math.min(matchday,34);
+ renderCalendar();
+ show("calendar");
+}
+
+function renderCalendar(){
+ const day=Number(document.getElementById("calendarDay").value);
+ const round=fixtures.find(r=>r.day===day);
+ const area=document.getElementById("calendarGames");
+ area.innerHTML="";
+ if(!round)return;
+ round.games.forEach(g=>{
+  const d=document.createElement("div");
+  d.className="fixture";
+  const text=document.createElement("span");
+  text.textContent=g.home+" — "+g.away;
+  if(g.home===selectedClub.name||g.away===selectedClub.name){
+   text.style.color="#e4c46e";
+   text.style.fontWeight="bold";
+  }
+  d.appendChild(text);
+  area.appendChild(d);
+ });
 }
 </script>
 </body>
