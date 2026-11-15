@@ -372,7 +372,7 @@ function selectClub(i){
  document.getElementById("chosenGroup").textContent=selectedClub.group;show("clubDetail");
 }
 function makePlayers(){
- const positions=[...Array(3).fill(["POR","Portiere"]),...Array(8).fill(["DIF","Difensore"]),...Array(8).fill(["CEN","Centrocampista"]),...Array(6).fill(["ATT","Attaccante")];
+ const positions=[...Array(3).fill(["POR","Portiere"]),...Array(8).fill(["DIF","Difensore"]),...Array(8).fill(["CEN","Centrocampista"]),...Array(6).fill(["ATT","Attaccante"])];
  const used=[];
  return positions.map((pos,i)=>{
   let n;do{n=firstNames[Math.floor(Math.random()*firstNames.length)]+" "+lastNames[Math.floor(Math.random()*lastNames.length)];}while(used.includes(n));used.push(n);
