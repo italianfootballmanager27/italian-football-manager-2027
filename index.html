@@ -249,7 +249,7 @@ td:first-child,th:first-child{text-align:left}
 <thead><tr><th>#</th><th>Squadra</th><th>PG</th><th>V</th><th>N</th><th>P</th><th>DR</th><th>PT</th></tr></thead>
 <tbody id="tableBody"></tbody>
 </table>
-<p class="small">Classifica provvisoria: vengono aggiornati i risultati delle partite giocate dalla tua squadra.</p>
+<p class="small">Classifica completa: vengono aggiornati tutti i risultati del girone dopo ogni giornata.</p>
 </div>
 <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
 </section>
@@ -269,7 +269,7 @@ td:first-child,th:first-child{text-align:left}
 </section>
 
 </main>
-<footer>ITALIAN FOOTBALL MANAGER 2027 · VERSIONE 0.7</footer>
+<footer>ITALIAN FOOTBALL MANAGER 2027 · VERSIONE 0.8</footer>
 
 <script>
 const groups={
@@ -373,7 +373,7 @@ function generateFixtures(){
   for(let i=0;i<9;i++){
    let home=rotation[i],away=rotation[17-i];
    if((r+i)%2===1)[home,away]=[away,home];
-   games.push({home,away});
+   games.push({home,away,played:false});
   }
   rounds.push(games);
   const fixed=rotation[0];
@@ -383,7 +383,7 @@ function generateFixtures(){
  }
  fixtures=[];
  rounds.forEach((games,i)=>fixtures.push({day:i+1,games}));
- rounds.forEach((games,i)=>fixtures.push({day:i+18,games:games.map(g=>({home:g.away,away:g.home}))}));
+ rounds.forEach((games,i)=>fixtures.push({day:i+18,games:games.map(g=>({home:g.away,away:g.home,played:false}))}));
 }
 
 function createLineup(){
@@ -444,15 +444,24 @@ function loadCareer(){
    fixtures=Array.isArray(s.fixtures)?s.fixtures:[];
    matchday=Number(s.matchday)||1;
    lastMatch=s.lastMatch||null;
+
    if(fixtures.length!==34||!fixtures.some(r=>r.day===matchday)){
     generateFixtures();
     matchday=1;
-    alert("Il calendario è stato ricostruito. La rosa e le tattiche sono state conservate.");
+    alert("Il calendario è stato ricostruito. Rosa e tattiche sono state conservate.");
+   }else{
+    // Compatibilità con i calendari della versione 0.7
+    fixtures.forEach(round=>{
+     round.games.forEach(g=>{
+      if(typeof g.played!=="boolean")g.played=!!(g.homeGoals!==undefined&&g.awayGoals!==undefined);
+     });
+    });
    }
   }else{
    makeLeague();
    alert("Carriera aggiornata al campionato da 18 squadre. Rosa e tattiche conservate; la classifica e il calendario ripartono da zero.");
   }
+
   pendingFixture=null;
   saveGame();
   showDashboard();
@@ -615,13 +624,58 @@ function teamStrength(){
  return avg+bonus;
 }
 
+// Simula una partita tra due squadre avversarie
+function simulateOtherMatch(homeName,awayName){
+ const home=league.find(t=>t.name===homeName);
+ const away=league.find(t=>t.name===awayName);
+ if(!home||!away)return null;
+
+ const homeStrength=55+Math.random()*14+2;
+ const awayStrength=55+Math.random()*14;
+ const advantage=homeStrength-awayStrength;
+ const probability=Math.max(0.25,Math.min(0.75,0.5+advantage*0.018));
+
+ let hg=0,ag=0;
+
+ for(let i=0;i<12;i++){
+  if(Math.random()<probability){
+   if(Math.random()<0.24+Math.max(-0.08,Math.min(0.12,advantage*0.009)))hg++;
+  }else{
+   if(Math.random()<0.22-Math.max(-0.08,Math.min(0.12,advantage*0.009)))ag++;
+  }
+ }
+
+ home.played++;
+ away.played++;
+ home.gf+=hg;
+ home.ga+=ag;
+ away.gf+=ag;
+ away.ga+=hg;
+
+ if(hg>ag){
+  home.w++;
+  home.points+=3;
+  away.l++;
+ }else if(hg<ag){
+  away.w++;
+  away.points+=3;
+  home.l++;
+ }else{
+  home.d++;
+  away.d++;
+  home.points++;
+  away.points++;
+ }
+
+ return {home:homeName,away:awayName,homeGoals:hg,awayGoals:ag};
+}
+
 function playMatch(){
  if(!pendingFixture)pendingFixture=getNextFixture();
  if(!pendingFixture){alert("Campionato terminato!");return;}
  const strength=teamStrength();
  if(strength===null){alert("Devi schierare tutti gli 11 titolari!");return;}
 
- // Si utilizza esattamente la partita mostrata nella schermata pre-partita.
  const fixture={...pendingFixture};
  const home=fixture.home===selectedClub.name;
  const oppName=home?fixture.away:fixture.home;
@@ -659,16 +713,64 @@ function playMatch(){
  events.push({minute:45,text:"Fine primo tempo."},{minute:90,text:"Triplice fischio!"});
  events.sort((a,b)=>a.minute-b.minute);
 
+ // Aggiorna le statistiche della partita della nostra squadra
  me.played++;
  opp.played++;
- me.gf+=my;me.ga+=their;
- opp.gf+=their;opp.ga+=my;
+ me.gf+=my;
+ me.ga+=their;
+ opp.gf+=their;
+ opp.ga+=my;
 
- if(my>their){me.w++;me.points+=3;opp.l++;}
- else if(my<their){opp.w++;opp.points+=3;me.l++;}
- else{me.d++;opp.d++;me.points++;opp.points++;}
+ if(my>their){
+  me.w++;
+  me.points+=3;
+  opp.l++;
+ }else if(my<their){
+  opp.w++;
+  opp.points+=3;
+  me.l++;
+ }else{
+  me.d++;
+  opp.d++;
+  me.points++;
+  opp.points++;
+ }
 
- lastMatch={opponent:opp.name,myGoals:my,theirGoals:their,events,home,day:matchday,shots,strength:Math.round(strength)};
+ // Registra il risultato della nostra partita nel calendario
+ const round=fixtures.find(r=>r.day===matchday);
+ if(round){
+  round.games.forEach(g=>{
+   if(g.home===fixture.home&&g.away===fixture.away){
+    g.homeGoals=home?my:their;
+    g.awayGoals=home?their:my;
+    g.played=true;
+   }
+  });
+
+  // Simula anche tutte le altre partite della giornata
+  round.games.forEach(g=>{
+   if(!g.played){
+    const result=simulateOtherMatch(g.home,g.away);
+    if(result){
+     g.homeGoals=result.homeGoals;
+     g.awayGoals=result.awayGoals;
+     g.played=true;
+    }
+   }
+  });
+ }
+
+ lastMatch={
+  opponent:opp.name,
+  myGoals:my,
+  theirGoals:their,
+  events,
+  home,
+  day:matchday,
+  shots,
+  strength:Math.round(strength)
+ };
+
  pendingFixture=null;
  matchday++;
  saveGame();
@@ -746,11 +848,26 @@ function renderCalendar(){
   d.className="fixture";
   const text=document.createElement("span");
   text.textContent=g.home+" — "+g.away;
+
   if(g.home===selectedClub.name||g.away===selectedClub.name){
    text.style.color="#e4c46e";
    text.style.fontWeight="bold";
   }
-  d.appendChild(text);
+
+  if(g.played){
+   const result=document.createElement("strong");
+   result.textContent=g.homeGoals+" - "+g.awayGoals;
+   result.style.color="#e4c46e";
+   d.appendChild(text);
+   d.appendChild(result);
+  }else{
+   d.appendChild(text);
+   const pending=document.createElement("span");
+   pending.textContent="Da giocare";
+   pending.style.color="#b8c7bd";
+   d.appendChild(pending);
+  }
+
   area.appendChild(d);
  });
 }
