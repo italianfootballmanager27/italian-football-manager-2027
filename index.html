@@ -9,35 +9,65 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#101d19;color:white;font-family:Arial,sans-serif}
-header{background:#172c24;padding:20px;text-align:center;border-bottom:2px solid #c4a34f}
-h1{font-size:23px;color:#e4c46e;margin:5px}
+header{background:#172c24;padding:18px;text-align:center;border-bottom:2px solid #c4a34f}
+h1{font-size:22px;color:#e4c46e;margin:5px}
 header p{font-size:12px;color:#b8c7bd;margin:5px}
-main{max-width:700px;margin:auto;padding:16px}
-.panel{background:#192c23;border:1px solid #456c55;border-radius:12px;padding:17px;margin:13px 0}
-.hero{text-align:center;background:linear-gradient(135deg,#1d4836,#10251d);padding:25px 15px;border-radius:15px}
+main{max-width:720px;margin:auto;padding:14px}
+.panel{background:#192c23;border:1px solid #456c55;border-radius:12px;padding:15px;margin:12px 0}
+.hero{text-align:center;background:linear-gradient(135deg,#1d4836,#10251d);padding:22px 12px;border-radius:14px}
 h2{color:#e4c46e}
 h3{margin:8px 0;color:#e4c46e}
-button{width:100%;padding:14px;margin-top:10px;border:0;border-radius:8px;font-weight:bold;background:#d1ad54;color:#15231b;cursor:pointer}
+button{width:100%;padding:13px;margin-top:9px;border:0;border-radius:8px;font-weight:bold;background:#d1ad54;color:#15231b;cursor:pointer}
 .secondary{background:#294438;color:white}
-input,select{width:100%;padding:13px;margin-top:9px;border-radius:7px;border:1px solid #617b69;background:#1b3026;color:white;font-size:15px}
-label{display:block;margin-top:18px;font-weight:bold}
+input,select{width:100%;padding:12px;margin-top:8px;border-radius:7px;border:1px solid #617b69;background:#1b3026;color:white;font-size:14px}
+label{display:block;margin-top:14px;font-weight:bold;font-size:13px}
 .tag{display:inline-block;background:#c4a34f;color:#17251d;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:bold}
 .small{font-size:12px;color:#b8c7bd;line-height:1.5}
 .hidden{display:none!important}
-.club,.player{background:#192c23;border:1px solid #456c55;border-radius:10px;padding:13px;margin-top:10px}
+.club,.player{background:#192c23;border:1px solid #456c55;border-radius:10px;padding:12px;margin-top:10px}
 .club p,.player p{font-size:12px;color:#b8c7bd;margin:5px 0}
-.player{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.player{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .rating{font-size:22px;color:#e4c46e;font-weight:bold}
-.player strong{font-size:14px}
-.stats{font-size:11px;color:#a9beb0}
 nav{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
 nav button{width:auto;flex:1;min-width:100px;font-size:11px;padding:11px}
 footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
+.pitch{
+ position:relative;width:100%;height:520px;max-width:480px;margin:14px auto;
+ border:3px solid #e9f1e8;border-radius:5px;overflow:hidden;
+ background:repeating-linear-gradient(0deg,#267647 0px,#267647 65px,#2d824e 65px,#2d824e 130px);
+}
+.pitch:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid #e9f1e8}
+.pitch:after{content:"";position:absolute;width:110px;height:110px;border:2px solid #e9f1e8;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
+.boxline{position:absolute;left:22%;width:56%;height:13%;border:2px solid #e9f1e8}
+.boxline.top{top:0;border-top:0}
+.boxline.bottom{bottom:0;border-bottom:0}
+.goal{position:absolute;left:38%;width:24%;height:4%;border:2px solid #e9f1e8}
+.goal.top{top:0;border-top:0}
+.goal.bottom{bottom:0;border-bottom:0}
+.player-slot{
+ position:absolute;transform:translate(-50%,-50%);width:68px;text-align:center;
+ z-index:2;
+}
+.player-shirt{
+ width:36px;height:36px;border-radius:50%;margin:auto;
+ display:flex;align-items:center;justify-content:center;
+ background:#f0c94f;color:#17251d;border:2px solid white;
+ font-weight:bold;font-size:12px;box-shadow:0 2px 5px #123;
+}
+.player-slot select{
+ display:block;width:78px;margin:4px 0 0 -5px;padding:4px 2px;
+ font-size:9px;text-align:center;background:#12271d;color:white;
+ border:1px solid #d7c16f;border-radius:5px;
+}
+.slot-name{font-size:9px;font-weight:bold;text-shadow:1px 1px 2px black;white-space:nowrap}
+.slot-rating{font-size:10px;color:#ffe58a;font-weight:bold;text-shadow:1px 1px 2px black}
+.bench-item{display:flex;justify-content:space-between;padding:9px;border-bottom:1px solid #456c55;font-size:12px}
+.bench-item:last-child{border:0}
 </style>
 </head>
 <body>
 <header>
- <div style="font-size:32px">⚽</div>
+ <div style="font-size:30px">⚽</div>
  <h1>ITALIAN FOOTBALL MANAGER 2027</h1>
  <p>DALLA SERIE D ALLA GLORIA</p>
 </header>
@@ -48,7 +78,7 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
   <span class="tag">STAGIONE 2026/2027</span>
   <h2>DALLA SERIE D ALLA SERIE A</h2>
   <p>Costruisci la tua squadra e scrivi la storia del calcio italiano.</p>
-  <div style="font-size:48px">🏟️</div>
+  <div style="font-size:45px">🏟️</div>
  </div>
  <button onclick="show('career')">NUOVA CARRIERA</button>
  <button class="secondary" onclick="loadCareer()">CARICA CARRIERA</button>
@@ -56,7 +86,6 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
 
 <section id="career" class="hidden">
  <div class="panel">
-  <span class="tag">NUOVA AVVENTURA</span>
   <h2>Crea il tuo manager</h2>
   <label>Nome e cognome</label>
   <input id="manager" maxlength="35" placeholder="Es. Marco Rossi">
@@ -92,7 +121,7 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
 
 <section id="clubDetail" class="hidden">
  <div class="hero">
-  <div style="font-size:45px">🛡️</div>
+  <div style="font-size:42px">🛡️</div>
   <span class="tag">LA TUA SOCIETÀ</span>
   <h2 id="chosenClub"></h2>
   <p id="chosenInfo"></p>
@@ -116,12 +145,14 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
  </div>
  <nav>
   <button onclick="showRoster()">ROSA</button>
+  <button onclick="showTactics()">FORMAZIONE</button>
   <button onclick="show('dashboard')">SOCIETÀ</button>
  </nav>
  <div class="panel">
-  <h3>Benvenuto alla guida della società!</h3>
-  <p class="small">La tua carriera è stata salvata. Puoi consultare i 25 calciatori della rosa.</p>
-  <button onclick="showRoster()">GESTISCI LA ROSA</button>
+  <h3>Centro di gestione</h3>
+  <p class="small">Gestisci la rosa e prepara la tua squadra per il campionato.</p>
+  <button onclick="showTactics()">GESTISCI LA FORMAZIONE</button>
+  <button class="secondary" onclick="showRoster()">CONSULTA LA ROSA</button>
   <button class="secondary" onclick="show('home')">MENU PRINCIPALE</button>
  </div>
 </section>
@@ -131,7 +162,7 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
   <span class="tag">PRIMA SQUADRA</span>
   <h2>ROSA CALCIATORI</h2>
   <p id="rosterClub"></p>
-  <div style="font-size:25px">👕 25 CALCIATORI</div>
+  <strong>25 CALCIATORI</strong>
  </div>
  <div class="panel">
   <h3>Composizione della rosa</h3>
@@ -149,8 +180,46 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
  <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
 </section>
 
+<section id="tactics" class="hidden">
+ <div class="hero">
+  <span class="tag">CENTRO TATTICO</span>
+  <h2>LA TUA FORMAZIONE</h2>
+  <p id="tacticClub"></p>
+ </div>
+ <div class="panel">
+  <label>Modulo di gioco</label>
+  <select id="formation" onchange="changeFormation()">
+   <option value="433">4-3-3</option>
+   <option value="442">4-4-2</option>
+   <option value="352">3-5-2</option>
+   <option value="4231">4-2-3-1</option>
+  </select>
+  <p class="small">Seleziona il modulo e scegli i calciatori da schierare in ogni posizione.</p>
+ </div>
+
+ <div class="pitch">
+  <div class="boxline top"></div>
+  <div class="boxline bottom"></div>
+  <div class="goal top"></div>
+  <div class="goal bottom"></div>
+  <div id="pitchPlayers"></div>
+ </div>
+
+ <div class="panel">
+  <h3>La tua panchina</h3>
+  <p class="small">I migliori 7 calciatori non schierati tra i titolari.</p>
+  <div id="bench"></div>
+ </div>
+ <div class="panel">
+  <h3>Riepilogo formazione</h3>
+  <p id="lineupSummary" class="small"></p>
+  <button onclick="saveTactics()">SALVA FORMAZIONE</button>
+  <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
+ </div>
+</section>
+
 </main>
-<footer>ITALIAN FOOTBALL MANAGER 2027 · VERSIONE 0.3</footer>
+<footer>ITALIAN FOOTBALL MANAGER 2027 · VERSIONE 0.4</footer>
 
 <script>
 const clubs=[
@@ -177,9 +246,40 @@ const clubs=[
 const firstNames=["Luca","Matteo","Andrea","Davide","Simone","Marco","Lorenzo","Alessandro","Federico","Riccardo","Tommaso","Gabriele","Filippo","Nicola","Samuele","Diego","Edoardo","Michele","Stefano","Christian","Fabio","Daniele","Pietro","Enrico","Leonardo","Giorgio","Antonio","Jacopo","Roberto","Massimo"];
 const lastNames=["Ferrari","Romano","Conti","Marino","Greco","Costa","Rinaldi","Moretti","Gallo","Caruso","Lombardi","De Luca","Barbieri","Fontana","Mancini","Ricci","Esposito","Serra","Colombo","Martini","Villa","Pellegrini","Leone","Ferri","Santoro","Marchetti","Testa","Bernardi","Farina","Longo"];
 
+const formations={
+ "433":[
+  {name:"POR",role:"POR",x:50,y:89},
+  {name:"TD",role:"DIF",x:83,y:70},{name:"DC",role:"DIF",x:61,y:74},
+  {name:"DC",role:"DIF",x:39,y:74},{name:"TS",role:"DIF",x:17,y:70},
+  {name:"CC",role:"CEN",x:70,y:51},{name:"CC",role:"CEN",x:50,y:57},{name:"CC",role:"CEN",x:30,y:51},
+  {name:"AD",role:"ATT",x:80,y:27},{name:"ATT",role:"ATT",x:50,y:20},{name:"AS",role:"ATT",x:20,y:27}
+ ],
+ "442":[
+  {name:"POR",role:"POR",x:50,y:89},
+  {name:"TD",role:"DIF",x:83,y:70},{name:"DC",role:"DIF",x:61,y:74},{name:"DC",role:"DIF",x:39,y:74},{name:"TS",role:"DIF",x:17,y:70},
+  {name:"ED",role:"CEN",x:83,y:49},{name:"CC",role:"CEN",x:61,y:54},{name:"CC",role:"CEN",x:39,y:54},{name:"ES",role:"CEN",x:17,y:49},
+  {name:"ATT",role:"ATT",x:62,y:25},{name:"ATT",role:"ATT",x:38,y:25}
+ ],
+ "352":[
+  {name:"POR",role:"POR",x:50,y:89},
+  {name:"DC",role:"DIF",x:75,y:73},{name:"DC",role:"DIF",x:50,y:76},{name:"DC",role:"DIF",x:25,y:73},
+  {name:"ED",role:"CEN",x:88,y:49},{name:"CC",role:"CEN",x:69,y:55},{name:"CC",role:"CEN",x:50,y:48},{name:"CC",role:"CEN",x:31,y:55},{name:"ES",role:"CEN",x:12,y:49},
+  {name:"ATT",role:"ATT",x:63,y:24},{name:"ATT",role:"ATT",x:37,y:24}
+ ],
+ "4231":[
+  {name:"POR",role:"POR",x:50,y:89},
+  {name:"TD",role:"DIF",x:83,y:70},{name:"DC",role:"DIF",x:61,y:74},{name:"DC",role:"DIF",x:39,y:74},{name:"TS",role:"DIF",x:17,y:70},
+  {name:"CC",role:"CEN",x:61,y:57},{name:"CC",role:"CEN",x:39,y:57},
+  {name:"AD",role:"CEN",x:78,y:36},{name:"TQ",role:"CEN",x:50,y:32},{name:"AS",role:"CEN",x:22,y:36},
+  {name:"ATT",role:"ATT",x:50,y:16}
+ ]
+};
+
 let manager="";
 let selectedClub=null;
 let players=[];
+let lineup=[];
+let currentFormation="433";
 
 function show(id){
  document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
@@ -248,14 +348,26 @@ function makePlayers(){
   };
  });
 }
+function createDefaultLineup(){
+ const slots=formations[currentFormation];
+ const available=[...players].sort((a,b)=>b.overall-a.overall);
+ const used=[];
+ return slots.map(slot=>{
+  const p=available.find(x=>x.role===slot.role&&!used.includes(x.id));
+  if(p)used.push(p.id);
+  return p?p.id:null;
+ });
+}
 function startCareer(){
  if(!manager||!selectedClub){alert("Completa la scelta del manager e della squadra.");return;}
  players=makePlayers();
+ currentFormation="433";
+ lineup=createDefaultLineup();
  saveGame();
  showDashboard();
 }
 function saveGame(){
- const save={manager:manager,club:selectedClub,season:"2026/2027",players:players};
+ const save={manager:manager,club:selectedClub,season:"2026/2027",players:players,formation:currentFormation,lineup:lineup};
  localStorage.setItem("ifm2027_save",JSON.stringify(save));
 }
 function showDashboard(){
@@ -271,16 +383,15 @@ function loadCareer(){
   const save=JSON.parse(raw);
   manager=save.manager;
   selectedClub=save.club;
-  players=save.players||makePlayers();
-  if(!save.players)saveGame();
+  players=save.players||[];
+  currentFormation=save.formation||"433";
+  lineup=save.lineup||[];
+  if(players.length!==25){alert("Salvataggio non compatibile. Crea una nuova carriera.");return;}
+  if(lineup.length!==formations[currentFormation].length)lineup=createDefaultLineup();
   showDashboard();
  }catch(e){alert("Salvataggio non leggibile. Crea una nuova carriera.");}
 }
 function showRoster(){
- if(players.length!==25){
-  alert("Non è disponibile una rosa completa. Avvia una nuova carriera.");
-  return;
- }
  document.getElementById("rosterClub").textContent=selectedClub.name;
  const count={POR:0,DIF:0,CEN:0,ATT:0};
  players.forEach(p=>count[p.role]++);
@@ -303,21 +414,107 @@ function renderPlayers(){
   name.textContent=p.name;
   const details=document.createElement("p");
   details.textContent=p.position+" · "+p.age+" anni";
-  const stats=document.createElement("div");
-  stats.className="stats";
+  const stats=document.createElement("p");
   stats.textContent="Potenziale "+p.potential+" · Stipendio €"+p.wage.toLocaleString("it-IT")+"/mese";
   info.append(name,details,stats);
   const rating=document.createElement("div");
   rating.className="rating";
   rating.textContent=p.overall;
-  const caption=document.createElement("div");
-  caption.className="stats";
-  caption.textContent="VAL";
-  const right=document.createElement("div");
-  right.append(rating,caption);
-  item.append(info,right);
+  item.append(info,rating);
   list.appendChild(item);
  });
+}
+function showTactics(){
+ document.getElementById("tacticClub").textContent=selectedClub.name;
+ document.getElementById("formation").value=currentFormation;
+ renderPitch();
+ show("tactics");
+}
+function changeFormation(){
+ currentFormation=document.getElementById("formation").value;
+ lineup=createDefaultLineup();
+ renderPitch();
+ saveGame();
+}
+function renderPitch(){
+ const pitch=document.getElementById("pitchPlayers");
+ pitch.innerHTML="";
+ const slots=formations[currentFormation];
+ slots.forEach((slot,index)=>{
+  const player=players.find(p=>p.id===lineup[index]);
+  const el=document.createElement("div");
+  el.className="player-slot";
+  el.style.left=slot.x+"%";
+  el.style.top=slot.y+"%";
+
+  const shirt=document.createElement("div");
+  shirt.className="player-shirt";
+  shirt.textContent=player?player.overall:slot.name;
+
+  const name=document.createElement("div");
+  name.className="slot-name";
+  name.textContent=player?player.name:slot.name;
+
+  const rating=document.createElement("div");
+  rating.className="slot-rating";
+  rating.textContent=player?player.overall+" VAL":"";
+
+  const select=document.createElement("select");
+  const placeholder=document.createElement("option");
+  placeholder.value="";
+  placeholder.textContent=slot.name;
+  select.appendChild(placeholder);
+
+  const used=lineup.filter((id,i)=>id!==null&&i!==index);
+  players.filter(p=>p.role===slot.role&&!used.includes(p.id))
+   .sort((a,b)=>b.overall-a.overall)
+   .forEach(p=>{
+    const option=document.createElement("option");
+    option.value=p.id;
+    option.textContent=p.name+" ("+p.overall+")";
+    if(player&&player.id===p.id)option.selected=true;
+    select.appendChild(option);
+   });
+
+  select.value=player?String(player.id):"";
+  select.onchange=()=>{
+   lineup[index]=select.value?Number(select.value):null;
+   renderPitch();
+   saveGame();
+  };
+  el.append(shirt,name,rating,select);
+  pitch.appendChild(el);
+ });
+ renderBench();
+ updateSummary();
+}
+function renderBench(){
+ const used=lineup.filter(id=>id!==null);
+ const remaining=players.filter(p=>!used.includes(p.id))
+  .sort((a,b)=>b.overall-a.overall).slice(0,7);
+ const bench=document.getElementById("bench");
+ bench.innerHTML="";
+ remaining.forEach((p,i)=>{
+  const row=document.createElement("div");
+  row.className="bench-item";
+  const left=document.createElement("span");
+  left.textContent=(i+1)+". "+p.name+" · "+p.role;
+  const right=document.createElement("strong");
+  right.textContent=p.overall;
+  row.append(left,right);
+  bench.appendChild(row);
+ });
+}
+function updateSummary(){
+ const used=lineup.filter(id=>id!==null).length;
+ const avg=players.filter(p=>lineup.includes(p.id));
+ const average=avg.length?Math.round(avg.reduce((s,p)=>s+p.overall,0)/avg.length):0;
+ document.getElementById("lineupSummary").textContent=
+ "Modulo: "+currentFormation+" · Giocatori schierati: "+used+"/11 · Valutazione media: "+average;
+}
+function saveTactics(){
+ saveGame();
+ alert("Formazione salvata correttamente!");
 }
 </script>
 </body>
