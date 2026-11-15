@@ -249,7 +249,7 @@ td:first-child,th:first-child{text-align:left}
 <thead><tr><th>#</th><th>Squadra</th><th>PG</th><th>V</th><th>N</th><th>P</th><th>DR</th><th>PT</th></tr></thead>
 <tbody id="tableBody"></tbody>
 </table>
-<p class="small">Girone fittizio di 18 squadre. Classifica aggiornata dopo ogni partita.</p>
+<p class="small">Classifica provvisoria: vengono aggiornati i risultati delle partite giocate dalla tua squadra.</p>
 </div>
 <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
 </section>
@@ -351,20 +351,13 @@ function makePlayers(){
   used.push(n);
   const age=18+Math.floor(Math.random()*17);
   const overall=48+Math.floor(Math.random()*25);
-  return {
-   id:i+1,name:n,role:p[0],position:p[1],age,overall,
-   potential:Math.min(90,overall+Math.floor(Math.random()*17)),
-   wage:350+overall*32+Math.floor(Math.random()*250)
-  };
+  return {id:i+1,name:n,role:p[0],position:p[1],age,overall,potential:Math.min(90,overall+Math.floor(Math.random()*17)),wage:350+overall*32+Math.floor(Math.random()*250)};
  });
 }
 
 function makeLeague(){
  const list=groups[selectedClub.group];
- league=list.map(c=>({
-  name:c[0],city:c[1],played:0,w:0,d:0,l:0,
-  gf:0,ga:0,points:0
- }));
+ league=list.map(c=>({name:c[0],city:c[1],played:0,w:0,d:0,l:0,gf:0,ga:0,points:0}));
  generateFixtures();
  matchday=1;
  lastMatch=null;
@@ -374,11 +367,11 @@ function makeLeague(){
 function generateFixtures(){
  const rotation=league.map(t=>t.name);
  const rounds=[];
+ if(rotation.length!==18)throw new Error("Il girone deve avere 18 squadre.");
  for(let r=0;r<17;r++){
   const games=[];
   for(let i=0;i<9;i++){
-   let home=rotation[i];
-   let away=rotation[17-i];
+   let home=rotation[i],away=rotation[17-i];
    if((r+i)%2===1)[home,away]=[away,home];
    games.push({home,away});
   }
@@ -390,10 +383,7 @@ function generateFixtures(){
  }
  fixtures=[];
  rounds.forEach((games,i)=>fixtures.push({day:i+1,games}));
- rounds.forEach((games,i)=>fixtures.push({
-  day:i+18,
-  games:games.map(g=>({home:g.away,away:g.home}))
- }));
+ rounds.forEach((games,i)=>fixtures.push({day:i+18,games:games.map(g=>({home:g.away,away:g.home}))}));
 }
 
 function createLineup(){
@@ -417,11 +407,14 @@ function startCareer(){
 }
 
 function saveGame(){
- localStorage.setItem("ifm2027_save",JSON.stringify({
-  manager,club:selectedClub,season:"2026/2027",
-  players,formation:currentFormation,lineup,tactics,
-  league,fixtures,matchday,lastMatch
- }));
+ if(!selectedClub||!players.length)return;
+ try{
+  localStorage.setItem("ifm2027_save",JSON.stringify({
+   manager,club:selectedClub,season:"2026/2027",
+   players,formation:currentFormation,lineup,tactics,
+   league,fixtures,matchday,lastMatch
+  }));
+ }catch(e){alert("Impossibile salvare la carriera sul dispositivo.");}
 }
 
 function loadCareer(){
@@ -429,30 +422,42 @@ function loadCareer(){
  if(!raw){alert("Non hai ancora una carriera salvata!");return;}
  try{
   const s=JSON.parse(raw);
+  if(!s.manager||!s.club||!Array.isArray(s.players)||s.players.length!==25){
+   alert("Salvataggio non compatibile.");
+   return;
+  }
+  if(!groups[s.club.group]||!groups[s.club.group].some(c=>c[0]===s.club.name)){
+   alert("La squadra del salvataggio non è riconosciuta.");
+   return;
+  }
   manager=s.manager;
   selectedClub=s.club;
-  players=s.players||[];
-  if(!selectedClub||players.length!==25){alert("Salvataggio non compatibile.");return;}
+  players=s.players;
   currentFormation=s.formation||"433";
   if(!formations[currentFormation])currentFormation="433";
   tactics={...defaultTactics,...(s.tactics||{})};
-  lineup=s.lineup||[];
+  lineup=Array.isArray(s.lineup)?s.lineup:[];
   if(lineup.length!==11)lineup=createLineup();
 
-  if(s.league&&s.league.length===18){
+  if(Array.isArray(s.league)&&s.league.length===18){
    league=s.league;
-   fixtures=s.fixtures||[];
-   matchday=s.matchday||1;
+   fixtures=Array.isArray(s.fixtures)?s.fixtures:[];
+   matchday=Number(s.matchday)||1;
    lastMatch=s.lastMatch||null;
-   if(fixtures.length!==34)generateFixtures();
+   if(fixtures.length!==34||!fixtures.some(r=>r.day===matchday)){
+    generateFixtures();
+    matchday=1;
+    alert("Il calendario è stato ricostruito. La rosa e le tattiche sono state conservate.");
+   }
   }else{
    makeLeague();
-   alert("Carriera aggiornata al nuovo campionato da 18 squadre. Rosa e tattiche conservate; il calendario riparte dalla prima giornata.");
+   alert("Carriera aggiornata al campionato da 18 squadre. Rosa e tattiche conservate; la classifica e il calendario ripartono da zero.");
   }
   pendingFixture=null;
+  saveGame();
   showDashboard();
  }catch(e){
-  alert("Salvataggio non leggibile.");
+  alert("Salvataggio non leggibile. Non avviare una nuova carriera se vuoi conservare i tuoi dati.");
  }
 }
 
@@ -461,9 +466,7 @@ function showDashboard(){
  document.getElementById("dashManager").textContent="Allenatore: "+manager;
  document.getElementById("dashGroup").textContent=selectedClub.group;
  const me=league.find(x=>x.name===selectedClub.name);
- document.getElementById("dashStats").textContent=me?
-  me.played+" partite · "+me.points+" punti · "+me.w+" vittorie · "+me.d+" pareggi · "+me.l+" sconfitte":
-  "Campionato pronto";
+ document.getElementById("dashStats").textContent=me?me.played+" partite · "+me.points+" punti · "+me.w+" vittorie · "+me.d+" pareggi · "+me.l+" sconfitte":"Campionato pronto";
  show("dashboard");
 }
 
@@ -471,8 +474,7 @@ function showRoster(){
  document.getElementById("rosterClub").textContent=selectedClub.name;
  const c={POR:0,DIF:0,CEN:0,ATT:0};
  players.forEach(p=>c[p.role]++);
- document.getElementById("rosterCounts").textContent=
-  "Portieri: "+c.POR+" · Difensori: "+c.DIF+" · Centrocampisti: "+c.CEN+" · Attaccanti: "+c.ATT;
+ document.getElementById("rosterCounts").textContent="Portieri: "+c.POR+" · Difensori: "+c.DIF+" · Centrocampisti: "+c.CEN+" · Attaccanti: "+c.ATT;
  document.getElementById("roleFilter").value="Tutti";
  renderPlayers();
  show("roster");
@@ -547,8 +549,7 @@ function renderPitch(){
   area.appendChild(d);
  });
  renderBench();
- document.getElementById("lineupSummary").textContent=
-  "Modulo "+currentFormation+" · "+lineup.filter(Boolean).length+"/11 titolari selezionati";
+ document.getElementById("lineupSummary").textContent="Modulo "+currentFormation+" · "+lineup.filter(Boolean).length+"/11 titolari selezionati";
 }
 
 function renderBench(){
@@ -567,6 +568,7 @@ function updateTactics(){
  Object.keys(defaultTactics).forEach(k=>tactics[k]=document.getElementById(k).value);
  saveGame();
 }
+
 function saveTactics(){
  updateTactics();
  alert("Formazione e tattiche salvate!");
@@ -581,7 +583,9 @@ function showMatch(){
  pendingFixture=getNextFixture();
  if(!pendingFixture){alert("Campionato terminato!");return;}
  const home=pendingFixture.home===selectedClub.name;
- const opp=league.find(t=>t.name===(home?pendingFixture.away:pendingFixture.home));
+ const opponentName=home?pendingFixture.away:pendingFixture.home;
+ const opp=league.find(t=>t.name===opponentName);
+ if(!opp){alert("Avversario non trovato nel campionato.");return;}
  document.getElementById("matchDay").textContent="GIORNATA "+matchday;
  document.getElementById("matchVenue").textContent=home?"In casa":"In trasferta";
  document.getElementById("matchTeams").textContent=pendingFixture.home+" VS "+pendingFixture.away;
@@ -606,6 +610,8 @@ function teamStrength(){
  if(tactics.pressing==="Molto alto")bonus+=1.5;
  if(tactics.style==="Possesso palla")bonus+=1.2;
  if(tactics.style==="Contropiede")bonus+=1;
+ if(tactics.tempo==="Veloce")bonus+=0.5;
+ if(tactics.passing==="Corti"&&tactics.style==="Possesso palla")bonus+=0.5;
  return avg+bonus;
 }
 
@@ -614,17 +620,27 @@ function playMatch(){
  if(!pendingFixture){alert("Campionato terminato!");return;}
  const strength=teamStrength();
  if(strength===null){alert("Devi schierare tutti gli 11 titolari!");return;}
- const home=pendingFixture.home===selectedClub.name;
- const oppName=home?pendingFixture.away:pendingFixture.home;
+
+ // Si utilizza esattamente la partita mostrata nella schermata pre-partita.
+ const fixture={...pendingFixture};
+ const home=fixture.home===selectedClub.name;
+ const oppName=home?fixture.away:fixture.home;
  const opp=league.find(t=>t.name===oppName);
  const me=league.find(t=>t.name===selectedClub.name);
- const adv=strength+(home?2:0)-(57+Math.random()*12+(home?0:2));
+ if(!opp||!me){alert("Errore nel caricamento delle squadre.");return;}
+
+ const advantage=strength+(home?2:0)-(57+Math.random()*12+(home?0:2));
+ const probability=Math.max(0.25,Math.min(0.75,0.5+advantage*0.018));
  let my=0,their=0,events=[],shots=0;
+
  for(let i=0;i<12;i++){
   const min=3+Math.floor(Math.random()*86);
-  const mine=Math.random()<Math.max(.25,Math.min(.75,.5+adv*.018));
+  const mine=Math.random()<probability;
   shots++;
-  const goalChance=mine?0.24:0.22;
+  const goalChance=mine
+   ?0.24+Math.max(-0.08,Math.min(0.12,advantage*0.009))
+   :0.22-Math.max(-0.08,Math.min(0.12,advantage*0.009));
+
   if(Math.random()<goalChance){
    if(mine){
     my++;
@@ -639,16 +655,20 @@ function playMatch(){
    events.push({minute:min,text:mine?"Occasione per "+selectedClub.name+", ma il tiro non trova la rete.":"L'avversario prova a rendersi pericoloso."});
   }
  }
+
  events.push({minute:45,text:"Fine primo tempo."},{minute:90,text:"Triplice fischio!"});
  events.sort((a,b)=>a.minute-b.minute);
+
  me.played++;
  opp.played++;
  me.gf+=my;me.ga+=their;
  opp.gf+=their;opp.ga+=my;
+
  if(my>their){me.w++;me.points+=3;opp.l++;}
  else if(my<their){opp.w++;opp.points+=3;me.l++;}
  else{me.d++;opp.d++;me.points++;opp.points++;}
- lastMatch={opponent:opp.name,myGoals:my,theirGoals:their,events,home,day:matchday,shots};
+
+ lastMatch={opponent:opp.name,myGoals:my,theirGoals:their,events,home,day:matchday,shots,strength:Math.round(strength)};
  pendingFixture=null;
  matchday++;
  saveGame();
@@ -663,6 +683,7 @@ function showMatchResult(r){
  document.getElementById("matchStatus").textContent=r.myGoals>r.theirGoals?"VITTORIA!":r.myGoals<r.theirGoals?"SCONFITTA":"PAREGGIO";
  document.getElementById("preMatch").classList.add("hidden");
  document.getElementById("matchReport").classList.remove("hidden");
+
  const a=document.getElementById("commentary");
  a.innerHTML="";
  r.events.forEach(e=>{
@@ -673,8 +694,10 @@ function showMatchResult(r){
   d.append(strong,document.createTextNode(e.text));
   a.appendChild(d);
  });
+
  document.getElementById("matchStats").innerHTML=
-  "<div class='statrow'><span>Tiri simulati</span><strong>"+r.shots+"</strong></div><div class='statrow'><span>Forza formazione</span><strong>"+Math.round(teamStrength())+"</strong></div>";
+  "<div class='statrow'><span>Tiri simulati</span><strong>"+r.shots+"</strong></div>"+
+  "<div class='statrow'><span>Forza formazione</span><strong>"+r.strength+"</strong></div>";
  show("match");
 }
 
@@ -717,6 +740,7 @@ function renderCalendar(){
  const area=document.getElementById("calendarGames");
  area.innerHTML="";
  if(!round)return;
+
  round.games.forEach(g=>{
   const d=document.createElement("div");
   d.className="fixture";
