@@ -31,11 +31,7 @@ label{display:block;margin-top:14px;font-weight:bold;font-size:13px}
 nav{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
 nav button{width:auto;flex:1;min-width:100px;font-size:11px;padding:11px}
 footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
-.pitch{
- position:relative;width:100%;height:520px;max-width:480px;margin:14px auto;
- border:3px solid #e9f1e8;border-radius:5px;overflow:hidden;
- background:repeating-linear-gradient(0deg,#267647 0px,#267647 65px,#2d824e 65px,#2d824e 130px);
-}
+.pitch{position:relative;width:100%;height:520px;max-width:480px;margin:14px auto;border:3px solid #e9f1e8;border-radius:5px;overflow:hidden;background:repeating-linear-gradient(0deg,#267647 0px,#267647 65px,#2d824e 65px,#2d824e 130px)}
 .pitch:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid #e9f1e8}
 .pitch:after{content:"";position:absolute;width:110px;height:110px;border:2px solid #e9f1e8;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
 .boxline{position:absolute;left:22%;width:56%;height:13%;border:2px solid #e9f1e8}
@@ -44,25 +40,18 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
 .goal{position:absolute;left:38%;width:24%;height:4%;border:2px solid #e9f1e8}
 .goal.top{top:0;border-top:0}
 .goal.bottom{bottom:0;border-bottom:0}
-.player-slot{
- position:absolute;transform:translate(-50%,-50%);width:68px;text-align:center;
- z-index:2;
-}
-.player-shirt{
- width:36px;height:36px;border-radius:50%;margin:auto;
- display:flex;align-items:center;justify-content:center;
- background:#f0c94f;color:#17251d;border:2px solid white;
- font-weight:bold;font-size:12px;box-shadow:0 2px 5px #123;
-}
-.player-slot select{
- display:block;width:78px;margin:4px 0 0 -5px;padding:4px 2px;
- font-size:9px;text-align:center;background:#12271d;color:white;
- border:1px solid #d7c16f;border-radius:5px;
-}
+.player-slot{position:absolute;transform:translate(-50%,-50%);width:68px;text-align:center;z-index:2}
+.player-shirt{width:36px;height:36px;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;background:#f0c94f;color:#17251d;border:2px solid white;font-weight:bold;font-size:12px;box-shadow:0 2px 5px #123}
+.player-slot select{display:block;width:78px;margin:4px 0 0 -5px;padding:4px 2px;font-size:9px;text-align:center;background:#12271d;color:white;border:1px solid #d7c16f;border-radius:5px}
 .slot-name{font-size:9px;font-weight:bold;text-shadow:1px 1px 2px black;white-space:nowrap}
 .slot-rating{font-size:10px;color:#ffe58a;font-weight:bold;text-shadow:1px 1px 2px black}
 .bench-item{display:flex;justify-content:space-between;padding:9px;border-bottom:1px solid #456c55;font-size:12px}
 .bench-item:last-child{border:0}
+.setting{padding:12px 0;border-bottom:1px solid #456c55}
+.setting:last-child{border:0}
+.setting select{margin-top:7px}
+.setting p{font-size:11px;color:#b8c7bd;margin:5px 0}
+.value{color:#e4c46e;font-weight:bold}
 </style>
 </head>
 <body>
@@ -145,13 +134,12 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
  </div>
  <nav>
   <button onclick="showRoster()">ROSA</button>
-  <button onclick="showTactics()">FORMAZIONE</button>
-  <button onclick="show('dashboard')">SOCIETÀ</button>
+  <button onclick="showTactics()">FORMAZIONE E TATTICHE</button>
  </nav>
  <div class="panel">
   <h3>Centro di gestione</h3>
-  <p class="small">Gestisci la rosa e prepara la tua squadra per il campionato.</p>
-  <button onclick="showTactics()">GESTISCI LA FORMAZIONE</button>
+  <p class="small">Prepara la tua squadra e definisci il tuo stile di gioco.</p>
+  <button onclick="showTactics()">GESTISCI LA SQUADRA</button>
   <button class="secondary" onclick="showRoster()">CONSULTA LA ROSA</button>
   <button class="secondary" onclick="show('home')">MENU PRINCIPALE</button>
  </div>
@@ -183,43 +171,127 @@ footer{text-align:center;color:#81968a;font-size:11px;padding:25px}
 <section id="tactics" class="hidden">
  <div class="hero">
   <span class="tag">CENTRO TATTICO</span>
-  <h2>LA TUA FORMAZIONE</h2>
+  <h2>LA TUA SQUADRA</h2>
   <p id="tacticClub"></p>
  </div>
+
  <div class="panel">
-  <label>Modulo di gioco</label>
+  <h3>1. Modulo di gioco</h3>
+  <label>Seleziona il modulo</label>
   <select id="formation" onchange="changeFormation()">
    <option value="433">4-3-3</option>
    <option value="442">4-4-2</option>
    <option value="352">3-5-2</option>
    <option value="4231">4-2-3-1</option>
   </select>
-  <p class="small">Seleziona il modulo e scegli i calciatori da schierare in ogni posizione.</p>
- </div>
-
- <div class="pitch">
-  <div class="boxline top"></div>
-  <div class="boxline bottom"></div>
-  <div class="goal top"></div>
-  <div class="goal bottom"></div>
-  <div id="pitchPlayers"></div>
+  <p class="small">Il modulo stabilisce la disposizione dei tuoi undici calciatori.</p>
  </div>
 
  <div class="panel">
+  <h3>2. La tua formazione</h3>
+  <p class="small">Seleziona i giocatori direttamente sul campo.</p>
+  <div class="pitch">
+   <div class="boxline top"></div>
+   <div class="boxline bottom"></div>
+   <div class="goal top"></div>
+   <div class="goal bottom"></div>
+   <div id="pitchPlayers"></div>
+  </div>
   <h3>La tua panchina</h3>
-  <p class="small">I migliori 7 calciatori non schierati tra i titolari.</p>
   <div id="bench"></div>
- </div>
- <div class="panel">
-  <h3>Riepilogo formazione</h3>
   <p id="lineupSummary" class="small"></p>
-  <button onclick="saveTactics()">SALVA FORMAZIONE</button>
+ </div>
+
+ <div class="panel">
+  <span class="tag">NUOVO</span>
+  <h3>3. Mentalità della squadra</h3>
+
+  <div class="setting">
+   <label for="mentality">Mentalità</label>
+   <select id="mentality" onchange="updateTactics()">
+    <option value="Difensiva">Difensiva</option>
+    <option value="Prudente">Prudente</option>
+    <option value="Equilibrata">Equilibrata</option>
+    <option value="Positiva">Positiva</option>
+    <option value="Offensiva">Offensiva</option>
+   </select>
+   <p>Determina l'atteggiamento generale della squadra.</p>
+  </div>
+
+  <div class="setting">
+   <label for="style">Stile di gioco</label>
+   <select id="style" onchange="updateTactics()">
+    <option value="Possesso palla">Possesso palla</option>
+    <option value="Contropiede">Contropiede</option>
+    <option value="Pressing alto">Pressing alto</option>
+    <option value="Gioco sulle fasce">Gioco sulle fasce</option>
+    <option value="Palla lunga">Palla lunga</option>
+   </select>
+   <p>Scegli come vuoi costruire le azioni offensive.</p>
+  </div>
+
+  <div class="setting">
+   <label for="pressing">Intensità del pressing</label>
+   <select id="pressing" onchange="updateTactics()">
+    <option value="Basso">Bassa</option>
+    <option value="Medio">Media</option>
+    <option value="Alto">Alta</option>
+    <option value="Molto alto">Molto alta</option>
+   </select>
+   <p>Un pressing più intenso può recuperare palloni, ma aumenta il consumo di energie.</p>
+  </div>
+
+  <div class="setting">
+   <label for="defense">Altezza della linea difensiva</label>
+   <select id="defense" onchange="updateTactics()">
+    <option value="Bassa">Bassa</option>
+    <option value="Media">Media</option>
+    <option value="Alta">Alta</option>
+   </select>
+   <p>Una linea alta porta la difesa più avanti e lascia più spazio alle spalle.</p>
+  </div>
+
+  <div class="setting">
+   <label for="tempo">Ritmo di gioco</label>
+   <select id="tempo" onchange="updateTactics()">
+    <option value="Lento">Lento</option>
+    <option value="Normale">Normale</option>
+    <option value="Veloce">Veloce</option>
+   </select>
+   <p>Decide la velocità con cui la squadra muove il pallone.</p>
+  </div>
+
+  <div class="setting">
+   <label for="width">Ampiezza di gioco</label>
+   <select id="width" onchange="updateTactics()">
+    <option value="Stretta">Stretta</option>
+    <option value="Normale">Normale</option>
+    <option value="Ampia">Ampia</option>
+   </select>
+   <p>Stabilisce quanto la squadra sfrutta le fasce laterali.</p>
+  </div>
+
+  <div class="setting">
+   <label for="passing">Tipo di passaggi</label>
+   <select id="passing" onchange="updateTactics()">
+    <option value="Corti">Corti</option>
+    <option value="Misti">Misti</option>
+    <option value="Diretti">Diretti</option>
+   </select>
+   <p>Determina come i calciatori cercano i compagni.</p>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h3>Riepilogo tattico</h3>
+  <div id="tacticSummary" class="small"></div>
+  <button onclick="saveTactics()">SALVA FORMAZIONE E TATTICHE</button>
   <button class="secondary" onclick="show('dashboard')">TORNA ALLA SOCIETÀ</button>
  </div>
 </section>
 
 </main>
-<footer>ITALIAN FOOTBALL MANAGER 2027 · VERSIONE 0.4</footer>
+<footer>ITALIAN FOOTBALL MANAGER 2027 · VERSIONE 0.5</footer>
 
 <script>
 const clubs=[
@@ -275,16 +347,28 @@ const formations={
  ]
 };
 
+const defaultTactics={
+ mentality:"Equilibrata",
+ style:"Possesso palla",
+ pressing:"Medio",
+ defense:"Media",
+ tempo:"Normale",
+ width:"Normale",
+ passing:"Misti"
+};
+
 let manager="";
 let selectedClub=null;
 let players=[];
 let lineup=[];
 let currentFormation="433";
+let tactics={...defaultTactics};
 
 function show(id){
  document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
  document.getElementById(id).classList.remove("hidden");
 }
+
 function createManager(){
  const value=document.getElementById("manager").value.trim();
  if(!value){alert("Inserisci il nome del manager!");return;}
@@ -292,6 +376,7 @@ function createManager(){
  document.getElementById("managerName").textContent=manager;
  show("welcome");
 }
+
 function showClubs(){
  const list=document.getElementById("clubList");
  list.innerHTML="";
@@ -310,6 +395,7 @@ function showClubs(){
  });
  show("clubs");
 }
+
 function selectClub(i){
  selectedClub=clubs[i];
  document.getElementById("chosenClub").textContent=selectedClub.name;
@@ -317,6 +403,7 @@ function selectClub(i){
  document.getElementById("chosenGroup").textContent=selectedClub.group;
  show("clubDetail");
 }
+
 function makePlayers(){
  const positions=[
   ...Array(3).fill(["POR","Portiere"]),
@@ -348,6 +435,7 @@ function makePlayers(){
   };
  });
 }
+
 function createDefaultLineup(){
  const slots=formations[currentFormation];
  const available=[...players].sort((a,b)=>b.overall-a.overall);
@@ -358,24 +446,37 @@ function createDefaultLineup(){
   return p?p.id:null;
  });
 }
+
 function startCareer(){
  if(!manager||!selectedClub){alert("Completa la scelta del manager e della squadra.");return;}
  players=makePlayers();
  currentFormation="433";
+ tactics={...defaultTactics};
  lineup=createDefaultLineup();
  saveGame();
  showDashboard();
 }
+
 function saveGame(){
- const save={manager:manager,club:selectedClub,season:"2026/2027",players:players,formation:currentFormation,lineup:lineup};
+ const save={
+  manager:manager,
+  club:selectedClub,
+  season:"2026/2027",
+  players:players,
+  formation:currentFormation,
+  lineup:lineup,
+  tactics:tactics
+ };
  localStorage.setItem("ifm2027_save",JSON.stringify(save));
 }
+
 function showDashboard(){
  document.getElementById("dashClub").textContent=selectedClub.name;
  document.getElementById("dashManager").textContent="Allenatore: "+manager;
  document.getElementById("dashGroup").textContent=selectedClub.group;
  show("dashboard");
 }
+
 function loadCareer(){
  const raw=localStorage.getItem("ifm2027_save");
  if(!raw){alert("Non hai ancora una carriera salvata!");return;}
@@ -386,11 +487,22 @@ function loadCareer(){
   players=save.players||[];
   currentFormation=save.formation||"433";
   lineup=save.lineup||[];
-  if(players.length!==25){alert("Salvataggio non compatibile. Crea una nuova carriera.");return;}
-  if(lineup.length!==formations[currentFormation].length)lineup=createDefaultLineup();
+  tactics={...defaultTactics,...(save.tactics||{})};
+
+  if(players.length!==25){
+   alert("Salvataggio non compatibile. Crea una nuova carriera.");
+   return;
+  }
+  if(!formations[currentFormation])currentFormation="433";
+  if(lineup.length!==formations[currentFormation].length){
+   lineup=createDefaultLineup();
+  }
   showDashboard();
- }catch(e){alert("Salvataggio non leggibile. Crea una nuova carriera.");}
+ }catch(e){
+  alert("Salvataggio non leggibile. Crea una nuova carriera.");
+ }
 }
+
 function showRoster(){
  document.getElementById("rosterClub").textContent=selectedClub.name;
  const count={POR:0,DIF:0,CEN:0,ATT:0};
@@ -402,6 +514,7 @@ function showRoster(){
  renderPlayers();
  show("roster");
 }
+
 function renderPlayers(){
  const filter=document.getElementById("roleFilter").value;
  const list=document.getElementById("playerList");
@@ -424,22 +537,34 @@ function renderPlayers(){
   list.appendChild(item);
  });
 }
+
 function showTactics(){
  document.getElementById("tacticClub").textContent=selectedClub.name;
  document.getElementById("formation").value=currentFormation;
+ loadTacticsControls();
  renderPitch();
  show("tactics");
 }
+
+function loadTacticsControls(){
+ Object.keys(defaultTactics).forEach(key=>{
+  document.getElementById(key).value=tactics[key]||defaultTactics[key];
+ });
+ updateTacticSummary();
+}
+
 function changeFormation(){
  currentFormation=document.getElementById("formation").value;
  lineup=createDefaultLineup();
  renderPitch();
  saveGame();
 }
+
 function renderPitch(){
  const pitch=document.getElementById("pitchPlayers");
  pitch.innerHTML="";
  const slots=formations[currentFormation];
+
  slots.forEach((slot,index)=>{
   const player=players.find(p=>p.id===lineup[index]);
   const el=document.createElement("div");
@@ -472,7 +597,6 @@ function renderPitch(){
     const option=document.createElement("option");
     option.value=p.id;
     option.textContent=p.name+" ("+p.overall+")";
-    if(player&&player.id===p.id)option.selected=true;
     select.appendChild(option);
    });
 
@@ -482,12 +606,14 @@ function renderPitch(){
    renderPitch();
    saveGame();
   };
+
   el.append(shirt,name,rating,select);
   pitch.appendChild(el);
  });
  renderBench();
  updateSummary();
 }
+
 function renderBench(){
  const used=lineup.filter(id=>id!==null);
  const remaining=players.filter(p=>!used.includes(p.id))
@@ -505,6 +631,7 @@ function renderBench(){
   bench.appendChild(row);
  });
 }
+
 function updateSummary(){
  const used=lineup.filter(id=>id!==null).length;
  const avg=players.filter(p=>lineup.includes(p.id));
@@ -512,9 +639,46 @@ function updateSummary(){
  document.getElementById("lineupSummary").textContent=
  "Modulo: "+currentFormation+" · Giocatori schierati: "+used+"/11 · Valutazione media: "+average;
 }
-function saveTactics(){
+
+function updateTactics(){
+ Object.keys(defaultTactics).forEach(key=>{
+  tactics[key]=document.getElementById(key).value;
+ });
+ updateTacticSummary();
  saveGame();
- alert("Formazione salvata correttamente!");
+}
+
+function updateTacticSummary(){
+ const labels=[
+  ["Mentalità","mentality"],
+  ["Stile di gioco","style"],
+  ["Pressing","pressing"],
+  ["Linea difensiva","defense"],
+  ["Ritmo","tempo"],
+  ["Ampiezza","width"],
+  ["Passaggi","passing"]
+ ];
+ const area=document.getElementById("tacticSummary");
+ if(!area)return;
+ area.innerHTML="";
+ labels.forEach(([label,key])=>{
+  const line=document.createElement("p");
+  const strong=document.createElement("strong");
+  strong.textContent=label+": ";
+  const value=document.createElement("span");
+  value.className="value";
+  value.textContent=tactics[key];
+  line.append(strong,value);
+  area.appendChild(line);
+ });
+}
+
+function saveTactics(){
+ Object.keys(defaultTactics).forEach(key=>{
+  tactics[key]=document.getElementById(key).value;
+ });
+ saveGame();
+ alert("Formazione e tattiche salvate correttamente!");
 }
 </script>
 </body>
